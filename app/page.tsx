@@ -11,6 +11,7 @@ import { useLang } from "@/context/LangContext"
 import { useEffect, useState } from 'react'
 import { XMLParser } from 'fast-xml-parser'
 import { GalleryImage } from '@/components/GalleryImage'
+import Image from "next/image"
 
 
 
@@ -65,7 +66,7 @@ const translations = {
       emailPlaceholder: "Votre email",
       messagePlaceholder: "Votre message",
       submitButton: "Envoyer",
-      address: "123 Rue de l'Innovation, 75000 Paris, France"
+      address: "rue saint michel 5, 1000 Bruxelles"
     },
     howItWorks: {
       title: "Comment ça marche ?",
@@ -246,22 +247,47 @@ export default function Component() {
 
   return (
     <div className={`flex flex-col items-center`}>
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
+      <section className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden">
+        {/* Background Image avec overlay plus sombre */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://cdn.discordapp.com/attachments/593496671820840962/1300581719006642217/photobooth.jpg?ex=67215c9d&is=67200b1d&hm=816e9104425fd5edbe3c294d1de919a7079b248943bf1d8c796ffee58a601e83&"
+            alt="Photobooth background"
+            fill
+            priority
+            quality={90}
+            className="object-cover"
+            sizes="100vw"
+          />
+          {/* Ajouter un overlay plus sombre */}
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+        
+        {/* Content avec texte plus contrasté */}
+        <div className="relative z-10 container mx-auto max-w-7xl px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg">
                 {t.hero.title}
               </h1>
-              <p className="mx-auto max-w-[700px] text-gray-600 dark:text-gray-400 md:text-xl">
+              <p className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md">
                 {t.hero.subtitle}
               </p>
             </div>
-            <div className="space-x-4">
-              <Button asChild size="lg" className="bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
+            <div className="space-x-4 mt-8">
+              <Button 
+                asChild 
+                size="lg" 
+                className="bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
+              >
                 <Link href="/pricing">{t.hero.cta1}</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300">
+              <Button 
+                asChild 
+                variant="outline" 
+                size="lg" 
+                className="border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
+              >
                 <Link href="/features">{t.hero.cta2}</Link>
               </Button>
             </div>
@@ -269,18 +295,18 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 text-gray-900 dark:text-gray-100">{t.features.title}</h2>
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 text-gray-900 dark:text-white">{t.features.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {t.features.items.map((feature, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-300 dark:bg-gray-700">
+              <Card key={index} className="hover:shadow-lg transition-all duration-300 dark:bg-[#2d1f42]">
                 <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  {index === 0 && <Users className="h-12 w-12 text-gray-900 dark:text-gray-100" />}
-                  {index === 1 && <Camera className="h-12 w-12 text-gray-900 dark:text-gray-100" />}
-                  {index === 2 && <Zap className="h-12 w-12 text-gray-900 dark:text-gray-100" />}
-                  <h3 className="text-xl font-semibold text-center text-gray-900 dark:text-gray-100">{feature.title}</h3>
-                  <p className="text-center text-gray-600 dark:text-gray-300">{feature.description}</p>
+                  {index === 0 && <Users className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
+                  {index === 1 && <Camera className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
+                  {index === 2 && <Zap className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
+                  <h3 className="text-xl font-semibold text-center text-gray-900 dark:text-gray-50">{feature.title}</h3>
+                  <p className="text-center text-gray-600 dark:text-gray-200">{feature.description} </p>
                 </CardContent>
               </Card>
             ))}
@@ -293,7 +319,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-900">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-4">
@@ -322,31 +348,52 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.gallery.title}</h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">{t.gallery.subtitle}</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {galleryImages.map((image, index) => (
-              <GalleryImage
-                key={image.ETag}
-                imageKey={image.Key}
-                index={index}
-                category={t.gallery.categories[index % t.gallery.categories.length]}
-              />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-auto gap-4">
+            {galleryImages.map((image, index) => {
+              let layout: 'square' | 'tall' | 'wide' | 'large' = 'square'
+              
+              switch (index % 12) {
+                case 0:
+                  layout = 'large'
+                  break
+                case 2:
+                case 8:
+                  layout = 'tall'
+                  break
+                case 3:
+                case 7:
+                  layout = 'wide'
+                  break
+                default:
+                  layout = 'square'
+              }
+
+              return (
+                <GalleryImage
+                  key={image.ETag}
+                  imageKey={image.Key}
+                  index={index}
+                  layout={layout}
+                  priority={index < 4}
+                />
+              )
+            })}
           </div>
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 text-gray-900 dark:text-gray-100">{t.reviews.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {t.reviews.items.map((review, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-300 dark:bg-gray-700">
+              <Card key={index} className="hover:shadow-lg transition-all duration-300 dark:bg-[#2d1f42] dark:hover:bg-[#3d2a5a]">
                 <CardContent className="flex flex-col items-center space-y-4 p-6">
                   <div className="flex items-center space-x-1">
                     {[...Array(5)].map((_, i) => (
@@ -362,7 +409,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-900">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 text-gray-900 dark:text-gray-100">{t.contact.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -370,7 +417,10 @@ export default function Component() {
               <Input placeholder={t.contact.namePlaceholder} />
               <Input type="email" placeholder={t.contact.emailPlaceholder} />
               <Textarea placeholder={t.contact.messagePlaceholder} />
-              <Button type="submit" className="w-full bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
+              <Button 
+                type="submit" 
+                className="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white transition-all duration-300"
+              >
                 {t.contact.submitButton}
               </Button>
             </form>
@@ -392,7 +442,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.howItWorks.title}</h2>
@@ -403,8 +453,8 @@ export default function Component() {
               const Icon = step.icon
               return (
                 <div key={index} className="flex flex-col items-center text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Icon className="h-8 w-8 text-primary" />
+                  <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
+                    <Icon className="h-8 w-8 text-purple-600 dark:text-purple-400" />
                   </div>
                   <h3 className="text-xl font-semibold">{step.title}</h3>
                   <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
@@ -415,7 +465,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.faq.title}</h2>
@@ -423,7 +473,7 @@ export default function Component() {
           </div>
           <div className="grid gap-6 max-w-3xl mx-auto">
             {t.faq.items.map((item, index) => (
-              <div key={index} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6">
+              <div key={index} className="bg-white dark:bg-[#2d1f42] rounded-lg p-6 hover:shadow-lg transition-all duration-300">
                 <h3 className="text-lg font-semibold mb-2">{item.question}</h3>
                 <p className="text-gray-600 dark:text-gray-400">{item.answer}</p>
               </div>

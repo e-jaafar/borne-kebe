@@ -31,11 +31,14 @@ const translations = {
 
 export function Navbar() {
   const { lang, setLang } = useLang()
+  const [mounted, setMounted] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
   const pathname = usePathname()
   const t = translations[lang as keyof typeof translations]
 
+  // Gérer le montage du composant
   useEffect(() => {
+    setMounted(true)
     const savedDarkMode = localStorage.getItem('darkMode')
     if (savedDarkMode !== null) {
       setDarkMode(JSON.parse(savedDarkMode))
@@ -43,13 +46,15 @@ export function Navbar() {
   }, [])
 
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
+    if (mounted) {
+      if (darkMode) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+      localStorage.setItem('darkMode', JSON.stringify(darkMode))
     }
-    localStorage.setItem('darkMode', JSON.stringify(darkMode))
-  }, [darkMode])
+  }, [darkMode, mounted])
 
   const handleDarkMode = () => {
     setDarkMode(!darkMode)
@@ -57,6 +62,11 @@ export function Navbar() {
 
   const isActive = (path: string) => {
     return pathname === path
+  }
+
+  // Ne rien rendre jusqu'au montage complet
+  if (!mounted) {
+    return null
   }
 
   return (
