@@ -70,7 +70,7 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+    <nav className="sticky top-0 z-50 w-full bg-white dark:bg-[#1a0f2e] border-b border-gray-200 dark:border-[#2d1f42]">
       <div className="container mx-auto max-w-7xl px-4 md:px-6">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
@@ -85,7 +85,11 @@ export function Navbar() {
           <div className="hidden md:flex items-center space-x-6">
             <Link 
               href="/"
-              className={`text-sm ${isActive('/') ? 'text-primary font-semibold' : 'text-gray-600 dark:text-gray-300'} hover:text-primary transition-colors`}
+              className={`text-sm ${
+                isActive('/') 
+                  ? 'text-primary dark:text-purple-400 font-semibold' 
+                  : 'text-gray-600 dark:text-gray-300'
+              } hover:text-primary dark:hover:text-purple-400 transition-colors`}
             >
               {t.home}
             </Link>
@@ -123,6 +127,7 @@ export function Navbar() {
               variant="outline"
               size="icon"
               onClick={handleDarkMode}
+              className="border-gray-200 dark:border-[#2d1f42] dark:hover:border-purple-500"
               aria-label={darkMode ? "Activer le mode clair" : "Activer le mode sombre"}
             >
               {darkMode ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}

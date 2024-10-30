@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { XMLParser } from 'fast-xml-parser'
 import { GalleryImage } from '@/components/GalleryImage'
 import Image from "next/image"
+import { DemoVideo } from '@/components/DemoVideo'
 
 
 
@@ -245,13 +246,15 @@ export default function Component() {
     fetchImages()
   }, [])
 
+
+
   return (
     <div className={`flex flex-col items-center`}>
       <section className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden">
         {/* Background Image avec overlay plus sombre */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://cdn.discordapp.com/attachments/593496671820840962/1300581719006642217/photobooth.jpg?ex=67215c9d&is=67200b1d&hm=816e9104425fd5edbe3c294d1de919a7079b248943bf1d8c796ffee58a601e83&"
+            src="/media/photobooth.jpg"
             alt="Photobooth background"
             fill
             priority
@@ -319,35 +322,28 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-gray-100">{t.why.title}</h2>
-              <p className="text-gray-600 dark:text-gray-300 md:text-lg">{t.why.description}</p>
-              <ul className="space-y-2">
-                {t.why.items.map((item, index) => (
-                  <li key={index} className="flex items-center space-x-2">
-                    <CheckCircle className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                    <span className="text-gray-600 dark:text-gray-300">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button asChild size="lg" className="mt-4 bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
-                <Link href="/contact">{t.why.cta}</Link>
-              </Button>
-            </div>
-            <div className="relative">
-              {/* <Image
-                src="/placeholder.svg?height=400&width=600&text=Smarthebooth+en+action"
-                alt="Smarthebooth en action"
-                className="rounded-lg shadow-xl"
-              /> */}
-            </div>
-          </div>
-        </div>
-      </section>
-
+<section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
+  <div className="container mx-auto max-w-7xl px-4 md:px-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div className="space-y-4">
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-gray-100">{t.why.title}</h2>
+        <p className="text-gray-600 dark:text-gray-300 md:text-lg">{t.why.description}</p>
+        <ul className="space-y-2">
+          {t.why.items.map((item, index) => (
+            <li key={index} className="flex items-center space-x-2">
+              <CheckCircle className="h-5 w-5 text-gray-900 dark:text-gray-100" />
+              <span className="text-gray-600 dark:text-gray-300">{item}</span>
+            </li>
+          ))}
+        </ul>
+        <Button asChild size="lg" className="mt-4 bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
+          <Link href="/contact">{t.why.cta}</Link>
+        </Button>
+      </div>
+      <DemoVideo />
+    </div>
+  </div>
+</section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <div className="text-center mb-16">
