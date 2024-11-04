@@ -3,35 +3,44 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef, type ReactNode } from 'react'
 
+type Direction = 'up' | 'down' | 'left' | 'right'
+
+type DirectionOffset = {
+  x?: number
+  y?: number
+}
+
 type FadeInProps = {
   children: ReactNode
   className?: string
   delay?: number
-  direction?: 'up' | 'down' | 'left' | 'right'
+  direction?: Direction
 }
 
 export function FadeIn({ children, className = '', delay = 0, direction = 'up' }: FadeInProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-  const directions = {
+  const directions: Record<Direction, DirectionOffset> = {
     up: { y: 40 },
     down: { y: -40 },
     left: { x: 40 },
     right: { x: -40 }
   }
 
+  const currentDirection = directions[direction]
+
   return (
     <motion.div
       ref={ref}
       initial={{
         opacity: 0,
-        ...directions[direction]
+        ...currentDirection
       }}
       animate={{
         opacity: isInView ? 1 : 0,
-        y: isInView ? 0 : directions[direction].y,
-        x: isInView ? 0 : directions[direction].x
+        y: isInView ? 0 : currentDirection.y ?? 0,
+        x: isInView ? 0 : currentDirection.x ?? 0
       }}
       transition={{
         duration: 0.7,
