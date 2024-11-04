@@ -174,14 +174,14 @@ export function Navbar() {
               {darkMode ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
             </Button>
 
-            {/* Menu burger modifié */}
+            {/* Menu burger amélioré */}
             <div className="md:hidden">
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="icon"
-                    className="border-gray-200 dark:border-[#2d1f42] dark:hover:border-purple-500"
+                    className="hover:bg-gray-100 dark:hover:bg-[#2d1f42] transition-colors"
                   >
                     <Menu className="h-[1.2rem] w-[1.2rem]" />
                     <span className="sr-only">{t.menu}</span>
@@ -189,24 +189,53 @@ export function Navbar() {
                 </SheetTrigger>
                 <SheetContent 
                   side="right" 
-                  className="w-[300px] bg-white dark:bg-[#1a0f2e] border-l border-gray-200 dark:border-[#2d1f42] overflow-y-auto"
+                  className="w-full sm:w-80 bg-white/95 dark:bg-[#1a0f2e]/95 backdrop-blur-lg border-l border-gray-200 dark:border-[#2d1f42] p-0"
                 >
-                  <nav className="flex flex-col space-y-4 mt-8">
-                    {navigationLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={handleLinkClick}
-                        className={`text-lg px-4 py-2 rounded-md transition-colors ${
-                          isActive(link.href)
-                            ? 'bg-gray-100 dark:bg-[#2d1f42] text-primary dark:text-purple-400 font-semibold'
-                            : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2d1f42]'
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </nav>
+                  <div className="flex flex-col h-full">
+                    <div className="p-6 border-b border-gray-200 dark:border-[#2d1f42]">
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                        Borne-Kébè
+                      </h2>
+                    </div>
+                    
+                    <nav className="flex-1 overflow-y-auto py-6">
+                      <div className="px-6 space-y-1">
+                        {navigationLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={handleLinkClick}
+                            className={`flex items-center w-full py-3 px-4 rounded-lg transition-colors ${
+                              isActive(link.href)
+                                ? 'bg-gray-100 dark:bg-[#2d1f42] text-primary dark:text-purple-400 font-semibold'
+                                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2d1f42]/50'
+                            }`}
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </nav>
+
+                    <div className="p-6 border-t border-gray-200 dark:border-[#2d1f42]">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          © 2024 Borne-Kébè
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={handleDarkMode}
+                          className="hover:bg-gray-100 dark:hover:bg-[#2d1f42]"
+                        >
+                          {darkMode ? 
+                            <Sun className="h-5 w-5" /> : 
+                            <Moon className="h-5 w-5" />
+                          }
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 </SheetContent>
               </Sheet>
             </div>
