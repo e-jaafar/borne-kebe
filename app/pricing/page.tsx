@@ -1,14 +1,15 @@
 'use client'
-
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check } from "lucide-react"
+import { useLang } from "@/context/LangContext"
+import { cn } from "@/lib/utils"
 
 const translations = {
   fr: {
     title: "Nos Forfaits",
     subtitle: "Choisissez l'offre qui correspond à vos besoins",
+    popularBadge: "Plus populaire",
     plans: [
       {
         name: "Essentiel",
@@ -20,7 +21,8 @@ const translations = {
           "Accessoires standards",
           "Support technique",
         ],
-        cta: "Choisir l'Essentiel"
+        cta: "Choisir l'Essentiel",
+        popular: false
       },
       {
         name: "Premium",
@@ -47,21 +49,71 @@ const translations = {
           "Analyse des données",
           "API disponible"
         ],
-        cta: "Contacter l'équipe"
+        cta: "Contacter l'équipe",
+        popular: false
       }
     ]
   },
   en: {
-    // ... (même structure que fr)
+    title: "Our Plans",
+    subtitle: "Choose the plan that fits your needs",
+    popularBadge: "Most Popular",
+    plans: [
+      {
+        name: "Essential",
+        price: "599€",
+        duration: "per day",
+        features: [
+          "HD Photobooth",
+          "Unlimited prints",
+          "Standard props",
+          "Technical support",
+        ],
+        cta: "Choose Essential",
+        popular: false
+      },
+      {
+        name: "Premium",
+        price: "899€",
+        duration: "per day",
+        features: [
+          "All Essential features",
+          "Full customization",
+          "Digital album",
+          "Green screen",
+          "Dedicated assistant"
+        ],
+        cta: "Choose Premium",
+        popular: true
+      },
+      {
+        name: "Enterprise",
+        price: "Custom",
+        duration: "",
+        features: [
+          "Custom solution",
+          "Multiple booths",
+          "Priority support",
+          "Data analytics",
+          "API access"
+        ],
+        cta: "Contact team",
+        popular: false
+      }
+    ]
   }
-}
+} as const
+
+// Définir le type des traductions
+type Translations = typeof translations
+type Lang = keyof Translations
 
 export default function PricingPage() {
-  const [lang] = useState("fr")
-  const t = translations[lang as keyof typeof translations]
-
+  const { lang } = useLang()
+  const t = translations[lang as Lang]
+  
   return (
-    <div className="py-24 px-4 md:px-6">
+    <div className="py-24 sm:py-32">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold tracking-tight mb-4">{t.title}</h1>
@@ -70,10 +122,22 @@ export default function PricingPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {t.plans.map((plan, index) => (
-            <Card key={index} className={`relative ${plan.popular ? 'border-primary shadow-lg' : ''}`}>
+            <Card 
+              key={index} 
+              className={cn(
+                "relative transition-all duration-300",
+                plan.popular ? [
+                  "border-primary",
+                  "shadow-lg",
+                  "scale-105",
+                  "hover:scale-110",
+                  "z-10"
+                ].join(" ") : "hover:scale-105"
+              )}
+            >
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground rounded-full text-sm">
-                  Plus populaire
+                  {t.popularBadge}
                 </div>
               )}
               <CardHeader>

@@ -28,13 +28,13 @@ type S3Image = {
 const translations = {
   fr: {
     hero: {
-      title: "Smarthebooth ",
+      title: "Borne-kebe ",
       subtitle: "Solutions de photobooth haut de gamme pour vos événements professionnels et privés.",
       cta1: "Demander un devis",
       cta2: "Découvrir nos services"
     },
     features: {
-      title: "L'excellence Smarthebooth",
+      title: "L'excellence Borne-kebe",
       cta: "Explorer toutes nos fonctionnalités",
       items: [
         { title: "Reconnaissance faciale avancée", description: "Technologie de pointe pour une expérience utilisateur optimale" },
@@ -43,8 +43,8 @@ const translations = {
       ]
     },
     why: {
-      title: "Pourquoi choisir Smarthebooth ?",
-      description: "Smarthebooth offre une expérience photo booth inégalée, alliant technologie de pointe et élégance pour vos événements professionnels et privés.",
+      title: "Pourquoi choisir Borne-kebe ?",
+      description: "Borne-kebe offre une expérience photo booth inégalée, alliant technologie de pointe et élégance pour vos événements professionnels et privés.",
       items: [
         "Technologie de reconnaissance faciale avancée",
         "Partage instantané sur les réseaux sociaux",
@@ -56,7 +56,7 @@ const translations = {
     reviews: {
       title: "Ce que disent nos clients",
       items: [
-        { name: "Marie D.", comment: "Smarthebooth a transformé notre mariage en une expérience inoubliable. Qualité exceptionnelle !" },
+        { name: "Marie D.", comment: "Borne-kebe a transformé notre mariage en une expérience inoubliable. Qualité exceptionnelle !" },
         { name: "Pierre L.", comment: "Parfait pour nos événements d'entreprise. Professionnel et innovant." },
         { name: "Sophie M.", comment: "Le partage instantané a été un grand succès auprès de nos invités. Très recommandé !" }
       ]
@@ -122,13 +122,13 @@ const translations = {
   },
   en: {
     hero: {
-      title: "Smarthebooth",
+      title: "Borne-kebe",
       subtitle: "High-end photobooth solutions for your professional and private events.",
       cta1: "Request a quote",
       cta2: "Discover our services"
     },
     features: {
-      title: "Smarthebooth Excellence",
+      title: "Borne-kebe Excellence",
       cta: "Explore all our features",
       items: [
         { title: "Advanced Facial Recognition", description: "Cutting-edge technology for an optimal user experience" },
@@ -137,8 +137,8 @@ const translations = {
       ]
     },
     why: {
-      title: "Why Choose Smarthebooth?",
-      description: "Smarthebooth offers an unparalleled photo booth experience, combining cutting-edge technology and elegance for your professional and private events.",
+      title: "Why Choose Borne-kebe?",
+      description: "Borne-kebe offers an unparalleled photo booth experience, combining cutting-edge technology and elegance for your professional and private events.",
       items: [
         "Advanced facial recognition technology",
         "Instant sharing on social networks",
@@ -150,7 +150,7 @@ const translations = {
     reviews: {
       title: "What Our Clients Say",
       items: [
-        { name: "Mary D.", comment: "Smarthebooth transformed our wedding into an unforgettable experience. Exceptional quality!" },
+        { name: "Mary D.", comment: "Borne-kebe transformed our wedding into an unforgettable experience. Exceptional quality!" },
         { name: "Peter L.", comment: "Perfect for our corporate events. Professional and innovative." },
         { name: "Sophie M.", comment: "The instant sharing was a big hit with our guests. Highly recommended!" }
       ]
@@ -254,7 +254,7 @@ export default function Component() {
         {/* Background Image avec overlay plus sombre */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/media/photobooth.jpg"
+            src="/videos/photobooth.jpg"
             alt="Photobooth background"
             fill
             priority
@@ -423,7 +423,7 @@ export default function Component() {
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
                 <Mail  className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                <span className="text-gray-600 dark:text-gray-300">contact@Smarthebooth.com</span>
+                <span className="text-gray-600 dark:text-gray-300">contact@Borne-kebe.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="h-5 w-5 text-gray-900 dark:text-gray-100" />
