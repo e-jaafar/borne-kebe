@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  webpack: (config) => {
+    config.experiments = { ...config.experiments, topLevelAwait: true }
+    return config
+  },
+  // Ajoutez ces configurations pour gérer les fichiers
+  experimental: {
+    serverComponentsExternalPackages: ['resend']
+  },
   images: {
     remotePatterns: [
       {
