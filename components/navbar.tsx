@@ -4,9 +4,14 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Menu } from "lucide-react"
 import { useLang } from "@/context/LangContext"
 import Image from "next/image"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import {
   Select,
   SelectContent,
@@ -20,13 +25,15 @@ const translations = {
     home: "Accueil",
     features: "Services",
     pricing: "Tarifs",
-    contact: "Contact"
+    contact: "Contact",
+    menu: "Menu"
   },
   en: {
     home: "Home",
     features: "Services",
     pricing: "Pricing",
-    contact: "Contact"
+    contact: "Contact",
+    menu: "Menu"
   }
 }
 
@@ -34,6 +41,7 @@ export function Navbar() {
   const { lang, setLang } = useLang()
   const [mounted, setMounted] = useState(false)
   const [darkMode, setDarkMode] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const t = translations[lang as keyof typeof translations]
 
@@ -67,10 +75,21 @@ export function Navbar() {
     return pathname === path
   }
 
+  const handleLinkClick = () => {
+    setIsOpen(false)
+  }
+
   // Ne rien rendre jusqu'au montage complet
   if (!mounted) {
     return null
   }
+
+  const navigationLinks = [
+    { href: "/", label: t.home },
+    { href: "/features", label: t.features },
+    { href: "/pricing", label: t.pricing },
+    { href: "/contact", label: t.contact },
+  ]
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white dark:bg-[#1a0f2e] border-b border-gray-200 dark:border-[#2d1f42]">
@@ -85,35 +104,21 @@ export function Navbar() {
             </Link>
           </div>
 
+          {/* Navigation desktop */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link 
-              href="/"
-              className={`text-sm ${
-                isActive('/') 
-                  ? 'text-primary dark:text-purple-400 font-semibold' 
-                  : 'text-gray-600 dark:text-gray-300'
-              } hover:text-primary dark:hover:text-purple-400 transition-colors`}
-            >
-              {t.home}
-            </Link>
-            <Link 
-              href="/features"
-              className={`text-sm ${isActive('/features') ? 'text-primary font-semibold' : 'text-gray-600 dark:text-gray-300'} hover:text-primary transition-colors`}
-            >
-              {t.features}
-            </Link>
-            <Link 
-              href="/pricing"
-              className={`text-sm ${isActive('/pricing') ? 'text-primary font-semibold' : 'text-gray-600 dark:text-gray-300'} hover:text-primary transition-colors`}
-            >
-              {t.pricing}
-            </Link>
-            <Link 
-              href="/contact"
-              className={`text-sm ${isActive('/contact') ? 'text-primary font-semibold' : 'text-gray-600 dark:text-gray-300'} hover:text-primary transition-colors`}
-            >
-              {t.contact}
-            </Link>
+            {navigationLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm ${
+                  isActive(link.href) 
+                    ? 'text-primary dark:text-purple-400 font-semibold' 
+                    : 'text-gray-600 dark:text-gray-300'
+                } hover:text-primary dark:hover:text-purple-400 transition-colors`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <div className="flex items-center space-x-4">
@@ -158,6 +163,7 @@ export function Navbar() {
                 </SelectItem>
               </SelectContent>
             </Select>
+
             <Button
               variant="outline"
               size="icon"
@@ -167,6 +173,38 @@ export function Navbar() {
             >
               {darkMode ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
             </Button>
+
+            {/* Menu burger pour mobile */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild className="md:hidden">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-gray-200 dark:border-[#2d1f42] dark:hover:border-purple-500"
+                >
+                  <Menu className="h-[1.2rem] w-[1.2rem]" />
+                  <span className="sr-only">{t.menu}</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] bg-white dark:bg-[#1a0f2e] border-l border-gray-200 dark:border-[#2d1f42]">
+                <nav className="flex flex-col space-y-4 mt-8">
+                  {navigationLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={handleLinkClick}
+                      className={`text-lg px-4 py-2 rounded-md transition-colors ${
+                        isActive(link.href)
+                          ? 'bg-gray-100 dark:bg-[#2d1f42] text-primary dark:text-purple-400 font-semibold'
+                          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2d1f42]'
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
