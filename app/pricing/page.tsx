@@ -16,12 +16,13 @@ const translations = {
         price: "300€",
         duration: "par événement",
         features: [
+          "Photobooth",
           "Accès illimité aux photos de l'événement",
           "Impression de 100 photos max",
           "1 borne photo avec personnel",
           "Reconnaissance faciale",
           "Livraison des photos par lien numérique",
-          "Réduction photographe de 5%"
+
         ],
         cta: "Choisir l'Essentiel",
         popular: false
@@ -36,7 +37,7 @@ const translations = {
           "1 borne photo avec personnel",
           "Reconnaissance faciale",
           "Livraison des photos par lien numérique",
-          "Réduction photographe de 10%"
+          "Réduction photographe de 5%"
         ],
         cta: "Choisir le Premium",
         popular: true
@@ -51,7 +52,7 @@ const translations = {
           "1 borne photo avec personnel",
           "Reconnaissance faciale",
           "Livraison des photos par lien numérique",
-          "Réduction photographe de 15%"
+          "Réduction photographe de 10%"
         ],
         cta: "Choisir le VIP",
         popular: false
@@ -73,7 +74,6 @@ const translations = {
           "1 photo booth with staff",
           "Facial recognition",
           "Digital photo delivery",
-          "5% photographer discount"
         ],
         cta: "Choose Essential",
         popular: false
@@ -88,7 +88,7 @@ const translations = {
           "1 photo booth with staff",
           "Facial recognition",
           "Digital photo delivery",
-          "10% photographer discount"
+          "5% photographer discount"
         ],
         cta: "Choose Premium",
         popular: true
@@ -103,7 +103,7 @@ const translations = {
           "1 photo booth with staff",
           "Facial recognition",
           "Digital photo delivery",
-          "15% photographer discount"
+          "10% photographer discount"
         ],
         cta: "Choose VIP",
         popular: false
