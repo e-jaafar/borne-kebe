@@ -113,7 +113,11 @@ export default function ContactPage() {
     }
 
     setAttachment(file)
-    setErrors(prev => ({ ...prev, file: undefined }))
+    setErrors(prev => {
+      const newErrors = { ...prev }
+      delete newErrors.file
+      return newErrors
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
