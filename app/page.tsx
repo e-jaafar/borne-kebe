@@ -321,11 +321,13 @@ export default function Component() {
               </FadeIn>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <Button asChild size="lg" className="bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
-              <Link href="/features">{t.features.cta}</Link>
-            </Button>
-          </div>
+          <FadeIn delay={0.4}>
+            <div className="text-center mt-12">
+              <Button asChild size="lg" className="bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
+                <Link href="/features">{t.features.cta}</Link>
+              </Button>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -466,21 +468,25 @@ export default function Component() {
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.howItWorks.title}</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">{t.howItWorks.subtitle}</p>
-          </div>
+          <FadeIn>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.howItWorks.title}</h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400">{t.howItWorks.subtitle}</p>
+            </div>
+          </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {t.howItWorks.steps.map((step, index) => {
               const Icon = step.icon
               return (
-                <div key={index} className="flex flex-col items-center text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
-                    <Icon className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                <FadeIn key={index} delay={index * 0.1}>
+                  <div className="flex flex-col items-center text-center space-y-4">
+                    <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
+                      <Icon className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <h3 className="text-xl font-semibold">{step.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
                   </div>
-                  <h3 className="text-xl font-semibold">{step.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
-                </div>
+                </FadeIn>
               )
             })}
           </div>
@@ -489,16 +495,20 @@ export default function Component() {
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.faq.title}</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">{t.faq.subtitle}</p>
-          </div>
+          <FadeIn>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.faq.title}</h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400">{t.faq.subtitle}</p>
+            </div>
+          </FadeIn>
           <div className="grid gap-6 max-w-3xl mx-auto">
             {t.faq.items.map((item, index) => (
-              <div key={index} className="bg-white dark:bg-[#2d1f42] rounded-lg p-6 hover:shadow-lg transition-all duration-300">
-                <h3 className="text-lg font-semibold mb-2">{item.question}</h3>
-                <p className="text-gray-600 dark:text-gray-400">{item.answer}</p>
-              </div>
+              <FadeIn key={index} delay={index * 0.1} direction="right">
+                <div className="bg-white dark:bg-[#2d1f42] rounded-lg p-6 hover:shadow-lg transition-all duration-300">
+                  <h3 className="text-lg font-semibold mb-2">{item.question}</h3>
+                  <p className="text-gray-600 dark:text-gray-400">{item.answer}</p>
+                </div>
+              </FadeIn>
             ))}
           </div>
         </div>

@@ -33,7 +33,7 @@ const translations = {
 export function Navbar() {
   const { lang, setLang } = useLang()
   const [mounted, setMounted] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(true)
   const pathname = usePathname()
   const t = translations[lang as keyof typeof translations]
 
@@ -41,7 +41,9 @@ export function Navbar() {
   useEffect(() => {
     setMounted(true)
     const savedDarkMode = localStorage.getItem('darkMode')
-    if (savedDarkMode !== null) {
+    if (savedDarkMode === null) {
+      localStorage.setItem('darkMode', 'true')
+    } else {
       setDarkMode(JSON.parse(savedDarkMode))
     }
   }, [])
