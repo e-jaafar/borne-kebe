@@ -13,6 +13,7 @@ import { XMLParser } from 'fast-xml-parser'
 import { GalleryImage } from '@/components/GalleryImage'
 import Image from "next/image"
 import { DemoVideo } from '@/components/DemoVideo'
+import { FadeIn } from '@/components/ui/motion'
 
 
 
@@ -268,50 +269,56 @@ export default function Component() {
         
         {/* Content avec texte plus contrasté */}
         <div className="relative z-10 container mx-auto max-w-7xl px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-4">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg">
-                {t.hero.title}
-              </h1>
-              <p className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md">
-                {t.hero.subtitle}
-              </p>
+          <FadeIn>
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-4">
+                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg">
+                  {t.hero.title}
+                </h1>
+                <p className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md">
+                  {t.hero.subtitle}
+                </p>
+              </div>
+              <div className="space-x-4 mt-8">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
+                >
+                  <Link href="/pricing">{t.hero.cta1}</Link>
+                </Button>
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
+                >
+                  <Link href="/features">{t.hero.cta2}</Link>
+                </Button>
+              </div>
             </div>
-            <div className="space-x-4 mt-8">
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
-              >
-                <Link href="/pricing">{t.hero.cta1}</Link>
-              </Button>
-              <Button 
-                asChild 
-                variant="outline" 
-                size="lg" 
-                className="border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
-              >
-                <Link href="/features">{t.hero.cta2}</Link>
-              </Button>
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 text-gray-900 dark:text-white">{t.features.title}</h2>
+          <FadeIn>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.features.title}</h2>
+          </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {t.features.items.map((feature, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-300 dark:bg-[#2d1f42]">
-                <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  {index === 0 && <Users className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
-                  {index === 1 && <Camera className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
-                  {index === 2 && <Zap className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
-                  <h3 className="text-xl font-semibold text-center text-gray-900 dark:text-gray-50">{feature.title}</h3>
-                  <p className="text-center text-gray-600 dark:text-gray-200">{feature.description} </p>
-                </CardContent>
-              </Card>
+              <FadeIn key={index} delay={index * 0.1}>
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="flex flex-col items-center space-y-4 p-6">
+                    {index === 0 && <Users className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
+                    {index === 1 && <Camera className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
+                    {index === 2 && <Zap className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
+                    <h3 className="text-xl font-semibold text-center text-gray-900 dark:text-gray-50">{feature.title}</h3>
+                    <p className="text-center text-gray-600 dark:text-gray-200">{feature.description} </p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
             ))}
           </div>
           <div className="text-center mt-12">
@@ -325,33 +332,40 @@ export default function Component() {
 <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
   <div className="container mx-auto max-w-7xl px-4 md:px-6">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <div className="space-y-4">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-gray-100">{t.why.title}</h2>
-        <p className="text-gray-600 dark:text-gray-300 md:text-lg">{t.why.description}</p>
-        <ul className="space-y-2">
-          {t.why.items.map((item, index) => (
-            <li key={index} className="flex items-center space-x-2">
-              <CheckCircle className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-              <span className="text-gray-600 dark:text-gray-300">{item}</span>
-            </li>
-          ))}
-        </ul>
-        <Button asChild size="lg" className="mt-4 bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
-          <Link href="/contact">{t.why.cta}</Link>
-        </Button>
-      </div>
-      <DemoVideo />
+      <FadeIn direction="left">
+        <div className="space-y-4">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-gray-100">{t.why.title}</h2>
+          <p className="text-gray-600 dark:text-gray-300 md:text-lg">{t.why.description}</p>
+          <ul className="space-y-2">
+            {t.why.items.map((item, index) => (
+              <li key={index} className="flex items-center space-x-2">
+                <CheckCircle className="h-5 w-5 text-gray-900 dark:text-gray-100" />
+                <span className="text-gray-600 dark:text-gray-300">{item}</span>
+              </li>
+            ))}
+          </ul>
+          <Button asChild size="lg" className="mt-4 bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
+            <Link href="/contact">{t.why.cta}</Link>
+          </Button>
+        </div>
+      </FadeIn>
+      <FadeIn direction="right">
+        <DemoVideo />
+      </FadeIn>
     </div>
   </div>
 </section>
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.gallery.title}</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">{t.gallery.subtitle}</p>
-          </div>
+          <FadeIn>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.gallery.title}</h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400">{t.gallery.subtitle}</p>
+            </div>
+          </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-auto gap-4">
             {galleryImages.map((image, index) => {
+              // Déterminer le layout en fonction de l'index
               let layout: 'square' | 'tall' | 'wide' | 'large' = 'square'
               
               switch (index % 12) {
@@ -371,13 +385,15 @@ export default function Component() {
               }
 
               return (
-                <GalleryImage
-                  key={image.ETag}
-                  imageKey={image.Key}
-                  index={index}
-                  layout={layout}
-                  priority={index < 4}
-                />
+                <FadeIn key={image.ETag} delay={index * 0.1}>
+                  <GalleryImage
+                    key={image.ETag}
+                    imageKey={image.Key}
+                    index={index}
+                    layout={layout}
+                    priority={index < 4}
+                  />
+                </FadeIn>
               )
             })}
           </div>
@@ -386,20 +402,24 @@ export default function Component() {
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 text-gray-900 dark:text-gray-100">{t.reviews.title}</h2>
+          <FadeIn>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.reviews.title}</h2>
+          </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {t.reviews.items.map((review, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-300 dark:bg-[#2d1f42] dark:hover:bg-[#3d2a5a]">
-                <CardContent className="flex flex-col items-center space-y-4 p-6">
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-current text-yellow-500" />
-                    ))}
-                  </div>
-                  <p className="text-center text-gray-600 dark:text-gray-300">{review.comment}</p>
-                  <p className="font-semibold text-gray-900 dark:text-gray-100">{review.name}</p>
-                </CardContent>
-              </Card>
+              <FadeIn key={index} delay={index * 0.1}>
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="flex flex-col items-center space-y-4 p-6">
+                    <div className="flex items-center space-x-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-current text-yellow-500" />
+                      ))}
+                    </div>
+                    <p className="text-center text-gray-600 dark:text-gray-300">{review.comment}</p>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100">{review.name}</p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -407,33 +427,39 @@ export default function Component() {
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 text-gray-900 dark:text-gray-100">{t.contact.title}</h2>
+          <FadeIn>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.contact.title}</h2>
+          </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <form className="space-y-4">
-              <Input placeholder={t.contact.namePlaceholder} />
-              <Input type="email" placeholder={t.contact.emailPlaceholder} />
-              <Textarea placeholder={t.contact.messagePlaceholder} />
-              <Button 
-                type="submit" 
-                className="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white transition-all duration-300"
-              >
-                {t.contact.submitButton}
-              </Button>
-            </form>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <Mail  className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                <span className="text-gray-600 dark:text-gray-300">contact@Borne Kébè.com</span>
+            <FadeIn direction="left">
+              <form className="space-y-4">
+                <Input placeholder={t.contact.namePlaceholder} />
+                <Input type="email" placeholder={t.contact.emailPlaceholder} />
+                <Textarea placeholder={t.contact.messagePlaceholder} />
+                <Button 
+                  type="submit" 
+                  className="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white transition-all duration-300"
+                >
+                  {t.contact.submitButton}
+                </Button>
+              </form>
+            </FadeIn>
+            <FadeIn direction="right">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Mail  className="h-5 w-5 text-gray-900 dark:text-gray-100" />
+                  <span className="text-gray-600 dark:text-gray-300">contact@Borne Kébè.com</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Phone className="h-5 w-5 text-gray-900 dark:text-gray-100" />
+                  <span className="text-gray-600 dark:text-gray-300">+33 1 23 45 67 89</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <MapPin className="h-5 w-5 text-gray-900 dark:text-gray-100" />
+                  <span className="text-gray-600 dark:text-gray-300">{t.contact.address}</span>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Phone className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                <span className="text-gray-600 dark:text-gray-300">+33 1 23 45 67 89</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                <span className="text-gray-600 dark:text-gray-300">{t.contact.address}</span>
-              </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
