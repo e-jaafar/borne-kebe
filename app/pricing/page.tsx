@@ -13,43 +13,47 @@ const translations = {
     plans: [
       {
         name: "Essentiel",
-        price: "599€",
-        duration: "par jour",
+        price: "300€",
+        duration: "par événement",
         features: [
-          "Photobooth HD",
-          "Impressions illimitées",
-          "Accessoires standards",
-          "Support technique",
+          "Accès illimité aux photos de l'événement",
+          "Impression de 100 photos max",
+          "1 borne photo avec personnel",
+          "Reconnaissance faciale",
+          "Livraison des photos par lien numérique",
+          "Réduction photographe de 5%"
         ],
         cta: "Choisir l'Essentiel",
         popular: false
       },
       {
         name: "Premium",
-        price: "899€",
-        duration: "par jour",
+        price: "450€",
+        duration: "par événement",
         features: [
-          "Tout de l'Essentiel",
-          "Personnalisation complète",
-          "Album digital",
-          "Fond vert",
-          "Assistant dédié"
+          "Accès illimité aux photos de l'événement",
+          "Impression de 300 photos max",
+          "1 borne photo avec personnel",
+          "Reconnaissance faciale",
+          "Livraison des photos par lien numérique",
+          "Réduction photographe de 10%"
         ],
         cta: "Choisir le Premium",
         popular: true
       },
       {
-        name: "Entreprise",
-        price: "Sur mesure",
-        duration: "",
+        name: "VIP",
+        price: "650€",
+        duration: "par événement",
         features: [
-          "Solution personnalisée",
-          "Multiple booths",
-          "Support prioritaire",
-          "Analyse des données",
-          "API disponible"
+          "Accès illimité aux photos de l'événement",
+          "Impression de 650 photos max",
+          "1 borne photo avec personnel",
+          "Reconnaissance faciale",
+          "Livraison des photos par lien numérique",
+          "Réduction photographe de 15%"
         ],
-        cta: "Contacter l'équipe",
+        cta: "Choisir le VIP",
         popular: false
       }
     ]
@@ -61,43 +65,47 @@ const translations = {
     plans: [
       {
         name: "Essential",
-        price: "599€",
-        duration: "per day",
+        price: "300€",
+        duration: "per event",
         features: [
-          "HD Photobooth",
-          "Unlimited prints",
-          "Standard props",
-          "Technical support",
+          "Unlimited event photo access",
+          "Up to 100 photo prints",
+          "1 photo booth with staff",
+          "Facial recognition",
+          "Digital photo delivery",
+          "5% photographer discount"
         ],
         cta: "Choose Essential",
         popular: false
       },
       {
         name: "Premium",
-        price: "899€",
-        duration: "per day",
+        price: "450€",
+        duration: "per event",
         features: [
-          "All Essential features",
-          "Full customization",
-          "Digital album",
-          "Green screen",
-          "Dedicated assistant"
+          "Unlimited event photo access",
+          "Up to 300 photo prints",
+          "1 photo booth with staff",
+          "Facial recognition",
+          "Digital photo delivery",
+          "10% photographer discount"
         ],
         cta: "Choose Premium",
         popular: true
       },
       {
-        name: "Enterprise",
-        price: "Custom",
-        duration: "",
+        name: "VIP",
+        price: "650€",
+        duration: "per event",
         features: [
-          "Custom solution",
-          "Multiple booths",
-          "Priority support",
-          "Data analytics",
-          "API access"
+          "Unlimited event photo access",
+          "Up to 650 photo prints",
+          "1 photo booth with staff",
+          "Facial recognition",
+          "Digital photo delivery",
+          "15% photographer discount"
         ],
-        cta: "Contact team",
+        cta: "Choose VIP",
         popular: false
       }
     ]
