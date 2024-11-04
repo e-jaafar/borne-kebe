@@ -174,37 +174,42 @@ export function Navbar() {
               {darkMode ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
             </Button>
 
-            {/* Menu burger pour mobile */}
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild className="md:hidden">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="border-gray-200 dark:border-[#2d1f42] dark:hover:border-purple-500"
+            {/* Menu burger modifié */}
+            <div className="md:hidden">
+              <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="border-gray-200 dark:border-[#2d1f42] dark:hover:border-purple-500"
+                  >
+                    <Menu className="h-[1.2rem] w-[1.2rem]" />
+                    <span className="sr-only">{t.menu}</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent 
+                  side="right" 
+                  className="w-[300px] bg-white dark:bg-[#1a0f2e] border-l border-gray-200 dark:border-[#2d1f42] overflow-y-auto"
                 >
-                  <Menu className="h-[1.2rem] w-[1.2rem]" />
-                  <span className="sr-only">{t.menu}</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] bg-white dark:bg-[#1a0f2e] border-l border-gray-200 dark:border-[#2d1f42]">
-                <nav className="flex flex-col space-y-4 mt-8">
-                  {navigationLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={handleLinkClick}
-                      className={`text-lg px-4 py-2 rounded-md transition-colors ${
-                        isActive(link.href)
-                          ? 'bg-gray-100 dark:bg-[#2d1f42] text-primary dark:text-purple-400 font-semibold'
-                          : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2d1f42]'
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </nav>
-              </SheetContent>
-            </Sheet>
+                  <nav className="flex flex-col space-y-4 mt-8">
+                    {navigationLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={handleLinkClick}
+                        className={`text-lg px-4 py-2 rounded-md transition-colors ${
+                          isActive(link.href)
+                            ? 'bg-gray-100 dark:bg-[#2d1f42] text-primary dark:text-purple-400 font-semibold'
+                            : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2d1f42]'
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>

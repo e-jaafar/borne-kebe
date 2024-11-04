@@ -270,7 +270,7 @@ export default function Component() {
         {/* Content avec texte plus contrasté */}
         <div className="relative z-10 container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
-            <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="flex flex-col items-center space-y-6 text-center">
               <div className="space-y-4">
                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg">
                   {t.hero.title}
@@ -279,11 +279,11 @@ export default function Component() {
                   {t.hero.subtitle}
                 </p>
               </div>
-              <div className="space-x-4 mt-8">
+              <div className="flex flex-col sm:flex-row gap-4 sm:space-x-4 w-full sm:w-auto">
                 <Button 
                   asChild 
                   size="lg" 
-                  className="bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
+                  className="w-full sm:w-auto bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
                 >
                   <Link href="/pricing">{t.hero.cta1}</Link>
                 </Button>
@@ -291,7 +291,7 @@ export default function Component() {
                   asChild 
                   variant="outline" 
                   size="lg" 
-                  className="border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
+                  className="w-full sm:w-auto border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
                 >
                   <Link href="/features">{t.hero.cta2}</Link>
                 </Button>
@@ -331,7 +331,7 @@ export default function Component() {
         </div>
       </section>
 
-<section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
+<section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24] overflow-hidden">
   <div className="container mx-auto max-w-7xl px-4 md:px-6">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <FadeIn direction="left">
@@ -357,7 +357,7 @@ export default function Component() {
     </div>
   </div>
 </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">
@@ -385,7 +385,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.reviews.title}</h2>
@@ -410,7 +410,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.contact.title}</h2>
@@ -449,7 +449,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">
@@ -476,7 +476,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">
