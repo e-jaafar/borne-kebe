@@ -8,7 +8,7 @@ import { Footer } from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Smarthebooth",
+  title: "Borne Kébè",
   description: "Solutions de photobooth haut de gamme pour vos événements",
 };
 

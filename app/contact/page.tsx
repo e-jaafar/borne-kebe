@@ -20,7 +20,7 @@ const translations = {
     },
     info: {
       title: "Informations de contact",
-      email: "contact@smarthebooth.com",
+      email: "alchimistelab@hotmail.com",
       phone: "+32 486 62 70 99",
       address: "Rue saint michel 5, 1000 Bruxelles",
       hours: "Lun-Ven: 9h-18h"
@@ -38,7 +38,7 @@ const translations = {
     },
     info: {
       title: "Contact Information",
-      email: "contact@smarthebooth.com",
+      email: "alchimistelab@hotmail.com",
       phone: "+32 486 62 70 99",
       address: "Rue saint michel 5, 1000 Brussels",
       hours: "Mon-Fri: 9am-6pm"

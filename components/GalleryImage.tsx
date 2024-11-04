@@ -18,10 +18,10 @@ export function GalleryImage({ imageKey, index, layout, priority = false }: Gall
   const imageUrl = `https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com${formattedKey}`
 
   const layoutClasses = {
-    square: "aspect-square",
-    tall: "aspect-[2/3] md:row-span-2",
-    wide: "aspect-[3/2] md:col-span-2",
-    large: "aspect-square md:col-span-2 md:row-span-2"
+    square: "aspect-square mb-4",
+    tall: "aspect-square md:aspect-[3/4] mb-4",
+    wide: "aspect-square md:aspect-[4/3] mb-4",
+    large: "aspect-square mb-4"
   }
 
   useEffect(() => {
@@ -52,7 +52,11 @@ export function GalleryImage({ imageKey, index, layout, priority = false }: Gall
   }, [imageKey, imageUrl])
 
   return (
-    <div className={`relative group overflow-hidden rounded-lg ${layoutClasses[layout]} transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl`}>
+    <div 
+      className={`relative group overflow-hidden rounded-lg ${layoutClasses[layout]} 
+        transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl 
+        break-inside-avoid w-full`}
+    >
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
           <Loader2 className="h-8 w-8 animate-spin text-gray-500" />

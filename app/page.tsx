@@ -365,31 +365,14 @@ export default function Component() {
               <p className="text-xl text-gray-600 dark:text-gray-400">{t.gallery.subtitle}</p>
             </div>
           </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-auto gap-4">
+          <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
             {galleryImages.map((image, index) => {
-              // Déterminer le layout en fonction de l'index
-              let layout: 'square' | 'tall' | 'wide' | 'large' = 'square'
+              // Calculer un ratio aléatoire mais contrôlé pour chaque image
+              const layout = getImageLayout(index)
               
-              switch (index % 12) {
-                case 0:
-                  layout = 'large'
-                  break
-                case 2:
-                case 8:
-                  layout = 'tall'
-                  break
-                case 3:
-                case 7:
-                  layout = 'wide'
-                  break
-                default:
-                  layout = 'square'
-              }
-
               return (
                 <FadeIn key={image.ETag} delay={index * 0.1}>
                   <GalleryImage
-                    key={image.ETag}
                     imageKey={image.Key}
                     index={index}
                     layout={layout}
@@ -515,4 +498,15 @@ export default function Component() {
       </section>
     </div>
   )
+}
+
+// Ajouter cette fonction helper avant le return du composant
+const getImageLayout = (index: number): 'square' | 'tall' | 'wide' | 'large' => {
+  // Créer un pattern qui se répète tous les 12 éléments
+  const pattern = index % 12
+
+  if (pattern === 0) return 'large'
+  if (pattern === 4 || pattern === 8) return 'tall'
+  if (pattern === 2 || pattern === 6) return 'wide'
+  return 'square'
 }
