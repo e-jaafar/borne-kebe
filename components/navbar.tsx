@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Moon, Sun } from "lucide-react"
 import { useLang } from "@/context/LangContext"
+import Image from "next/image"
 import {
   Select,
   SelectContent,
@@ -115,12 +116,44 @@ export function Navbar() {
 
           <div className="flex items-center space-x-4">
             <Select onValueChange={(value) => setLang(value)} defaultValue={lang}>
-              <SelectTrigger className="w-[80px]">
-                <SelectValue placeholder="Langue" />
+              <SelectTrigger className="w-[70px]">
+                <SelectValue>
+                  <div className="flex items-center justify-center">
+                    <Image
+                      src={`/flags/${lang}.svg`}
+                      alt={lang === 'fr' ? 'Français' : 'English'}
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                  </div>
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="fr">FR</SelectItem>
-                <SelectItem value="en">EN</SelectItem>
+                <SelectItem value="fr">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/flags/fr.svg"
+                      alt="Français"
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                    Français
+                  </div>
+                </SelectItem>
+                <SelectItem value="en">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/flags/en.svg"
+                      alt="English"
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                    English
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
             <Button
