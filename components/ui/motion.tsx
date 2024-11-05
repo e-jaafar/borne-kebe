@@ -1,21 +1,15 @@
 'use client'
 
-import { motion, useInView } from 'framer-motion'
-import { useRef, type ReactNode } from 'react'
-
-type Direction = 'up' | 'down' | 'left' | 'right'
-
-type DirectionOffset = {
-  x?: number
-  y?: number
-}
+import { motion } from 'framer-motion'
+import { ReactNode } from 'react'
+import { HTMLMotionProps } from 'framer-motion'
 
 type FadeInProps = {
   children: ReactNode
-  className?: string
   delay?: number
-  direction?: Direction
-}
+  direction?: "up" | "down" | "left" | "right"
+  className?: string
+} & Omit<HTMLMotionProps<"div">, "initial" | "animate" | "transition">
 
 export const FadeIn = ({ 
   children, 
