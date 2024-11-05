@@ -34,6 +34,13 @@ const translations = {
     pricing: "Pricing",
     contact: "Contact",
     menu: "Menu"
+  },
+  nl: {
+    home: "Home",
+    features: "Diensten",
+    pricing: "Prijzen",
+    contact: "Contact",
+    menu: "Menu"
   }
 }
 
