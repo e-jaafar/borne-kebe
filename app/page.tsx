@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Camera, Zap, CheckCircle, Star, Share2, Settings, Mail } from "lucide-react"
+import { Users, Camera, Zap, CheckCircle, Star, Share2, Settings, Mail, ArrowUp } from "lucide-react"
 import { useLang } from "@/context/LangContext"
 // import Image from "next/image"
 import { useEffect, useState } from 'react'
@@ -152,7 +152,8 @@ const translations = {
         value: "24/7",
         label: "Support client"
       }
-    }
+    },
+    scrollToTop: "Retour en haut",
   },
   en: {
     hero: {
@@ -274,7 +275,8 @@ const translations = {
         value: "24/7",
         label: "Customer support"
       }
-    }
+    },
+    scrollToTop: "Back to top",
   }
 }
 
@@ -282,6 +284,7 @@ export default function Component() {
   const { lang } = useLang()
   const t = translations[lang as keyof typeof translations]
   const [galleryImages, setGalleryImages] = useState<S3Image[]>([])
+  const [showScrollButton, setShowScrollButton] = useState(false)
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -307,7 +310,28 @@ export default function Component() {
     fetchImages()
   }, [])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+      console.log('Scroll position:', scrolled);
+      setShowScrollButton(scrolled > 100);
+      console.log('showScrollButton:', scrolled > 100);
+    };
 
+    setTimeout(() => {
+      handleScroll();
+    }, 100);
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 
   return (
     <div className={`flex flex-col items-center`}>
@@ -589,6 +613,24 @@ export default function Component() {
           </Link>
         </Button>
       </div>
+
+      <div 
+        className={`fixed bottom-8 left-8 z-[9999] transition-all duration-300 ${
+          showScrollButton ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
+      >
+        <Button
+          size="lg"
+          onClick={scrollToTop}
+          className="bg-primary hover:bg-primary/90 text-white shadow-xl rounded-full px-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
+        >
+          <span className="flex items-center gap-2">
+            <ArrowUp className="w-5 h-5" />
+            {t.scrollToTop}
+          </span>
+        </Button>
+      </div>
+      
     </div>
   )
 }
