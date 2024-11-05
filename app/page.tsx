@@ -3,9 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Users, Camera, Zap, CheckCircle, Star, Mail, Phone, MapPin, Share2, Settings } from "lucide-react"
+import { Users, Camera, Zap, CheckCircle, Star, Share2, Settings } from "lucide-react"
 import { useLang } from "@/context/LangContext"
 // import Image from "next/image"
 import { useEffect, useState } from 'react'
@@ -14,6 +12,12 @@ import { GalleryImage } from '@/components/GalleryImage'
 import Image from "next/image"
 import { DemoVideo } from '@/components/DemoVideo'
 import { FadeIn } from '@/components/ui/motion'
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from "@/components/ui/accordion"
 
 
 
@@ -63,12 +67,9 @@ const translations = {
       ]
     },
     contact: {
-      title: "Contactez-nous",
-      namePlaceholder: "Votre nom",
-      emailPlaceholder: "Votre email",
-      messagePlaceholder: "Votre message",
-      submitButton: "Envoyer",
-      address: "rue saint michel 5, 1000 Bruxelles"
+      title: "Une question, besoin d'information ?",
+      subtitle: "Notre équipe est là pour vous aider",
+      cta: "Contactez-nous"
     },
     howItWorks: {
       title: "Comment ça marche ?",
@@ -157,12 +158,9 @@ const translations = {
       ]
     },
     contact: {
-      title: "Contact Us",
-      namePlaceholder: "Your name",
-      emailPlaceholder: "Your email",
-      messagePlaceholder: "Your message",
-      submitButton: "Send",
-      address: "123 Innovation Street, 75000 Paris, France"
+      title: "Got a question or need information?",
+      subtitle: "Our team is here to help",
+      cta: "Contact us"
     },
     howItWorks: {
       title: "How it works?",
@@ -301,7 +299,7 @@ export default function Component() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.features.title}</h2>
@@ -331,119 +329,28 @@ export default function Component() {
         </div>
       </section>
 
-<section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24] overflow-hidden">
-  <div className="container mx-auto max-w-7xl px-4 md:px-6">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <FadeIn direction="left">
-        <div className="space-y-4">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-gray-100">{t.why.title}</h2>
-          <p className="text-gray-600 dark:text-gray-300 md:text-lg">{t.why.description}</p>
-          <ul className="space-y-2">
-            {t.why.items.map((item, index) => (
-              <li key={index} className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                <span className="text-gray-600 dark:text-gray-300">{item}</span>
-              </li>
-            ))}
-          </ul>
-          <Button asChild size="lg" className="mt-4 bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
-            <Link href="/contact">{t.why.cta}</Link>
-          </Button>
-        </div>
-      </FadeIn>
-      <FadeIn direction="right">
-        <DemoVideo />
-      </FadeIn>
-    </div>
-  </div>
-</section>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <FadeIn>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.gallery.title}</h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400">{t.gallery.subtitle}</p>
-            </div>
-          </FadeIn>
-          <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-            {galleryImages.map((image, index) => {
-              // Calculer un ratio aléatoire mais contrôlé pour chaque image
-              const layout = getImageLayout(index)
-              
-              return (
-                <FadeIn key={image.ETag} delay={index * 0.1}>
-                  <GalleryImage
-                    imageKey={image.Key}
-                    index={index}
-                    layout={layout}
-                    priority={index < 4}
-                  />
-                </FadeIn>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <FadeIn>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.reviews.title}</h2>
-          </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {t.reviews.items.map((review, index) => (
-              <FadeIn key={index} delay={index * 0.1}>
-                <Card className="hover:shadow-lg transition-all duration-300">
-                  <CardContent className="flex flex-col items-center space-y-4 p-6">
-                    <div className="flex items-center space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-current text-yellow-500" />
-                      ))}
-                    </div>
-                    <p className="text-center text-gray-600 dark:text-gray-300">{review.comment}</p>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100">{review.name}</p>
-                  </CardContent>
-                </Card>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <FadeIn>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.contact.title}</h2>
-          </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <FadeIn direction="left">
-              <form className="space-y-4">
-                <Input placeholder={t.contact.namePlaceholder} />
-                <Input type="email" placeholder={t.contact.emailPlaceholder} />
-                <Textarea placeholder={t.contact.messagePlaceholder} />
-                <Button 
-                  type="submit" 
-                  className="w-full bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white transition-all duration-300"
-                >
-                  {t.contact.submitButton}
+              <div className="space-y-4">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-gray-100">{t.why.title}</h2>
+                <p className="text-gray-600 dark:text-gray-300 md:text-lg">{t.why.description}</p>
+                <ul className="space-y-2">
+                  {t.why.items.map((item, index) => (
+                    <li key={index} className="flex items-center space-x-2">
+                      <CheckCircle className="h-5 w-5 text-gray-900 dark:text-gray-100" />
+                      <span className="text-gray-600 dark:text-gray-300">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button asChild size="lg" className="mt-4 bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300">
+                  <Link href="/contact">{t.why.cta}</Link>
                 </Button>
-              </form>
+              </div>
             </FadeIn>
             <FadeIn direction="right">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Mail  className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                  <span className="text-gray-600 dark:text-gray-300">contact@Borne Kébè.com</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Phone className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                  <span className="text-gray-600 dark:text-gray-300">+33 1 23 45 67 89</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <MapPin className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                  <span className="text-gray-600 dark:text-gray-300">{t.contact.address}</span>
-                </div>
-              </div>
+              <DemoVideo />
             </FadeIn>
           </div>
         </div>
@@ -479,10 +386,94 @@ export default function Component() {
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24] overflow-hidden">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.reviews.title}</h2>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {t.reviews.items.map((review, index) => (
+              <FadeIn key={index} delay={index * 0.1}>
+                <Card className="h-full hover:shadow-lg transition-all duration-300">
+                  <CardContent className="flex flex-col items-center h-full p-6">
+                    <div className="flex items-center space-x-1 mb-6">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-current text-yellow-500" />
+                      ))}
+                    </div>
+                    <p className="text-center text-gray-600 dark:text-gray-300 flex-1 flex items-center">
+                      {review.comment}
+                    </p>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 w-full text-center">
+                      {review.name}
+                    </p>
+                  </CardContent>
+                </Card>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
+        <div className="container mx-auto max-w-7xl px-4 md:px-6">
+          <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.faq.title}</h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400">{t.faq.subtitle}</p>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.gallery.title}</h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400">{t.gallery.subtitle}</p>
             </div>
+          </FadeIn>
+          <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+            {galleryImages.map((image, index) => {
+              // Calculer un ratio aléatoire mais contrôlé pour chaque image
+              const layout = getImageLayout(index)
+              
+              return (
+                <FadeIn key={image.ETag} delay={index * 0.1}>
+                  <GalleryImage
+                    imageKey={image.Key}
+                    index={index}
+                    layout={layout}
+                    priority={index < 4}
+                  />
+                </FadeIn>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e] overflow-hidden">
+        <div className="container mx-auto max-w-4xl px-4 md:px-6">
+          <FadeIn>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
+                {t.faq.title}
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400">
+                {t.faq.subtitle}
+              </p>
+            </div>
+          </FadeIn>
+
+          <FadeIn>
+            <Accordion type="single" collapsible className="w-full">
+              {t.faq.items.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left hover:no-underline hover:text-primary dark:text-gray-200 dark:hover:text-primary">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600 dark:text-gray-400">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </FadeIn>
+        </div>
+      </section> */}
+
+<section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24] overflow-hidden">
+        <div className="container mx-auto max-w-7xl px-4 md:px-6">
+          <FadeIn>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.faq.title}</h2>
           </FadeIn>
           <div className="grid gap-6 max-w-3xl mx-auto">
             {t.faq.items.map((item, index) => (
@@ -494,6 +485,28 @@ export default function Component() {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="w-full py-8 md:py-12 bg-white dark:bg-[#1a0f2e] overflow-hidden">
+        <div className="container mx-auto max-w-7xl px-4 md:px-6">
+          <FadeIn>
+            <div className="text-center">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">{t.contact.title}</h2>
+              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-6">
+                {t.contact.subtitle}
+              </p>
+              <Button 
+                asChild 
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-white transition-colors"
+              >
+                <Link href="/contact">
+                  {t.contact.cta}
+                </Link>
+              </Button>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </div>

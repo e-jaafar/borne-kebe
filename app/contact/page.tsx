@@ -17,7 +17,7 @@ const translations = {
       subject: "Sujet",
       message: "Votre message",
       submit: "Envoyer le message",
-      success: "Message envoyé avec succès !",
+      success: "Votre message a bien été envoyé, nos équipes vous répondront dans les plus brefs délais.",
       error: "Une erreur est survenue. Veuillez réessayer.",
       required: "Ce champ est requis",
       invalidEmail: "Email invalide",
@@ -28,7 +28,7 @@ const translations = {
     info: {
       title: "Informations de contact",
       email: "alchimistelab@hotmail.com",
-      phone: "+32 486 62 70 99",
+      phone: "+32 488 95 21 50",
       address: "Rue saint michel 5, 1000 Bruxelles",
       hours: "Lun-Ven: 9h-18h"
     }
@@ -42,7 +42,7 @@ const translations = {
       subject: "Subject",
       message: "Your message",
       submit: "Send message",
-      success: "Message sent successfully!",
+      success: "Your message has been sent, our team will respond to you shortly.",
       error: "An error occurred. Please try again.",
       required: "This field is required",
       invalidEmail: "Invalid email",
@@ -53,7 +53,7 @@ const translations = {
     info: {
       title: "Contact Information",
       email: "alchimistelab@hotmail.com",
-      phone: "+32 486 62 70 99",
+      phone: "+32 488 95 21 50",
       address: "Rue saint michel 5, 1000 Brussels",
       hours: "Mon-Fri: 9am-6pm"
     }
@@ -168,11 +168,11 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center py-12 px-4 md:px-6">
-      <div className="container mx-auto max-w-5xl">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center py-12 md:py-24 lg:py-32 px-4 md:px-6">
+      <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">{t.title}</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">{t.subtitle}</p>
+          <p className="text-xl text-gray-600 dark:text-gray-400">{t.subtitle}</p>
         </div>
 
         {message && (
