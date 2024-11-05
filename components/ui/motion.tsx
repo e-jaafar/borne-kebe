@@ -17,37 +17,33 @@ type FadeInProps = {
   direction?: Direction
 }
 
-export function FadeIn({ children, className = '', delay = 0, direction = 'up' }: FadeInProps) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-
-  const directions: Record<Direction, DirectionOffset> = {
-    up: { y: 40 },
-    down: { y: -40 },
-    left: { x: 40 },
-    right: { x: -40 }
-  }
-
-  const currentDirection = directions[direction]
-
+export const FadeIn = ({ 
+  children, 
+  delay = 0,
+  direction = "up",
+  className = "",
+  ...props 
+}: FadeInProps) => {
   return (
     <motion.div
-      ref={ref}
-      initial={{
+      initial={{ 
         opacity: 0,
-        ...currentDirection
+        y: direction === "up" ? 20 : direction === "down" ? -20 : 0,
+        x: direction === "left" ? 20 : direction === "right" ? -20 : 0
       }}
-      animate={{
-        opacity: isInView ? 1 : 0,
-        y: isInView ? 0 : currentDirection.y ?? 0,
-        x: isInView ? 0 : currentDirection.x ?? 0
+      whileInView={{ 
+        opacity: 1,
+        y: 0,
+        x: 0
       }}
-      transition={{
-        duration: 0.7,
-        delay: delay,
+      viewport={{ once: true }}
+      transition={{ 
+        duration: 0.8,
+        delay,
         ease: [0.21, 0.47, 0.32, 0.98]
       }}
       className={className}
+      {...props}
     >
       {children}
     </motion.div>
