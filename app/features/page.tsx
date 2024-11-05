@@ -142,9 +142,9 @@ export default function FeaturesPage() {
             return (
               <Card 
                 key={index} 
-                className="group hover:shadow-2xl active:scale-95 touch-manipulation transition-all duration-500 dark:bg-[#2d1f42] relative overflow-hidden border-0 bg-gradient-to-br from-white to-gray-50 dark:from-[#2d1f42] dark:to-[#1a0f2e] md:hover:scale-105"
+                className="group hover:shadow-2xl active:scale-95 touch-manipulation transition-all duration-500 dark:bg-[#2d1f42] relative overflow-hidden border-0 bg-gradient-to-br from-white to-gray-50 dark:from-[#2d1f42] dark:to-[#1a0f2e] md:hover:scale-105 h-full"
               >
-                <CardContent className="flex flex-col items-center space-y-3 md:space-y-4 p-4 md:p-6 relative z-10">
+                <CardContent className="flex flex-col items-center space-y-3 md:space-y-4 p-4 md:p-6 relative z-10 h-full">
                   {/* Effet de brillance au hover/touch */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] group-active:translate-x-[100%] transition-transform duration-1000" />
                   
@@ -168,10 +168,14 @@ export default function FeaturesPage() {
                     {feature.description}
                   </p>
 
-                  {/* Overlay avec détails - Adapté pour le touch */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/95 to-purple-900/95 dark:from-purple-900/95 dark:to-purple-950/95 p-4 md:p-6 translate-y-[101%] group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-500 ease-out flex items-center justify-center backdrop-blur-sm">
-                    <div className="text-white overflow-y-auto max-h-full">
-                      <h4 className="font-bold text-base md:text-lg mb-2 md:mb-3 text-purple-100">{feature.title}</h4>
+                  {/* Overlay avec effet tiroir */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-br from-purple-600/95 to-purple-900/95 dark:from-purple-900/95 dark:to-purple-950/95 p-4 md:p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out flex items-center justify-center backdrop-blur-sm pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    <div className="text-white overflow-y-auto max-h-full scrollbar-hide">
+                      <h4 className="font-bold text-base md:text-lg mb-2 md:mb-3 text-purple-100">
+                        {feature.title}
+                      </h4>
                       <p className="text-xs md:text-sm leading-relaxed text-purple-50/90">
                         {feature.details}
                       </p>
