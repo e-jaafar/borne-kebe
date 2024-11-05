@@ -285,6 +285,7 @@ export default function Component() {
   const t = translations[lang as keyof typeof translations]
   const [galleryImages, setGalleryImages] = useState<S3Image[]>([])
   const [showScrollButton, setShowScrollButton] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -551,6 +552,9 @@ export default function Component() {
                     index={index}
                     layout={layout}
                     priority={index < 4}
+                    onModalChange={(isOpen) => {
+                      setIsModalOpen(isOpen)
+                    }}
                   />
                 </FadeIn>
               )
@@ -615,17 +619,17 @@ export default function Component() {
       </div>
 
       <div 
-        className={`fixed bottom-8 left-8 z-[9999] transition-all duration-300 ${
-          showScrollButton ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
+        className={`fixed bottom-8 left-8 z-50 transition-all duration-300 ${
+          showScrollButton ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
+        } ${isModalOpen ? 'blur-sm' : ''}`}
       >
         <Button
           size="lg"
           onClick={scrollToTop}
-          className="bg-primary hover:bg-primary/90 text-white shadow-xl rounded-full px-6 backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
+          className="bg-primary hover:bg-primary/90 text-white shadow-lg rounded-full px-6 backdrop-blur-sm"
         >
           <span className="flex items-center gap-2">
-            <ArrowUp className="w-5 h-5" />
+            <ArrowUp className="w-4 h-4" />
             {t.scrollToTop}
           </span>
         </Button>
