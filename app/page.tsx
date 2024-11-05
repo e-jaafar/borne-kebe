@@ -277,6 +277,122 @@ const translations = {
       }
     },
     scrollToTop: "Back to top",
+  },
+  nl: {
+    hero: {
+      title: "Borne Kébè",
+      subtitle: "Hoogwaardige photobooth-oplossingen voor uw professionele en privé-evenementen.",
+      cta1: "Offerte aanvragen",
+      cta2: "Ontdek onze diensten"
+    },
+    features: {
+      title: "Borne Kébè Excellentie",
+      cta: "Ontdek al onze functies",
+      items: [
+        { title: "Geavanceerde Gezichtsherkenning", description: "Geavanceerde technologie voor een optimale gebruikerservaring" },
+        { title: "Professionele Kwaliteit", description: "Hoge resolutie beelden waardig aan de grootste evenementen" },
+        { title: "Direct Delen", description: "Onmiddellijke verspreiding op uw favoriete platforms" }
+      ]
+    },
+    why: {
+      title: "Waarom Kiezen voor Borne Kébè?",
+      description: "Borne Kébè biedt een ongeëvenaarde photobooth-ervaring, die geavanceerde technologie en elegantie combineert voor uw professionele en privé-evenementen.",
+      items: [
+        "Geavanceerde gezichtsherkenning technologie",
+        "Direct delen op sociale netwerken",
+        "Volledige aanpassing van de ervaring",
+        "Toegewijde technische ondersteuning"
+      ],
+      cta: "Demonstratie aanvragen"
+    },
+    reviews: {
+      title: "Wat Onze Klanten Zeggen",
+      items: [
+        { name: "Marie D.", comment: "Borne Kébè heeft onze bruiloft omgetoverd tot een onvergetelijke ervaring. Uitzonderlijke kwaliteit!" },
+        { name: "Peter L.", comment: "Perfect voor onze bedrijfsevenementen. Professioneel en innovatief." },
+        { name: "Sophie M.", comment: "Het direct delen was een groot succes bij onze gasten. Zeer aanbevolen!" }
+      ]
+    },
+    contact: {
+      title: "Een vraag of informatie nodig?",
+      subtitle: "Ons team staat voor u klaar",
+      cta: "Neem contact op",
+      floating_button: "Contact"
+    },
+    howItWorks: {
+      title: "Hoe werkt het?",
+      subtitle: "Een eenvoudige en intuïtieve ervaring",
+      steps: [
+        {
+          title: "Poseer",
+          description: "Ga voor onze booth staan en laat u leiden door onze intuïtieve interface",
+          icon: Camera
+        },
+        {
+          title: "Gezichtsherkenning",
+          description: "Onze technologie herkent automatisch gezichten om uw foto's gemakkelijk terug te vinden",
+          icon: Users
+        },
+        {
+          title: "Direct Bewerken",
+          description: "Pas professionele filters toe en personaliseer uw foto's",
+          icon: Settings
+        },
+        {
+          title: "Direct Delen",
+          description: "Ontvang uw foto's op uw telefoon of print ze direct",
+          icon: Share2
+        }
+      ]
+    },
+    gallery: {
+      title: "Onze Galerij",
+      subtitle: "Ontdek de magische momenten vastgelegd door onze photobooths",
+      categories: [
+        "Alle",
+        "Bruiloften",
+        "Zakelijk",
+        "Feesten",
+        "Evenementen"
+      ]
+    },
+    faq: {
+      title: "Veelgestelde Vragen",
+      subtitle: "Alles wat u moet weten over onze diensten",
+      items: [
+        {
+          question: "Hoe lang bewaart u de foto's?",
+          answer: "We bewaren uw foto's veilig gedurende 30 dagen, met mogelijkheid tot verlenging."
+        },
+        {
+          question: "Is gezichtsherkenning veilig?",
+          answer: "Ja, we gebruiken geavanceerde technologieën en voldoen aan de AVG. Gegevens worden versleuteld en na het evenement verwijderd."
+        },
+        {
+          question: "Kan de interface worden aangepast?",
+          answer: "Absoluut! We passen de interface aan uw huisstijl en het thema van uw evenement aan."
+        }
+      ]
+    },
+    stats: {
+      events: {
+        value: "500+",
+        label: "Evenementen voltooid"
+      },
+      photos: {
+        value: "50K+",
+        label: "Foto's genomen"
+      },
+      satisfaction: {
+        value: "98%",
+        label: "Tevreden klanten"
+      },
+      support: {
+        value: "24/7",
+        label: "Klantenservice"
+      }
+    },
+    scrollToTop: "Naar boven"
   }
 }
 

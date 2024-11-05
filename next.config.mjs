@@ -1,30 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   swcMinify: true,
-  webpack: (config) => {
-    config.experiments = { ...config.experiments, topLevelAwait: true }
-    return config
+  compiler: {
+    // Activer SWC
+    styledComponents: true,
   },
-  // Ajoutez ces configurations pour gérer les fichiers
-  experimental: {
-    serverComponentsExternalPackages: ['resend']
-  },
+  // Autres configurations existantes
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.discordapp.com',
-        port: '',
-        pathname: '/**',
-      }
-    ],
+    domains: ['nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com'],
   },
 }
 

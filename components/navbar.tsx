@@ -161,6 +161,18 @@ export function Navbar() {
                     English
                   </div>
                 </SelectItem>
+                <SelectItem value="nl">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/flags/nl.svg"
+                      alt="Nederlands"
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                    Nederlands
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
 
