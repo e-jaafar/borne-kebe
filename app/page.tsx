@@ -153,7 +153,7 @@ const translations = {
         label: "Support client"
       }
     },
-    scrollToTop: "Retour en haut",
+    scrollToTop: "",
   },
   en: {
     hero: {
@@ -276,7 +276,7 @@ const translations = {
         label: "Customer support"
       }
     },
-    scrollToTop: "Back to top",
+    scrollToTop: "",
   },
   nl: {
     hero: {
@@ -392,7 +392,7 @@ const translations = {
         label: "Klantenservice"
       }
     },
-    scrollToTop: "Naar boven"
+    scrollToTop: ""
   }
 }
 
@@ -429,10 +429,10 @@ export default function Component() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.pageYOffset || document.documentElement.scrollTop;
-      console.log('Scroll position:', scrolled);
+      const scrolled = window.scrollY;
+      // console.log('Scroll position:', scrolled);
+      // console.log('showScrollButton:', scrolled > 100);
       setShowScrollButton(scrolled > 100);
-      console.log('showScrollButton:', scrolled > 100);
     };
 
     setTimeout(() => {
@@ -573,7 +573,7 @@ export default function Component() {
                     {index === 0 && <Users className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
                     {index === 1 && <Camera className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
                     {index === 2 && <Zap className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
-                    <h3 className="text-xl font-semibold text-center text-gray-900 dark:text-gray-50">{feature.title}</h3>
+                    <h3 className="text-xl font-semibold text-center text-gray-900 dark:text-gray-50 pb-2">{feature.title}</h3>
                     <p className="text-center text-gray-600 dark:text-gray-200">{feature.description} </p>
                   </CardContent>
                 </Card>
@@ -719,16 +719,16 @@ export default function Component() {
         </div>
       </section>
 
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-8 right-8 z-50 animate-bounce">
         <Button 
           asChild
           size="lg"
-          className="bg-primary hover:bg-primary/90 text-white shadow-lg rounded-full px-6"
+          className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white shadow-lg rounded-full px-6 font-bold"
         >
           <Link href="/contact">
             <span className="flex items-center gap-2">
               <Mail className="w-4 h-4" />
-              {t.contact.floating_button}
+              Demander un devis gratuit
             </span>
           </Link>
         </Button>
