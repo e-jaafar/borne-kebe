@@ -108,6 +108,58 @@ const translations = {
         popular: false
       }
     ]
+  },
+  nl: {
+    title: "Onze Pakketten",
+    subtitle: "Kies het pakket dat bij u past",
+    popularBadge: "Meest Populair",
+    plans: [
+      {
+        name: "Essentieel",
+        price: "300€",
+        duration: "per evenement",
+        features: [
+          "Photobooth",
+          "Onbeperkte toegang tot evenementfoto's",
+          "Maximaal 100 foto's afdrukken",
+          "1 fotohokje met personeel",
+          "Gezichtsherkenning",
+          "Digitale fotolevering via link",
+        ],
+        cta: "Kies Essentieel",
+        popular: false
+      },
+      {
+        name: "Premium",
+        price: "450€",
+        duration: "per evenement",
+        features: [
+          "Onbeperkte toegang tot evenementfoto's",
+          "Maximaal 300 foto's afdrukken",
+          "1 fotohokje met personeel",
+          "Gezichtsherkenning",
+          "Digitale fotolevering via link",
+          "5% korting op fotograaf"
+        ],
+        cta: "Kies Premium",
+        popular: true
+      },
+      {
+        name: "VIP",
+        price: "650€",
+        duration: "per evenement",
+        features: [
+          "Onbeperkte toegang tot evenementfoto's",
+          "Maximaal 650 foto's afdrukken",
+          "1 fotohokje met personeel",
+          "Gezichtsherkenning",
+          "Digitale fotolevering via link",
+          "10% korting op fotograaf"
+        ],
+        cta: "Kies VIP",
+        popular: false
+      }
+    ]
   }
 } as const
 

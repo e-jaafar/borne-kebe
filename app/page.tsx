@@ -348,13 +348,13 @@ const translations = {
     gallery: {
       title: "Onze Galerij",
       subtitle: "Ontdek de magische momenten vastgelegd door onze photobooths",
-      categories: [
-        "Alle",
-        "Bruiloften",
-        "Zakelijk",
-        "Feesten",
-        "Evenementen"
-      ]
+      filters: {
+        all: "Alle",
+        wedding: "Bruiloften",
+        corporate: "Zakelijk",
+        party: "Feesten",
+        event: "Evenementen"
+      }
     },
     faq: {
       title: "Veelgestelde Vragen",
@@ -565,8 +565,8 @@ export default function Component() {
           <FadeIn>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">{t.features.title}</h2>
           </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {t.features.items.map((feature, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {t.features.items.map((feature, index) => (
               <FadeIn key={index} delay={index * 0.1}>
                 <Card className="hover:shadow-lg transition-all duration-300">
                   <CardContent className="flex flex-col items-center space-y-4 p-6">

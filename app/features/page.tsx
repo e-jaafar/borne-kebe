@@ -121,6 +121,60 @@ const translations = {
         details: "Manage multiple queues simultaneously, create photo groups, and allow all your guests to easily access their photos using our facial recognition system."
       }
     ]
+  },
+  nl: {
+    title: "Onze Diensten",
+    subtitle: "Een complete oplossing voor uw evenementen",
+    features: [
+      {
+        icon: Camera,
+        title: "Professionele Kwaliteit",
+        description: "Hoge resolutie foto's met geoptimaliseerde verlichting",
+        details: "Onze booths zijn uitgerust met professionele camera's en een verstelbaar LED-verlichtingssysteem om studiokwaliteit foto's te garanderen, ongeacht de sfeer van uw evenement."
+      },
+      {
+        icon: Share2,
+        title: "Direct Delen",
+        description: "Direct delen via e-mail en sociale media",
+        details: "Deel uw foto's direct op uw favoriete sociale media, ontvang ze via e-mail of SMS. Ons systeem maakt het ook mogelijk om privé online albums te maken voor uw evenement."
+      },
+      {
+        icon: Smartphone,
+        title: "Mobiele App",
+        description: "Afstandsbediening en persoonlijke galerij",
+        details: "Toegang tot al uw foto's via onze speciale mobiele app. Bedien de booth op afstand, pas instellingen aan en beheer uw galerij in realtime."
+      },
+      {
+        icon: Palette,
+        title: "Aanpassing",
+        description: "Aanpasbare filters en kaders voor uw evenement",
+        details: "Pas de interface aan met uw kleuren, logo en thema. Maak aangepaste kaders en kies uit onze bibliotheek met professionele filters voor unieke foto's."
+      },
+      {
+        icon: Cloud,
+        title: "Cloud Opslag",
+        description: "Veilige toegang tot al uw foto's",
+        details: "Uw foto's worden automatisch opgeslagen in een beveiligde cloudruimte. Toegang wanneer u maar wilt en download ze in hoge resolutie gedurende 30 dagen."
+      },
+      {
+        icon: Shield,
+        title: "Beveiliging",
+        description: "Gegevensbescherming en gegarandeerde vertrouwelijkheid",
+        details: "Wij voldoen aan de AVG en gebruiken end-to-end versleuteling. Uw gegevens worden beschermd en na de overeengekomen bewaartermijn automatisch verwijderd."
+      },
+      {
+        icon: Printer,
+        title: "Onbeperkt Printen",
+        description: "Hoogwaardige directe foto's",
+        details: "Print zoveel foto's als u wilt met ons professionele sublimatieprint systeem. Meerdere formaten beschikbaar en onbeperkt herdrukken mogelijk."
+      },
+      {
+        icon: Users,
+        title: "Multi-gebruikers",
+        description: "Perfect voor grote evenementen",
+        details: "Beheer meerdere wachtrijen tegelijk, maak fotogroepen en laat al uw gasten eenvoudig toegang krijgen tot hun foto's via ons gezichtsherkenningssysteem."
+      }
+    ]
   }
 }
 

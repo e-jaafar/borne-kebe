@@ -57,6 +57,31 @@ const translations = {
       address: "Rue saint michel 5, 1000 Brussels",
       hours: "Mon-Fri: 9am-6pm"
     }
+  },
+  nl: {
+    title: "Neem Contact Op",
+    subtitle: "Ons team staat voor u klaar",
+    form: {
+      name: "Uw naam",
+      email: "Uw e-mail",
+      subject: "Onderwerp",
+      message: "Uw bericht",
+      submit: "Bericht versturen",
+      success: "Uw bericht is verzonden, ons team zal zo spoedig mogelijk reageren.",
+      error: "Er is een fout opgetreden. Probeer het opnieuw.",
+      required: "Dit veld is verplicht",
+      invalidEmail: "Ongeldig e-mailadres",
+      attachment: "Bijlage (max 5MB)",
+      attachmentTooLarge: "Bestand is te groot (max 5MB)",
+      invalidFileType: "Niet-ondersteund bestandstype",
+    },
+    info: {
+      title: "Contactgegevens",
+      email: "alchimistelab@hotmail.com",
+      phone: "+32 488 95 21 50",
+      address: "Rue saint michel 5, 1000 Brussel",
+      hours: "Ma-Vr: 9:00-18:00"
+    }
   }
 }
 
