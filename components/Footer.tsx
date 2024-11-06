@@ -11,12 +11,17 @@ const translations = {
   en: {
     copyright: "All rights reserved",
     developedBy: "Developed by"
+  },
+  nl: {
+    copyright: "Alle rechten voorbehouden",
+    developedBy: "Ontwikkeld door"
   }
 }
 
 export function Footer() {
   const { lang } = useLang()
-  const t = translations[lang as keyof typeof translations]
+  const currentLang = (lang && translations[lang as keyof typeof translations]) ? lang : 'fr'
+  const t = translations[currentLang as keyof typeof translations]
   const currentYear = new Date().getFullYear()
 
   return (

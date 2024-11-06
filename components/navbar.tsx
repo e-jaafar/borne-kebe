@@ -12,6 +12,13 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const translations = {
   fr: {
@@ -125,48 +132,59 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <select 
-              onChange={(e) => setLang(e.target.value)} 
-              value={lang}
-              className="w-[70px] rounded-md border border-input bg-transparent px-3 py-1 text-sm"
-            >
-              <option value="fr" className="flex items-center gap-2">
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/flags/fr.svg"
-                    alt="Français"
-                    width={20}
-                    height={20}
-                    className="rounded-sm"
-                  />
-                  Français
-                </div>
-              </option>
-              <option value="en">
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/flags/en.svg"
-                    alt="English"
-                    width={20}
-                    height={20}
-                    className="rounded-sm"
-                  />
-                  English
-                </div>
-              </option>
-              <option value="nl">
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/flags/nl.svg"
-                    alt="Nederlands"
-                    width={20}
-                    height={20}
-                    className="rounded-sm"
-                  />
-                  Nederlands
-                </div>
-              </option>
-            </select>
+            <Select onValueChange={setLang} value={lang}>
+              <SelectTrigger className="w-[60px]">
+                <SelectValue>
+                  <div className="flex items-center justify-center">
+                    <Image
+                      src={`/flags/${lang}.svg`}
+                      alt={lang === 'fr' ? 'Français' : lang === 'en' ? 'English' : 'Nederlands'}
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                  </div>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="fr">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/flags/fr.svg"
+                      alt="Français"
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                    Français
+                  </div>
+                </SelectItem>
+                <SelectItem value="en">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/flags/en.svg"
+                      alt="English"
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                    English
+                  </div>
+                </SelectItem>
+                <SelectItem value="nl">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/flags/nl.svg"
+                      alt="Nederlands"
+                      width={20}
+                      height={20}
+                      className="rounded-sm"
+                    />
+                    Nederlands
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
 
             <Button
               variant="outline"
