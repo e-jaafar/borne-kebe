@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://www.borne-kébè.com/sitemap.xml',
+    sitemap: 'https://www.xn--borne-kb-80ai.com/sitemap.xml',
   }
 } 
