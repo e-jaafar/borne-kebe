@@ -154,6 +154,9 @@ const translations = {
       }
     },
     scrollToTop: "",
+    cta: {
+      quote: "Demander un devis gratuit"
+    }
   },
   en: {
     hero: {
@@ -277,6 +280,9 @@ const translations = {
       }
     },
     scrollToTop: "",
+    cta: {
+      quote: "Request a free quote"
+    }
   },
   nl: {
     hero: {
@@ -392,7 +398,10 @@ const translations = {
         label: "Klantenservice"
       }
     },
-    scrollToTop: ""
+    scrollToTop: "",
+    cta: {
+      quote: "Gratis offerte aanvragen"
+    }
   }
 }
 
@@ -719,7 +728,7 @@ export default function Component() {
         </div>
       </section>
 
-      <div className="fixed bottom-8 right-8 z-50 animate-bounce">
+      <div className="fixed bottom-8 right-8 z-50 animate-bounce hidden md:block">
         <Button 
           asChild
           size="lg"
@@ -728,7 +737,7 @@ export default function Component() {
           <Link href="/contact">
             <span className="flex items-center gap-2">
               <Mail className="w-4 h-4" />
-              Demander un devis gratuit
+              {t.cta.quote}
             </span>
           </Link>
         </Button>
