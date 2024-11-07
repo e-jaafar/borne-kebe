@@ -48,7 +48,6 @@ const actionButtons: Record<string, ActionButton[]> = {
       bgColor: "bg-green-500/10 dark:bg-green-400/10"
     }
   ],
-  // ... autres langues avec la même structure
 }
 
 export function MobileNav() {

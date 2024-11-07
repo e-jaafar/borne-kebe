@@ -87,7 +87,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   }, [])
 
   return (
-    <main role="main" className="flex flex-col items-center">
+    <main role="main" className="flex flex-col items-center relative pb-16">
       {/* Hero Section avec Parallax */}
       <section 
         ref={heroRef} 
@@ -482,7 +482,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </div>
       </section>
 
-      {/* Floating Contact Button */}
+      {/* Floating Contact Button - Repositionné */}
       <div className="fixed bottom-8 right-8 z-50 hidden md:block">
         <Button 
           asChild 
@@ -517,7 +517,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </Button>
       </div>
 
-      {/* Bouton Scroll to Top amélioré */}
+      {/* Scroll to Top Button - Repositionné */}
       <div 
         className={`fixed md:bottom-8 md:left-8 bottom-20 left-4 z-50 transition-all duration-500 ease-in-out ${
           showScrollTop 
