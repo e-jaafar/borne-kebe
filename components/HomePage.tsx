@@ -5,12 +5,15 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Users, Camera, Zap, CheckCircle, Star, Share2, Settings, Mail, ArrowUp } from "lucide-react"
 import Image from "next/image"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { XMLParser } from 'fast-xml-parser'
 import { GalleryImage } from '@/components/GalleryImage'
 import { DemoVideo } from '@/components/DemoVideo'
 import { FadeIn } from '@/components/ui/motion'
 import { type HomePageTranslations } from '@/types/translations'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import Particles, { initParticlesEngine } from "@tsparticles/react"
+import { loadSlim } from "@tsparticles/slim"
 
 type S3Image = {
   Key: string
@@ -25,19 +28,30 @@ type HomePageProps = {
   translations: HomePageTranslations
 }
 
-const getImageLayout = (index: number): 'square' | 'tall' | 'wide' | 'large' => {
-  const pattern = index % 12
-  if (pattern === 0) return 'large'
-  if (pattern === 4 || pattern === 8) return 'tall'
-  if (pattern === 2 || pattern === 6) return 'wide'
-  return 'square'
-}
-
 export function HomePage({ lang, translations: t }: HomePageProps) {
   const [galleryImages, setGalleryImages] = useState<S3Image[]>([])
-  const [showScrollButton, setShowScrollButton] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [init, setInit] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
 
+  const heroRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
+
+  // Initialisation des particules
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine)
+    }).then(() => {
+      setInit(true)
+    })
+  }, [])
+
+  // Chargement des images
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -62,64 +76,177 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
     fetchImages()
   }, [])
 
+  // Gestion du bouton scroll to top
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollButton(window.scrollY > 100)
+      setShowScrollTop(window.scrollY > 300)
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   return (
-    <div className="flex flex-col items-center">
-      {/* Hero Section */}
-      <section className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden">
-        <div className="absolute inset-0 z-0">
+    <main role="main" className="flex flex-col items-center">
+      {/* Hero Section avec Parallax */}
+      <section 
+        ref={heroRef} 
+        aria-label="Hero section"
+        className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden"
+      >
+        <motion.div 
+          style={{ y, opacity }} 
+          className="absolute inset-0 z-0"
+        >
           <Image
             src="/videos/photobooth.jpg"
-            alt="Photobooth background"
+            alt="Photobooth professionnel en action lors d'un événement"
             fill
             priority
+            loading="eager"
             quality={90}
-            className="object-cover"
+            className="object-cover scale-110"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
-        
-        <div className="relative z-10 container mx-auto max-w-7xl px-4 md:px-6">
+          <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
+        </motion.div>
+
+        {/* Particules */}
+        {init && (
+          <div aria-hidden="true">
+            <Particles
+              id="tsparticles"
+              className="absolute inset-0 z-10"
+              options={{
+                particles: {
+                  color: {
+                    value: "#ffffff"
+                  },
+                  number: {
+                    value: 30
+                  },
+                  opacity: {
+                    value: { min: 0.1, max: 0.3 },
+                    animation: {
+                      enable: true,
+                      speed: 1,
+                      sync: false,
+                      startValue: "min",
+                      destroy: "max"
+                    }
+                  },
+                  size: {
+                    value: { min: 1, max: 3 },
+                    animation: {
+                      enable: true,
+                      speed: 2,
+                      sync: false,
+                      startValue: "min",
+                      destroy: "max"
+                    }
+                  },
+                  move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    outModes: {
+                      default: "out"
+                    }
+                  }
+                },
+                interactivity: {
+                  events: {
+                    onHover: {
+                      enable: true,
+                      mode: "bubble"
+                    }
+                  },
+                  modes: {
+                    bubble: {
+                      distance: 200,
+                      size: 6,
+                      duration: 0.3,
+                      opacity: 0.8
+                    }
+                  }
+                },
+                background: {
+                  color: "transparent"
+                },
+                detectRetina: true
+              }}
+            />
+          </div>
+        )}
+
+        {/* Contenu du Hero */}
+        <div className="relative z-20 container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="flex flex-col items-center space-y-6 text-center">
-              <div className="space-y-4 max-w-[800px] mx-auto">
-                <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg">
-                  {t.hero.title}
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md">
+              <header className="space-y-4 max-w-[800px] mx-auto">
+                <motion.h1 
+                  className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                  {t.hero.title.split(' ').map((word, i) => (
+                    <motion.span
+                      key={i}
+                      className="inline-block mr-2"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.8,
+                        ease: "easeOut",
+                        delay: i * 0.1
+                      }}
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
+                </motion.h1>
+
+                <motion.p 
+                  className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                >
                   {t.hero.subtitle}
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 sm:space-x-4 w-full sm:w-auto">
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="w-full sm:w-auto bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
+                </motion.p>
+              </header>
+
+              <nav aria-label="Actions principales">
+                <motion.div 
+                  className="flex flex-col sm:flex-row gap-4 sm:space-x-4 w-full sm:w-auto"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
                 >
-                  <Link href={`/${lang}/pricing`}>{t.hero.cta1}</Link>
-                </Button>
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
-                  className="w-full sm:w-auto border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
-                >
-                  <Link href={`/${lang}/features`}>{t.hero.cta2}</Link>
-                </Button>
-              </div>
+                  <Button 
+                    asChild 
+                    size="lg" 
+                    className="w-full sm:w-auto bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
+                  >
+                    <Link href={`/${lang}/pricing`} aria-label={`${t.hero.cta1} - Voir nos tarifs`}>
+                      {t.hero.cta1}
+                    </Link>
+                  </Button>
+                  <Button 
+                    asChild 
+                    variant="outline" 
+                    size="lg" 
+                    className="w-full sm:w-auto border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
+                  >
+                    <Link href={`/${lang}/features`} aria-label={`${t.hero.cta2} - Découvrir nos fonctionnalités`}>
+                      {t.hero.cta2}
+                    </Link>
+                  </Button>
+                </motion.div>
+              </nav>
             </div>
           </FadeIn>
         </div>
@@ -270,7 +397,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </section>
 
       {/* Gallery Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">
@@ -282,23 +409,39 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               </p>
             </div>
           </FadeIn>
-          <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-            {galleryImages.map((image, index) => {
-              const layout = getImageLayout(index)
-              return (
-                <FadeIn key={image.ETag} delay={index * 0.1}>
+
+          {/* Mobile: Grid avec taille uniforme */}
+          <div className="block md:hidden">
+            <div className="grid grid-cols-1 gap-4">
+              {galleryImages.map((image, index) => (
+                <FadeIn key={image.Key} delay={index * 0.1}>
                   <GalleryImage
-                    imageKey={image.Key}
-                    index={index}
-                    layout={layout}
+                    image={image}
                     priority={index < 4}
-                    onModalChange={(isOpen) => {
-                      setIsModalOpen(isOpen)
-                    }}
+                    onModalChange={() => {}}
+                    index={index}
+                    isMobile={true}
                   />
                 </FadeIn>
-              )
-            })}
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop: Style Pinterest */}
+          <div className="hidden md:block">
+            <div className="columns-2 md:columns-3 lg:columns-4 gap-4">
+              {galleryImages.map((image, index) => (
+                <FadeIn key={image.Key} delay={index * 0.1}>
+                  <GalleryImage
+                    image={image}
+                    priority={index < 4}
+                    onModalChange={() => {}}
+                    index={index}
+                    isMobile={false}
+                  />
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -372,36 +515,59 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {/* Floating Contact Button */}
       <div className="fixed bottom-8 right-8 z-50 hidden md:block">
         <Button 
-          asChild
+          asChild 
           size="lg"
-          className="bg-primary hover:bg-primary/90 text-white shadow-lg rounded-full px-6"
+          className="group bg-primary/80 hover:bg-primary text-white shadow-lg rounded-full px-8 py-6
+            transform transition-all duration-1000 ease-out
+            hover:shadow-[0_0_30px_rgba(168,85,247,0.25)]
+            border border-purple-400/10 hover:border-purple-400/30
+            relative overflow-hidden backdrop-blur-sm"
         >
           <Link href={`/${lang}/contact`}>
-            <span className="flex items-center gap-2">
-              <Mail className="w-4 h-4" />
-              {t.contact.floating_button}
+            {/* Effet de particules */}
+            <div className="absolute inset-0">
+              <div className="absolute h-2 w-2 bg-white/20 rounded-full top-1/4 left-1/4 animate-float-slow" />
+              <div className="absolute h-2 w-2 bg-white/20 rounded-full bottom-1/4 right-1/3 animate-float-slower" />
+              <div className="absolute h-1.5 w-1.5 bg-white/20 rounded-full top-1/3 right-1/4 animate-float" />
+            </div>
+
+            <span className="flex items-center gap-3 text-lg font-medium relative z-10">
+              <div className="relative">
+                <Mail className="w-5 h-5 transition-all duration-1000 ease-out group-hover:scale-105" />
+                <div className="absolute inset-0 animate-pulse opacity-0 group-hover:opacity-50 bg-white rounded-full duration-1000" />
+              </div>
+              
+              <span className="relative">
+                {t.contact.floating_button}
+                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white/80
+                  origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
+              </span>
             </span>
           </Link>
         </Button>
       </div>
 
-      {/* Scroll to Top Button */}
+      {/* Bouton Scroll to Top amélioré */}
       <div 
-        className={`fixed bottom-8 left-8 z-50 transition-all duration-300 ${
-          showScrollButton ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
-        } ${isModalOpen ? 'blur-sm' : ''}`}
+        className={`fixed md:bottom-8 md:left-8 bottom-20 left-4 z-50 transition-all duration-500 ease-in-out ${
+          showScrollTop 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-10 pointer-events-none'
+        }`}
       >
         <Button
-          size="lg"
-          onClick={scrollToTop}
-          className="bg-primary hover:bg-primary/90 text-white shadow-lg rounded-full px-6 backdrop-blur-sm"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          size="icon"
+          aria-label="Retour en haut de la page"
+          className="bg-primary hover:bg-primary/90 text-white shadow-lg rounded-full w-10 h-10 p-0
+            transform transition-all duration-300 hover:scale-110
+            hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]
+            relative overflow-hidden"
         >
-          <span className="flex items-center gap-2">
-            <ArrowUp className="w-4 h-4" />
-            {t.scrollToTop}
-          </span>
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 animate-pulse" aria-hidden="true" />
+          <ArrowUp className="w-5 h-5 relative z-10" aria-hidden="true" />
         </Button>
       </div>
-    </div>
+    </main>
   )
 } 

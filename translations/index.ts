@@ -106,9 +106,9 @@ export const translations = {
     },
     gallery: {
       title: "Notre galerie",
-      subtitle: "Découvrez les moments magiques capturés par nos photobooths"
+      subtitle: "Découvrez les moments magiques capturés lors de nos événements"
     },
-    scrollToTop: "Retour en haut",
+    scrollToTop: '',
     pricing: {
       title: "Nos Forfaits",
       subtitle: "Choisissez l'offre qui correspond à vos besoins",
@@ -315,9 +315,9 @@ export const translations = {
     },
     gallery: {
       title: "Our Gallery",
-      subtitle: "Discover the magical moments captured by our photobooths"
+      subtitle: "Discover the magical moments captured during our events"
     },
-    scrollToTop: "Back to top",
+    scrollToTop: '',
     pricing: {
       title: "Our Plans",
       subtitle: "Choose the plan that fits your needs",
@@ -524,9 +524,9 @@ export const translations = {
     },
     gallery: {
       title: "Onze Galerij",
-      subtitle: "Ontdek de magische momenten vastgelegd door onze photobooths"
+      subtitle: "Ontdek de magische momenten vastgelegd tijdens onze evenementen"
     },
-    scrollToTop: "Naar boven",
+    scrollToTop: '',
     pricing: {
       title: "Onze Pakketten",
       subtitle: "Kies het pakket dat bij u past",

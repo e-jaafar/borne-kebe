@@ -2,25 +2,27 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { Loader2, } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { Modal } from '@/components/ui/modal'
 import { cn } from '@/lib/utils'
 
-type GalleryImageProps = {
-  imageKey: string
-  index: number
-  layout: 'square' | 'tall' | 'wide' | 'large'
-  priority?: boolean
-  onModalChange?: (isOpen: boolean) => void
+type S3Image = {
+  Key: string
+  LastModified: string
+  ETag: string
+  Size: number
+  StorageClass: string
 }
 
-export function GalleryImage({ 
-  imageKey, 
-  index, 
-  layout, 
-  priority = false,
-  onModalChange
-}: GalleryImageProps) {
+interface GalleryImageProps {
+  image: S3Image;
+  priority?: boolean;
+  onModalChange: (isOpen: boolean) => void;
+  index: number;
+  isMobile: boolean;
+}
+
+export function GalleryImage({ image, priority = false, onModalChange, index, isMobile }: GalleryImageProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -28,24 +30,23 @@ export function GalleryImage({
     onModalChange?.(isModalOpen)
   }, [isModalOpen, onModalChange])
 
-  const layoutClasses = {
-    square: "aspect-square mb-4",
-    tall: "aspect-square md:aspect-[3/4] mb-4",
-    wide: "aspect-square md:aspect-[4/3] mb-4",
-    large: "aspect-square mb-4"
-  }
-
-  const imageUrl = `https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com/${imageKey}`
+  const imageUrl = `https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com/${image.Key}`
     .replace(/\/+/g, '/')
     .replace('https:/', 'https://')
+
+  const getDesktopHeight = () => {
+    const heights = ['h-64', 'h-96', 'h-80', 'h-72']
+    return heights[index % heights.length]
+  }
 
   return (
     <>
       <div 
         className={cn(
-          `relative group overflow-hidden rounded-lg ${layoutClasses[layout]}`,
-          'transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl',
-          'break-inside-avoid w-full cursor-pointer'
+          'relative group overflow-hidden rounded-lg w-full mb-4',
+          'cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl',
+          isMobile ? 'h-[300px]' : getDesktopHeight(),
+          !isMobile && 'break-inside-avoid'
         )}
         onClick={() => setIsModalOpen(true)}
         role="button"
@@ -64,7 +65,7 @@ export function GalleryImage({
 
         <Image
           src={imageUrl}
-          alt={`Gallery image ${index + 1}`}
+          alt={`Gallery image ${image.Key}`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority={priority}
@@ -97,7 +98,7 @@ export function GalleryImage({
             <div className="relative">
               <Image
                 src={imageUrl}
-                alt={`Gallery image ${index + 1}`}
+                alt={`Gallery image ${image.Key}`}
                 width={1920}
                 height={1080}
                 priority

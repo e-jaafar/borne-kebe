@@ -100,3 +100,18 @@ textarea {
   -webkit-appearance: none;
   border-radius: 0;
 }
+
+@keyframes glow {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.92;
+    transform: scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

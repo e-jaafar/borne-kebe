@@ -68,6 +68,7 @@ export const metadata: Metadata = {
     email: true,
   },
   manifest: '/manifest.json',
+  metadataBase: new URL('https://www.xn--borne-kb-80ai.com'),
 }
 
 export default function RootLayout({
