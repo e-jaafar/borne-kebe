@@ -7,7 +7,6 @@ import { Users, Camera, Zap, CheckCircle, Star, Share2, Settings, Mail, ArrowUp 
 import Image from "next/image"
 import { useState, useEffect, useRef } from 'react'
 import { XMLParser } from 'fast-xml-parser'
-import { GalleryImage } from '@/components/GalleryImage'
 import { DemoVideo } from '@/components/DemoVideo'
 import { FadeIn } from '@/components/ui/motion'
 import { type HomePageTranslations } from '@/types/translations'
@@ -413,8 +412,6 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
           <MasonryGrid 
             images={galleryImages}
-            columnWidth={300}
-            columnGap={20}
           />
         </div>
       </section>

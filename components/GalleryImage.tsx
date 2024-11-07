@@ -19,7 +19,6 @@ interface GalleryImageProps {
   priority?: boolean
   onModalChange: (isOpen: boolean) => void
   index: number
-  isMobile: boolean
   style?: React.CSSProperties
 }
 
@@ -28,7 +27,6 @@ export function GalleryImage({
   priority = false, 
   onModalChange, 
   index,
-  isMobile,
   style 
 }: GalleryImageProps) {
   const [isLoading, setIsLoading] = useState(true)

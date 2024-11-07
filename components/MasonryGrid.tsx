@@ -75,7 +75,6 @@ export function MasonryGrid({ images }: MasonryGridProps) {
               image={image}
               index={imageIndex}
               onModalChange={() => {}}
-              isMobile={false}
               priority={imageIndex < 4}
               style={{
                 width: '100%',
