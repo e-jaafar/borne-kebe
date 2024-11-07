@@ -76,3 +76,27 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Ajouter ces règles pour une meilleure compatibilité mobile */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Fix pour le défilement sur iOS */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix pour le tap highlight sur mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fix pour les inputs sur iOS */
+input,
+textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
+}

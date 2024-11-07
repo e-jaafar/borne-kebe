@@ -34,7 +34,7 @@ export function Footer() {
           <div className="text-sm text-gray-600 dark:text-gray-300">
             {t.developedBy}{" "}
             <Link 
-              href="https://github.com/e-jaafar"
+              href={`/${lang}/contact`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors"

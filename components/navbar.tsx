@@ -19,6 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useRouter } from "next/navigation"
+import { useTheme } from '@/components/ThemeProvider'
 
 const translations = {
   fr: {
@@ -45,11 +47,12 @@ const translations = {
 } as const
 
 export function Navbar() {
+  const { theme, setTheme } = useTheme()
   const { lang, setLang } = useLang()
   const [mounted, setMounted] = useState(false)
-  const [darkMode, setDarkMode] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
   
   // Ajout d'une vérification pour s'assurer que la langue est valide
   const currentLang = (lang && translations[lang as keyof typeof translations]) ? lang : 'fr'
@@ -58,27 +61,10 @@ export function Navbar() {
   // Gérer le montage du composant
   useEffect(() => {
     setMounted(true)
-    const savedDarkMode = localStorage.getItem('darkMode')
-    if (savedDarkMode === null) {
-      localStorage.setItem('darkMode', 'true')
-    } else {
-      setDarkMode(JSON.parse(savedDarkMode))
-    }
   }, [])
 
-  useEffect(() => {
-    if (mounted) {
-      if (darkMode) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
-      localStorage.setItem('darkMode', JSON.stringify(darkMode))
-    }
-  }, [darkMode, mounted])
-
-  const handleDarkMode = () => {
-    setDarkMode(!darkMode)
+  const handleThemeToggle = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   const isActive = (path: string) => {
@@ -99,7 +85,17 @@ export function Navbar() {
     { href: "/features", label: t.features },
     { href: "/pricing", label: t.pricing },
     { href: "/contact", label: t.contact },
-  ]
+  ].map(link => ({
+    ...link,
+    href: `/${lang}${link.href === '/' ? '' : link.href}`
+  }))
+
+  const handleLanguageChange = (newLang: string) => {
+    setLang(newLang)
+    // Mettre à jour l'URL avec la nouvelle langue
+    const newPathname = pathname.replace(`/${lang}`, `/${newLang}`)
+    router.push(newPathname)
+  }
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white dark:bg-[#1a0f2e] border-b border-gray-200 dark:border-[#2d1f42]">
@@ -107,10 +103,10 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link 
-              href="/"
-              className="text-xl font-bold text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300"
+              href={`/${lang}`}
+              className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent hover:opacity-90 transition-opacity"
             >
-              Borne-Kébè
+              Borne Kébè
             </Link>
           </div>
 
@@ -132,7 +128,10 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Select onValueChange={setLang} value={lang}>
+            <Select 
+              onValueChange={(value) => handleLanguageChange(value)} 
+              value={lang}
+            >
               <SelectTrigger className="w-[60px]">
                 <SelectValue>
                   <div className="flex items-center justify-center">
@@ -189,11 +188,11 @@ export function Navbar() {
             <Button
               variant="outline"
               size="icon"
-              onClick={handleDarkMode}
+              onClick={handleThemeToggle}
               className="border-gray-200 dark:border-[#2d1f42] dark:hover:border-purple-500"
-              aria-label={darkMode ? "Activer le mode clair" : "Activer le mode sombre"}
+              aria-label={theme === 'dark' ? "Activer le mode clair" : "Activer le mode sombre"}
             >
-              {darkMode ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
+              {theme === 'dark' ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
             </Button>
 
             {/* Menu burger amélioré */}
@@ -247,10 +246,10 @@ export function Navbar() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={handleDarkMode}
+                          onClick={handleThemeToggle}
                           className="hover:bg-gray-100 dark:hover:bg-[#2d1f42]"
                         >
-                          {darkMode ? 
+                          {theme === 'dark' ? 
                             <Sun className="h-5 w-5" /> : 
                             <Moon className="h-5 w-5" />
                           }

@@ -35,7 +35,9 @@ export function GalleryImage({
     large: "aspect-square mb-4"
   }
 
-  const imageUrl = `https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com${imageKey.startsWith('/') ? imageKey : `/${imageKey}`}`
+  const imageUrl = `https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com/${imageKey}`
+    .replace(/\/+/g, '/')
+    .replace('https:/', 'https://')
 
   return (
     <>
@@ -71,7 +73,7 @@ export function GalleryImage({
             'object-cover transition-all duration-300',
             isLoading ? 'opacity-0' : 'opacity-100'
           )}
-          onLoadingComplete={() => setIsLoading(false)}
+          onLoad={() => setIsLoading(false)}
           onError={() => setIsLoading(false)}
         />
         
@@ -102,7 +104,7 @@ export function GalleryImage({
                 quality={100}
                 className="rounded-lg max-h-[85vh] w-auto h-auto object-contain"
                 style={{ maxWidth: '90vw' }}
-                onLoadingComplete={() => setIsLoading(false)}
+                onLoad={() => setIsLoading(false)}
               />
             </div>
           </div>

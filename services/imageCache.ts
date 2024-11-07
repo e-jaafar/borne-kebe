@@ -1,22 +1,40 @@
 // Créer un service de cache d'images
-class ImageCache {
+export class ImageCache {
+  private static instance: ImageCache
   private cache: Map<string, string>
 
-  constructor() {
+  private constructor() {
     this.cache = new Map()
   }
 
-  async has(key: string): Promise<boolean> {
-    return this.cache.has(key)
+  static getInstance(): ImageCache {
+    if (!ImageCache.instance) {
+      ImageCache.instance = new ImageCache()
+    }
+    return ImageCache.instance
   }
 
-  async set(key: string, url: string): Promise<void> {
-    this.cache.set(key, url)
+  async preloadImage(url: string): Promise<void> {
+    if (this.cache.has(url)) return
+
+    try {
+      const response = await fetch(url)
+      const blob = await response.blob()
+      const objectURL = URL.createObjectURL(blob)
+      this.cache.set(url, objectURL)
+    } catch (error) {
+      console.error('Error preloading image:', error)
+    }
   }
 
-  async get(key: string): Promise<string | undefined> {
-    return this.cache.get(key)
+  getImage(url: string): string | undefined {
+    return this.cache.get(url)
   }
-}
 
-export default new ImageCache() 
+  clearCache(): void {
+    this.cache.forEach(objectURL => {
+      URL.revokeObjectURL(objectURL)
+    })
+    this.cache.clear()
+  }
+} 
