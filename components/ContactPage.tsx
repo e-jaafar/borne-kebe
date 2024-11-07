@@ -6,9 +6,10 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Phone, MapPin, Clock, Paperclip } from "lucide-react"
 import { FadeIn } from '@/components/ui/motion'
+import { type ContactTranslations } from '@/types/translations'
 
 type ContactPageProps = {
-  translations: any
+  translations: ContactTranslations
 }
 
 export function ContactPage({ translations: t }: ContactPageProps) {

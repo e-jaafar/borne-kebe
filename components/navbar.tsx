@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
 import { useTheme } from '@/components/ThemeProvider'
+import { Lang } from '@/config/i18n'
 
 const translations = {
   fr: {
@@ -90,7 +91,7 @@ export function Navbar() {
     href: `/${lang}${link.href === '/' ? '' : link.href}`
   }))
 
-  const handleLanguageChange = (newLang: string) => {
+  const handleLanguageChange = (newLang: Lang) => {
     setLang(newLang)
     // Mettre à jour l'URL avec la nouvelle langue
     const newPathname = pathname.replace(`/${lang}`, `/${newLang}`)
@@ -129,7 +130,7 @@ export function Navbar() {
 
           <div className="flex items-center space-x-4">
             <Select 
-              onValueChange={(value) => handleLanguageChange(value)} 
+              onValueChange={handleLanguageChange} 
               value={lang}
             >
               <SelectTrigger className="w-[60px]">

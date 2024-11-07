@@ -20,57 +20,59 @@ const createInitialsSVG = (size: number) => `
   <svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#2D1B69;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#1A0F2E;stop-opacity:1" />
+        <stop offset="0%" style="stop-color:#2B3A67;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#1B1B3A;stop-opacity:1" />
       </linearGradient>
-      <filter id="shadow">
-        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+      <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+      </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
       </filter>
-      <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#E0E0E0;stop-opacity:1" />
-      </linearGradient>
     </defs>
-    
+
     <!-- Fond avec coins arrondis -->
     <rect width="${size}" height="${size}" fill="url(#bgGrad)" rx="${size * 0.2}" />
-    
-    <!-- Éléments photographiques stylisés -->
-    <circle cx="${size * 0.5}" cy="${size * 0.5}" r="${size * 0.35}" 
-      fill="none" 
-      stroke="url(#textGrad)" 
-      stroke-width="${size * 0.03}"
-      opacity="0.2"
-    />
-    <circle cx="${size * 0.5}" cy="${size * 0.5}" r="${size * 0.25}" 
-      fill="none" 
-      stroke="url(#textGrad)" 
-      stroke-width="${size * 0.02}"
-      opacity="0.15"
-    />
-    
-    <!-- Flash stylisé -->
+
+    <!-- K stylisé -->
     <path 
-      d="M${size * 0.65} ${size * 0.3} L${size * 0.7} ${size * 0.4} L${size * 0.6} ${size * 0.45} L${size * 0.65} ${size * 0.6}"
-      stroke="url(#textGrad)"
-      stroke-width="${size * 0.02}"
+      d="
+        M${size * 0.3} ${size * 0.25}
+        L${size * 0.3} ${size * 0.75}
+        M${size * 0.3} ${size * 0.5}
+        L${size * 0.7} ${size * 0.25}
+        M${size * 0.3} ${size * 0.5}
+        L${size * 0.7} ${size * 0.75}
+      "
+      stroke="url(#accentGrad)"
+      stroke-width="${size * 0.08}"
+      stroke-linecap="round"
       fill="none"
-      opacity="0.3"
+      filter="url(#glow)"
     />
 
-    <!-- Texte KEBE -->
-    <text
-      x="50%"
-      y="50%"
-      font-family="Arial"
-      font-size="${size * 0.25}"
-      font-weight="900"
-      text-anchor="middle"
-      dominant-baseline="central"
-      fill="url(#textGrad)"
-      filter="url(#shadow)"
-      style="letter-spacing: ${size * 0.01}px;"
-    >KEBE</text>
+    <!-- Éléments décoratifs -->
+    <circle 
+      cx="${size * 0.7}" 
+      cy="${size * 0.3}" 
+      r="${size * 0.05}" 
+      fill="url(#accentGrad)"
+      filter="url(#glow)"
+    />
+    
+    <!-- Ligne décorative -->
+    <path
+      d="M${size * 0.2} ${size * 0.85} L${size * 0.8} ${size * 0.85}"
+      stroke="url(#accentGrad)"
+      stroke-width="${size * 0.02}"
+      stroke-linecap="round"
+      opacity="0.6"
+    />
   </svg>
 `;
 

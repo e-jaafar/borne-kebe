@@ -10,7 +10,7 @@ import { XMLParser } from 'fast-xml-parser'
 import { GalleryImage } from '@/components/GalleryImage'
 import { DemoVideo } from '@/components/DemoVideo'
 import { FadeIn } from '@/components/ui/motion'
-import { translations } from '@/translations'
+import { type HomePageTranslations } from '@/types/translations'
 
 type S3Image = {
   Key: string
@@ -22,16 +22,7 @@ type S3Image = {
 
 type HomePageProps = {
   lang: string
-  translations: {
-    hero: typeof translations['fr']['hero']
-    features: typeof translations['fr']['features']
-    why: typeof translations['fr']['why']
-    reviews: typeof translations['fr']['reviews']
-    contact: typeof translations['fr']['contact']
-    howItWorks: typeof translations['fr']['howItWorks']
-    gallery: typeof translations['fr']['gallery']
-    scrollToTop: string
-  }
+  translations: HomePageTranslations
 }
 
 const getImageLayout = (index: number): 'square' | 'tall' | 'wide' | 'large' => {
@@ -170,6 +161,41 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </div>
       </section>
 
+      {/* Stats Section */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
+        <div className="container mx-auto max-w-7xl px-4 md:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {t.stats.items.map((stat, index) => (
+              <FadeIn key={index} delay={index * 0.1}>
+                <div className="relative group h-full">
+                  {/* Effet de halo */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg blur-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
+                  
+                  {/* Card avec hauteur fixe */}
+                  <div className="relative bg-white dark:bg-[#2d1f42] p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col justify-between min-h-[200px]">
+                    {/* Contenu principal */}
+                    <div>
+                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                        {stat.value}
+                      </div>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                        {stat.label}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                        {stat.description}
+                      </p>
+                    </div>
+                    
+                    {/* Effet de brillance */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl" />
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-100 to-white dark:from-[#140b24] dark:to-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
@@ -297,16 +323,16 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 Users: Users,
                 Settings: Settings,
                 Share2: Share2
-              }[step.icon]
+              }[step.icon] || Camera;
 
               return (
                 <FadeIn key={index} delay={index * 0.1}>
                   <div className="flex flex-col items-center text-center space-y-4 relative">
-                    <div className="absolute -left-4 -top-4 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">
+                    <div className="absolute left-0 -top-4 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">
                       {index + 1}
                     </div>
                     <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
-                      <Icon className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                      {Icon && <Icon className="h-8 w-8 text-purple-600 dark:text-purple-400" />}
                     </div>
                     <h3 className="text-xl font-semibold">{step.title}</h3>
                     <p className="text-gray-600 dark:text-gray-400">{step.description}</p>

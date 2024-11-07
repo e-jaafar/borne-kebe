@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { useLang } from '@/context/LangContext'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
-import { translations } from '@/translations'
 
 const actionButtons = {
   fr: [

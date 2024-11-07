@@ -1,3 +1,14 @@
+declare global {
+  interface GtagParams {
+    page_path?: string;
+    // Ajoutez d'autres propriétés spécifiques ici si nécessaire
+  }
+
+  interface Window {
+    gtag: (command: string, id: string, params?: GtagParams) => void;
+  }
+}
+
 'use client'
 
 import { useEffect } from 'react'

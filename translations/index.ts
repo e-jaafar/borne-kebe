@@ -181,6 +181,31 @@ export const translations = {
       phone: "+32 488 95 21 50",
       address: "Rue saint michel 5, 1000 Bruxelles",
       hours: "Lun-Ven: 9h-18h"
+    },
+    stats: {
+      title: "Chiffres clés",
+      items: [
+        {
+          value: "500+",
+          label: "Événements réalisés",
+          description: "Des mariages aux événements d'entreprise"
+        },
+        {
+          value: "50K+",
+          label: "Photos prises",
+          description: "Des souvenirs inoubliables capturés"
+        },
+        {
+          value: "98%",
+          label: "Clients satisfaits",
+          description: "Une qualité de service exceptionnelle"
+        },
+        {
+          value: "24/7",
+          label: "Support client",
+          description: "Une équipe à votre écoute"
+        }
+      ]
     }
   },
   en: {
@@ -365,6 +390,31 @@ export const translations = {
       phone: "+32 488 95 21 50",
       address: "Rue saint michel 5, 1000 Brussels",
       hours: "Mon-Fri: 9am-6pm"
+    },
+    stats: {
+      title: "Key Figures",
+      items: [
+        {
+          value: "500+",
+          label: "Events Completed",
+          description: "From weddings to corporate events"
+        },
+        {
+          value: "50K+",
+          label: "Photos Taken",
+          description: "Unforgettable memories captured"
+        },
+        {
+          value: "98%",
+          label: "Satisfied Clients",
+          description: "Exceptional service quality"
+        },
+        {
+          value: "24/7",
+          label: "Customer Support",
+          description: "A team at your service"
+        }
+      ]
     }
   },
   nl: {
@@ -549,6 +599,31 @@ export const translations = {
       phone: "+32 488 95 21 50",
       address: "Rue saint michel 5, 1000 Brussel",
       hours: "Ma-Vr: 9:00-18:00"
+    },
+    stats: {
+      title: "Belangrijke cijfers",
+      items: [
+        {
+          value: "500+",
+          label: "Evenementen voltooid",
+          description: "Van bruiloften tot bedrijfsevenementen"
+        },
+        {
+          value: "50K+",
+          label: "Foto's genomen",
+          description: "Onvergetelijke herinneringen vastgelegd"
+        },
+        {
+          value: "98%",
+          label: "Tevreden klanten",
+          description: "Uitstekende servicekwaliteit"
+        },
+        {
+          value: "24/7",
+          label: "Klantenservice",
+          description: "Een team tot uw dienst"
+        }
+      ]
     }
   }
 } as const

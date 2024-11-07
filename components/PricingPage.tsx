@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { FadeIn } from '@/components/ui/motion'
+import { type PricingTranslations, type Plan } from '@/types/translations'
 
 type PricingPageProps = {
-  translations: any
+  translations: PricingTranslations
 }
 
 export function PricingPage({ translations: t }: PricingPageProps) {
@@ -24,7 +25,7 @@ export function PricingPage({ translations: t }: PricingPageProps) {
         <div className="flex justify-center">
           <div className="grid grid-cols-1 gap-8 sm:gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-[1200px]">
             <div className="col-span-1 sm:col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-6 md:gap-8">
-              {t.pricing.plans.map((plan: any, index: number) => (
+              {t.pricing.plans.map((plan: Plan, index: number) => (
                 <FadeIn key={index} delay={index * 0.1}>
                   <div 
                     className={cn(

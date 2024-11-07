@@ -1,25 +1,30 @@
-import { Lang, isValidLang, languages } from '@/config/i18n'
+import { isValidLang, languages } from '@/config/i18n'
 import { notFound } from 'next/navigation'
+import { Analytics } from "@vercel/analytics/react"
 
-export default function LocaleLayout({
-  children,
-  params: { lang },
-}: {
+type LayoutProps = {
   children: React.ReactNode
   params: { lang: string }
-}) {
+}
+
+export default function Layout({ children, params: { lang } }: LayoutProps) {
   if (!isValidLang(lang)) {
     notFound()
   }
 
-  return children
+  return (
+    <>
+      {children}
+      <Analytics />
+    </>
+  )
 }
 
 export async function generateMetadata({ params: { lang } }: { params: { lang: string } }) {
   const baseUrl = 'https://www.xn--borne-kb-80ai.com'
-  
+
   return {
-    // ... autres métadonnées
+    metadataBase: new URL(baseUrl),
     alternates: {
       canonical: `${baseUrl}/${lang}`,
       languages: Object.fromEntries(
