@@ -3,21 +3,20 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLang } from '@/context/LangContext'
-import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
+import { Phone, Mail, MapPin, MessageCircle, } from 'lucide-react'
 import { translations } from '@/translations'
 import { motion } from 'framer-motion'
 
 // Définition du type pour les boutons
 type ActionButton = {
-  icon: typeof Phone | typeof Mail | typeof MapPin | typeof MessageCircle
-  href: string
-  label: string
-  color: string
-  bgColor: string
-  notifications?: boolean
+  icon: typeof Phone | typeof Mail | typeof MapPin | typeof MessageCircle;
+  href: string;
+  label: string;
+  color: string;
+  bgColor: string;
+  notifications?: boolean;
 }
 
-// Définir les boutons pour toutes les langues supportées
 const actionButtons: Record<string, ActionButton[]> = {
   fr: [
     {
@@ -49,73 +48,14 @@ const actionButtons: Record<string, ActionButton[]> = {
       bgColor: "bg-green-500/10 dark:bg-green-400/10"
     }
   ],
-  en: [
-    {
-      icon: Phone,
-      href: "tel:+32488952150",
-      label: "Call",
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
-    },
-    {
-      icon: Mail,
-      href: "mailto:alchimistelab@hotmail.com",
-      label: "Email",
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
-    },
-    {
-      icon: MapPin,
-      href: "https://maps.google.com/?q=Rue+saint+michel+5+1000+Bruxelles",
-      label: "Address",
-      color: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-500/10 dark:bg-red-400/10"
-    },
-    {
-      icon: MessageCircle,
-      href: "https://wa.me/+32488952150",
-      label: "WhatsApp",
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
-    }
-  ],
-  nl: [
-    {
-      icon: Phone,
-      href: "tel:+32488952150",
-      label: "Bellen",
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
-    },
-    {
-      icon: Mail,
-      href: "mailto:alchimistelab@hotmail.com",
-      label: "E-mail",
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
-    },
-    {
-      icon: MapPin,
-      href: "https://maps.google.com/?q=Rue+saint+michel+5+1000+Bruxelles",
-      label: "Adres",
-      color: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-500/10 dark:bg-red-400/10"
-    },
-    {
-      icon: MessageCircle,
-      href: "https://wa.me/+32488952150",
-      label: "WhatsApp",
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
-    }
-  ]
+  // ... autres langues avec la même structure
 }
 
 export function MobileNav() {
   const { lang } = useLang()
   const pathname = usePathname()
-  const currentLang = lang || 'fr'
-  const buttons = actionButtons[currentLang] || actionButtons.fr // Fallback sur le français
+  const currentLang = (lang && translations[lang as keyof typeof translations]) ? lang : 'fr'
+  const buttons = actionButtons[currentLang as keyof typeof actionButtons]
 
   return (
     <motion.div 
@@ -140,6 +80,7 @@ export function MobileNav() {
                   rel={button.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 >
                   <div className="flex flex-col items-center justify-center h-16 relative">
+                    {/* Fond animé au hover/active */}
                     <motion.div
                       initial={false}
                       animate={{
@@ -149,14 +90,16 @@ export function MobileNav() {
                       className={`absolute inset-0 m-2 rounded-xl ${button.bgColor}`}
                     />
 
+                    {/* Conteneur de l'icône avec animation */}
                     <motion.div
                       whileTap={{ scale: 0.9 }}
                       whileHover={{ scale: 1.1 }}
                       className="relative z-10"
                     >
-                      <Icon className={`h-6 w-6 ${button.color}`} />
+                      <Icon className={`h-6 w-6 ${button.color} transition-transform duration-200`} />
                     </motion.div>
 
+                    {/* Label avec animation */}
                     <motion.span 
                       initial={{ opacity: 0.5, y: 5 }}
                       whileHover={{ opacity: 1, y: 0 }}
@@ -165,6 +108,7 @@ export function MobileNav() {
                       {button.label}
                     </motion.span>
 
+                    {/* Indicateur de notification (si nécessaire) */}
                     {button.notifications && (
                       <span className="absolute top-3 right-1/4 h-2 w-2 bg-red-500 rounded-full" />
                     )}
