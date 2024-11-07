@@ -14,6 +14,7 @@ import { type HomePageTranslations } from '@/types/translations'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
+import { MasonryGrid } from '@/components/MasonryGrid'
 
 type S3Image = {
   Key: string
@@ -410,39 +411,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             </div>
           </FadeIn>
 
-          {/* Mobile: Grid avec taille uniforme */}
-          <div className="block md:hidden">
-            <div className="grid grid-cols-1 gap-4">
-              {galleryImages.map((image, index) => (
-                <FadeIn key={image.Key} delay={index * 0.1}>
-                  <GalleryImage
-                    image={image}
-                    priority={index < 4}
-                    onModalChange={() => {}}
-                    index={index}
-                    isMobile={true}
-                  />
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-
-          {/* Desktop: Style Pinterest */}
-          <div className="hidden md:block">
-            <div className="columns-2 md:columns-3 lg:columns-4 gap-4">
-              {galleryImages.map((image, index) => (
-                <FadeIn key={image.Key} delay={index * 0.1}>
-                  <GalleryImage
-                    image={image}
-                    priority={index < 4}
-                    onModalChange={() => {}}
-                    index={index}
-                    isMobile={false}
-                  />
-                </FadeIn>
-              ))}
-            </div>
-          </div>
+          <MasonryGrid 
+            images={galleryImages}
+            columnWidth={300}
+            columnGap={20}
+          />
         </div>
       </section>
 

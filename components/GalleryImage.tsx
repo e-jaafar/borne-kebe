@@ -15,38 +15,47 @@ type S3Image = {
 }
 
 interface GalleryImageProps {
-  image: S3Image;
-  priority?: boolean;
-  onModalChange: (isOpen: boolean) => void;
-  index: number;
-  isMobile: boolean;
+  image: S3Image
+  priority?: boolean
+  onModalChange: (isOpen: boolean) => void
+  index: number
+  isMobile: boolean
+  style?: React.CSSProperties
 }
 
-export function GalleryImage({ image, priority = false, onModalChange, index, isMobile }: GalleryImageProps) {
+export function GalleryImage({ 
+  image, 
+  priority = false, 
+  onModalChange, 
+  index,
+  isMobile,
+  style 
+}: GalleryImageProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  useEffect(() => {
-    onModalChange?.(isModalOpen)
-  }, [isModalOpen, onModalChange])
+  const [aspectRatio, setAspectRatio] = useState(1)
 
   const imageUrl = `https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com/${image.Key}`
     .replace(/\/+/g, '/')
     .replace('https:/', 'https://')
 
-  const getDesktopHeight = () => {
-    const heights = ['h-64', 'h-96', 'h-80', 'h-72']
-    return heights[index % heights.length]
-  }
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const img = new window.Image()
+      img.src = imageUrl
+      img.onload = () => {
+        setAspectRatio(img.height / img.width)
+        setIsLoading(false)
+      }
+    }
+  }, [imageUrl])
 
   return (
     <>
       <div 
         className={cn(
-          'relative group overflow-hidden rounded-lg w-full mb-4',
-          'cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl',
-          isMobile ? 'h-[300px]' : getDesktopHeight(),
-          !isMobile && 'break-inside-avoid'
+          'relative overflow-hidden group',
+          'cursor-pointer transition-transform duration-300 hover:z-10 hover:scale-[1.02]'
         )}
         onClick={() => setIsModalOpen(true)}
         role="button"
@@ -55,6 +64,11 @@ export function GalleryImage({ image, priority = false, onModalChange, index, is
           if (e.key === 'Enter' || e.key === ' ') {
             setIsModalOpen(true)
           }
+        }}
+        style={{
+          ...style,
+          aspectRatio: `1/${aspectRatio}`,
+          maxHeight: '400px'
         }}
       >
         {isLoading && (
@@ -65,20 +79,18 @@ export function GalleryImage({ image, priority = false, onModalChange, index, is
 
         <Image
           src={imageUrl}
-          alt={`Gallery image ${image.Key}`}
+          alt={`Photo d'événement ${index + 1}`}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 30vw"
           priority={priority}
-          quality={75}
+          quality={60}
           className={cn(
-            'object-cover transition-all duration-300',
+            'object-cover transition-opacity duration-300',
             isLoading ? 'opacity-0' : 'opacity-100'
           )}
-          onLoad={() => setIsLoading(false)}
-          onError={() => setIsLoading(false)}
         />
         
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       <Modal
@@ -90,24 +102,16 @@ export function GalleryImage({ image, priority = false, onModalChange, index, is
       >
         <div className="relative w-full h-full flex items-center justify-center">
           <div className="relative max-w-[90vw] max-h-[85vh]">
-            {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
-              </div>
-            )}
-            <div className="relative">
-              <Image
-                src={imageUrl}
-                alt={`Gallery image ${image.Key}`}
-                width={1920}
-                height={1080}
-                priority
-                quality={100}
-                className="rounded-lg max-h-[85vh] w-auto h-auto object-contain"
-                style={{ maxWidth: '90vw' }}
-                onLoad={() => setIsLoading(false)}
-              />
-            </div>
+            <Image
+              src={imageUrl}
+              alt={`Photo d'événement ${index + 1}`}
+              width={1600}
+              height={900}
+              priority
+              quality={85}
+              className="rounded-lg max-h-[85vh] w-auto h-auto object-contain"
+              style={{ maxWidth: '90vw' }}
+            />
           </div>
         </div>
       </Modal>

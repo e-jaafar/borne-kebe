@@ -42,4 +42,6 @@ export default function Page({ params: { lang } }: { params: { lang: string } })
 
 export function generateStaticParams() {
   return ['fr', 'en', 'nl'].map((lang) => ({ lang }))
-} 
+}
+
+export const revalidate = 3600 // Revalider toutes les heures 

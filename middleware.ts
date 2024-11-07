@@ -100,6 +100,11 @@ export async function middleware(request: NextRequest) {
       return response
     }
 
+    // Ajouter des headers de cache pour les images S3
+    if (pathname.includes('nouveau-storage-2150dbb5225628-staging')) {
+      response.headers.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+    }
+
     return response
   } catch (error) {
     console.error('Middleware error:', error)
