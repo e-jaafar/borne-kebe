@@ -32,6 +32,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   const [galleryImages, setGalleryImages] = useState<S3Image[]>([])
   const [init, setInit] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [isNearBottom, setIsNearBottom] = useState(false)
 
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -80,6 +81,22 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Gestion du scroll pour le bouton CTA
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const scrollTop = window.scrollY
+      
+      // Détecte quand on est proche du bas (par exemple, à 100px du bas)
+      const nearBottom = documentHeight - (scrollTop + windowHeight) < 100
+      setIsNearBottom(nearBottom)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -482,8 +499,12 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </div>
       </section>
 
-      {/* Floating Contact Button - Repositionné */}
-      <div className="fixed bottom-8 right-8 z-50 hidden md:block">
+      {/* Floating Contact Button avec animation de translation */}
+      <div 
+        className={`fixed bottom-8 right-8 z-50 hidden md:block transition-transform duration-300 ${
+          isNearBottom ? 'translate-y-[-100px]' : 'translate-y-0'
+        }`}
+      >
         <Button 
           asChild 
           size="lg"
