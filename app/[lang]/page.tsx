@@ -11,7 +11,10 @@ export default function Page({ params: { lang } }: { params: { lang: string } })
 
   const currentLang = lang as Lang
   const t: HomePageTranslations = {
-    hero: translations[currentLang].hero,
+    hero: {
+      ...translations[currentLang].hero,
+      sequences: [...translations[currentLang].hero.sequences]
+    },
     features: {
       ...translations[currentLang].features,
       items: [...translations[currentLang].features.items]

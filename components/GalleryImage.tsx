@@ -6,20 +6,15 @@ import { Loader2 } from 'lucide-react'
 import { Modal } from '@/components/ui/modal'
 import { cn } from '@/lib/utils'
 
-type S3Image = {
-  Key: string
-  LastModified: string
-  ETag: string
-  Size: number
-  StorageClass: string
-}
-
 interface GalleryImageProps {
-  image: S3Image
-  priority?: boolean
-  onModalChange: (isOpen: boolean) => void
-  index: number
-  style?: React.CSSProperties
+  image: {
+    src: string;
+    alt: string;
+  };
+  priority?: boolean;
+  onModalChange: (isOpen: boolean) => void;
+  index: number;
+  isMobile: boolean;
 }
 
 export function GalleryImage({ 
@@ -27,33 +22,29 @@ export function GalleryImage({
   priority = false, 
   onModalChange, 
   index,
-  style 
+  isMobile 
 }: GalleryImageProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [aspectRatio, setAspectRatio] = useState(1)
-
-  const imageUrl = `https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com/${image.Key}`
-    .replace(/\/+/g, '/')
-    .replace('https:/', 'https://')
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const img = new window.Image()
-      img.src = imageUrl
-      img.onload = () => {
-        setAspectRatio(img.height / img.width)
-        setIsLoading(false)
-      }
-    }
-  }, [imageUrl])
+    onModalChange?.(isModalOpen)
+  }, [isModalOpen, onModalChange])
+
+  // Hauteurs variables pour l'effet Pinterest sur desktop
+  const getDesktopHeight = () => {
+    const heights = ['h-64', 'h-96', 'h-80', 'h-72']
+    return heights[index % heights.length]
+  }
 
   return (
     <>
       <div 
         className={cn(
-          'relative overflow-hidden group',
-          'cursor-pointer transition-transform duration-300 hover:z-10 hover:scale-[1.02]'
+          'relative group overflow-hidden rounded-lg w-full mb-4',
+          'cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl',
+          isMobile ? 'h-[300px]' : getDesktopHeight(),
+          !isMobile && 'break-inside-avoid'
         )}
         onClick={() => setIsModalOpen(true)}
         role="button"
@@ -63,11 +54,6 @@ export function GalleryImage({
             setIsModalOpen(true)
           }
         }}
-        style={{
-          ...style,
-          aspectRatio: `1/${aspectRatio}`,
-          maxHeight: '400px'
-        }}
       >
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 animate-pulse">
@@ -76,19 +62,21 @@ export function GalleryImage({
         )}
 
         <Image
-          src={imageUrl}
-          alt={`Photo d'événement ${index + 1}`}
+          src={image.src}
+          alt={image.alt}
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 30vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority={priority}
-          quality={60}
+          quality={75}
           className={cn(
-            'object-cover transition-opacity duration-300',
+            'object-cover transition-all duration-300',
             isLoading ? 'opacity-0' : 'opacity-100'
           )}
+          onLoad={() => setIsLoading(false)}
+          onError={() => setIsLoading(false)}
         />
         
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       <Modal
@@ -101,8 +89,8 @@ export function GalleryImage({
         <div className="relative w-full h-full flex items-center justify-center">
           <div className="relative max-w-[90vw] max-h-[85vh]">
             <Image
-              src={imageUrl}
-              alt={`Photo d'événement ${index + 1}`}
+              src={image.src}
+              alt={image.alt}
               width={1600}
               height={900}
               priority

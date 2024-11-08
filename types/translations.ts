@@ -13,6 +13,7 @@ export type HomePageTranslations = {
   hero: {
     title: string
     subtitle: string
+    sequences: readonly string[]
     cta1: string
     cta2: string
   }

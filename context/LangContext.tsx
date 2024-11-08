@@ -18,6 +18,13 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
+      const urlLang = pathname.split('/')[1]
+      if (languages.includes(urlLang as Lang)) {
+        setLangState(urlLang as Lang)
+        localStorage.setItem('preferred-lang', urlLang as Lang)
+        return
+      }
+
       const savedLang = localStorage.getItem('preferred-lang') as Lang | null
       const browserLang = navigator.language.split('-')[0]
       const detectedLang = languages.includes(browserLang as Lang) ? browserLang as Lang : defaultLang
@@ -25,15 +32,13 @@ export function LangProvider({ children }: { children: ReactNode }) {
       
       setLangState(initialLang)
       
-      // Synchroniser l'URL avec la langue
-      const currentLangInPath = pathname.split('/')[1]
-      if (!languages.includes(currentLangInPath as Lang)) {
+      if (!languages.includes(urlLang as Lang)) {
         router.replace(`/${initialLang}${pathname}`)
       }
     } catch (error) {
       console.error('Error setting language:', error)
     }
-  }, [])
+  }, [pathname])
 
   const setLang = (newLang: Lang) => {
     try {

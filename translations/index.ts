@@ -1,8 +1,19 @@
 export const translations = {
   fr: {
+    nav: {
+      home: "Accueil",
+      features: "Services",
+      pricing: "Tarifs",
+      contact: "Contact",
+      menu: "Menu"
+    },
     hero: {
       title: "Borne Kébè",
       subtitle: "Solutions de photobooth haut de gamme pour vos événements professionnels et privés.",
+      sequences: [
+        "Photobooth Premium",
+        "Événements Uniques"
+      ],
       cta1: "Demander un devis",
       cta2: "Découvrir nos services"
     },
@@ -209,9 +220,20 @@ export const translations = {
     }
   },
   en: {
+    nav: {
+      home: "Home",
+      features: "Services",
+      pricing: "Pricing",
+      contact: "Contact",
+      menu: "Menu"
+    },
     hero: {
       title: "Borne Kébè",
       subtitle: "High-end photobooth solutions for your professional and private events.",
+      sequences: [
+        "Premium Photobooth",
+        "Unique Events"
+      ],
       cta1: "Request a quote",
       cta2: "Discover our services"
     },
@@ -418,9 +440,20 @@ export const translations = {
     }
   },
   nl: {
+    nav: {
+      home: "Home",
+      features: "Diensten",
+      pricing: "Prijzen",
+      contact: "Contact",
+      menu: "Menu"
+    },
     hero: {
       title: "Borne Kébè",
       subtitle: "Hoogwaardige photobooth-oplossingen voor uw professionele en privé-evenementen.",
+      sequences: [
+        "Premium Photobooth",
+        "Unieke Evenementen"
+      ],
       cta1: "Offerte aanvragen",
       cta2: "Ontdek onze diensten"
     },

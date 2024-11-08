@@ -21,31 +21,19 @@ import {
 } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
 import { useTheme } from '@/components/ThemeProvider'
-import { Lang } from '@/config/i18n'
+import { languages, type Lang } from '@/config/i18n'
+import { translations } from '@/translations'
+import { motion, useScroll, useTransform } from "framer-motion"
 
-const translations = {
-  fr: {
-    home: "Accueil",
-    features: "Services",
-    pricing: "Tarifs",
-    contact: "Contact",
-    menu: "Menu"
-  },
-  en: {
+const defaultTranslations = {
+  nav: {
     home: "Home",
     features: "Services",
     pricing: "Pricing",
     contact: "Contact",
     menu: "Menu"
-  },
-  nl: {
-    home: "Home",
-    features: "Diensten",
-    pricing: "Prijzen",
-    contact: "Contact",
-    menu: "Menu"
   }
-} as const
+}
 
 export function Navbar() {
   const { theme, setTheme } = useTheme()
@@ -54,216 +42,371 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
-  
-  // Ajout d'une vérification pour s'assurer que la langue est valide
-  const currentLang = (lang && translations[lang as keyof typeof translations]) ? lang : 'fr'
-  const t = translations[currentLang as keyof typeof translations]
+  const { scrollYProgress } = useScroll()
+  const navOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.1],
+    [0.5, 0.95]
+  )
 
-  // Gérer le montage du composant
+  const navStyle = {
+    backgroundColor: theme === 'dark' 
+      ? `rgba(26, 15, 46, ${navOpacity.get()})`
+      : `rgba(255, 255, 255, ${navOpacity.get()})`
+  }
+
+  // Extraire la langue de l'URL avec une valeur par défaut
+  const urlLang = (pathname?.split('/')[1] || 'fr') as Lang
+  const currentPath = pathname?.split('/').slice(2).join('/') || ''
+
+  // Gestion sécurisée des traductions avec vérification complète
+  const getTranslations = () => {
+    try {
+      if (!urlLang || !translations[urlLang]) {
+        return defaultTranslations.nav
+      }
+      return translations[urlLang].nav || defaultTranslations.nav
+    } catch (error) {
+      console.error('Error loading translations:', error)
+      return defaultTranslations.nav
+    }
+  }
+
+  const t = getTranslations()
+
+  // Définir les liens de navigation avec les traductions sécurisées
+  const navigationLinks = [
+    { href: `/${urlLang}`, label: t.home },
+    { href: `/${urlLang}/features`, label: t.features },
+    { href: `/${urlLang}/pricing`, label: t.pricing },
+    { href: `/${urlLang}/contact`, label: t.contact },
+  ]
+
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    if (languages.includes(urlLang as Lang)) {
+      setLang(urlLang)
+      localStorage.setItem('preferred-lang', urlLang)
+    }
+  }, [pathname, setLang, urlLang])
+
+  const handleLanguageChange = (newLang: Lang) => {
+    const newPathname = `/${newLang}/${currentPath}`
+    router.push(newPathname)
+  }
+
+  const handleLinkClick = () => setIsOpen(false)
 
   const handleThemeToggle = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
-  const isActive = (path: string) => {
-    return pathname === path
-  }
-
-  const handleLinkClick = () => {
-    setIsOpen(false)
-  }
-
-  // Ne rien rendre jusqu'au montage complet
+  // Ne rendre la navbar que côté client
   if (!mounted) {
-    return null
-  }
-
-  const navigationLinks = [
-    { href: "/", label: t.home },
-    { href: "/features", label: t.features },
-    { href: "/pricing", label: t.pricing },
-    { href: "/contact", label: t.contact },
-  ].map(link => ({
-    ...link,
-    href: `/${lang}${link.href === '/' ? '' : link.href}`
-  }))
-
-  const handleLanguageChange = (newLang: Lang) => {
-    setLang(newLang)
-    // Mettre à jour l'URL avec la nouvelle langue
-    const newPathname = pathname.replace(`/${lang}`, `/${newLang}`)
-    router.push(newPathname)
+    return null // ou un placeholder/skeleton
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white dark:bg-[#1a0f2e] border-b border-gray-200 dark:border-[#2d1f42]">
+    <motion.nav 
+      className="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-gray-800/50 backdrop-blur-lg"
+      style={navStyle}
+    >
+      {/* Indicateur de progression */}
+      <motion.div 
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 to-pink-500 origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
+
       <div className="container mx-auto max-w-7xl px-4 md:px-6">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
+          {/* Logo avec animation */}
+          <motion.div 
+            className="flex items-center"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <Link 
               href={`/${lang}`}
               className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent hover:opacity-90 transition-opacity"
             >
               Borne Kébè
             </Link>
-          </div>
+          </motion.div>
 
-          {/* Navigation desktop */}
+          {/* Navigation desktop améliorée */}
           <div className="hidden md:flex items-center space-x-6">
             {navigationLinks.map((link) => (
-              <Link
+              <motion.div
                 key={link.href}
-                href={link.href}
-                className={`text-sm ${
-                  isActive(link.href) 
-                    ? 'text-primary dark:text-purple-400 font-semibold' 
-                    : 'text-gray-600 dark:text-gray-300'
-                } hover:text-primary dark:hover:text-purple-400 transition-colors`}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  className={`relative text-sm ${
+                    pathname === link.href 
+                      ? 'text-primary dark:text-purple-400 font-semibold' 
+                      : 'text-gray-600 dark:text-gray-300'
+                  } hover:text-primary dark:hover:text-purple-400 transition-colors`}
+                >
+                  {link.label}
+                  {pathname === link.href && (
+                    <motion.div
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary dark:bg-purple-400"
+                      layoutId="underline"
+                    />
+                  )}
+                </Link>
+              </motion.div>
             ))}
           </div>
 
-          <div className="flex items-center space-x-4">
-            <Select 
-              onValueChange={handleLanguageChange} 
-              value={lang}
-            >
-              <SelectTrigger className="w-[60px]">
-                <SelectValue>
-                  <div className="flex items-center justify-center">
-                    <Image
-                      src={`/flags/${lang}.svg`}
-                      alt={lang === 'fr' ? 'Français' : lang === 'en' ? 'English' : 'Nederlands'}
-                      width={20}
-                      height={20}
-                      className="rounded-sm"
-                    />
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="fr">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/flags/fr.svg"
-                      alt="Français"
-                      width={20}
-                      height={20}
-                      className="rounded-sm"
-                    />
-                    Français
-                  </div>
-                </SelectItem>
-                <SelectItem value="en">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/flags/en.svg"
-                      alt="English"
-                      width={20}
-                      height={20}
-                      className="rounded-sm"
-                    />
-                    English
-                  </div>
-                </SelectItem>
-                <SelectItem value="nl">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/flags/nl.svg"
-                      alt="Nederlands"
-                      width={20}
-                      height={20}
-                      className="rounded-sm"
-                    />
-                    Nederlands
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
+          {mounted && (
+            <div className="flex items-center space-x-4">
+              {/* Sélecteur de langue amélioré */}
+              <Select
+                value={urlLang}
+                onValueChange={handleLanguageChange}
+              >
+                <SelectTrigger className="w-[52px] h-[40px] p-0 pl-2 bg-transparent border-gray-200/50 dark:border-gray-800/50 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors backdrop-blur-lg">
+                  <SelectValue>
+                    <motion.div 
+                      className="flex items-center justify-center w-full"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Image
+                        src={`/flags/${urlLang}.svg`}
+                        alt={urlLang === 'fr' ? 'Français' : urlLang === 'en' ? 'English' : 'Nederlands'}
+                        width={24}
+                        height={24}
+                        className="rounded-sm"
+                      />
+                    </motion.div>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-gray-200/50 dark:border-gray-800/50">
+                  <SelectItem value="fr">
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src="/flags/fr.svg"
+                        alt="Français"
+                        width={24}
+                        height={24}
+                        className="rounded-sm"
+                      />
+                      <span>Français</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="en">
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src="/flags/en.svg"
+                        alt="English"
+                        width={24}
+                        height={24}
+                        className="rounded-sm"
+                      />
+                      <span>English</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="nl">
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src="/flags/nl.svg"
+                        alt="Nederlands"
+                        width={24}
+                        height={24}
+                        className="rounded-sm"
+                      />
+                      <span>Nederlands</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
 
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleThemeToggle}
-              className="border-gray-200 dark:border-[#2d1f42] dark:hover:border-purple-500"
-              aria-label={theme === 'dark' ? "Activer le mode clair" : "Activer le mode sombre"}
-            >
-              {theme === 'dark' ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
-            </Button>
+              {/* Bouton thème amélioré */}
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleThemeToggle}
+                  className="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors backdrop-blur-lg"
+                >
+                  {theme === 'dark' ? 
+                    <Sun className="h-5 w-5 text-yellow-500" /> : 
+                    <Moon className="h-5 w-5 text-purple-600" />
+                  }
+                </Button>
+              </motion.div>
+            </div>
+          )}
 
-            {/* Menu burger amélioré */}
-            <div className="md:hidden">
-              <Sheet open={isOpen} onOpenChange={setIsOpen}>
-                <SheetTrigger asChild>
+          {/* Menu mobile amélioré */}
+          <div className="md:hidden">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="hover:bg-gray-100 dark:hover:bg-[#2d1f42] transition-colors"
+                    className="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors backdrop-blur-lg"
                   >
                     <Menu className="h-[1.2rem] w-[1.2rem]" />
-                    <span className="sr-only">{t.menu}</span>
+                    <span className="sr-only">{translations[urlLang].nav.menu}</span>
                   </Button>
-                </SheetTrigger>
-                <SheetContent 
-                  side="right" 
-                  className="w-full sm:w-80 bg-white/95 dark:bg-[#1a0f2e]/95 backdrop-blur-lg border-l border-gray-200 dark:border-[#2d1f42] p-0"
+                </motion.div>
+              </SheetTrigger>
+              <SheetContent 
+                side="right" 
+                className="w-full sm:w-80 bg-white/95 dark:bg-[#1a0f2e]/95 backdrop-blur-lg border-l border-gray-200/50 dark:border-gray-800/50 p-0"
+              >
+                <motion.div 
+                  className="flex flex-col h-full"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <div className="flex flex-col h-full">
-                    <div className="p-6 border-b border-gray-200 dark:border-[#2d1f42]">
-                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {/* En-tête du menu */}
+                  <motion.div 
+                    className="p-6 border-b border-gray-200/50 dark:border-gray-800/50"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <Link 
+                      href={`/${lang}`}
+                      onClick={() => setIsOpen(false)}
+                      className="inline-block"
+                    >
+                      <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
                         Borne-Kébè
                       </h2>
-                    </div>
-                    
-                    <nav className="flex-1 overflow-y-auto py-6">
-                      <div className="px-6 space-y-1">
-                        {navigationLinks.map((link) => (
+                    </Link>
+                  </motion.div>
+                  
+                  {/* Navigation */}
+                  <nav className="flex-1 overflow-y-auto py-6">
+                    <div className="px-6 space-y-2">
+                      {navigationLinks.map((link, index) => (
+                        <motion.div
+                          key={link.href}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.2 + index * 0.1 }}
+                        >
                           <Link
-                            key={link.href}
                             href={link.href}
                             onClick={handleLinkClick}
-                            className={`flex items-center w-full py-3 px-4 rounded-lg transition-colors ${
-                              isActive(link.href)
-                                ? 'bg-gray-100 dark:bg-[#2d1f42] text-primary dark:text-purple-400 font-semibold'
-                                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2d1f42]/50'
+                            className={`flex items-center w-full py-3 px-4 rounded-lg transition-all duration-300 ${
+                              pathname === link.href
+                                ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 font-semibold transform scale-105'
+                                : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/30'
                             }`}
                           >
                             {link.label}
+                            {pathname === link.href && (
+                              <motion.div
+                                className="ml-auto text-purple-600 dark:text-purple-400"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                              >
+                                •
+                              </motion.div>
+                            )}
                           </Link>
-                        ))}
-                      </div>
-                    </nav>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </nav>
 
-                    <div className="p-6 border-t border-gray-200 dark:border-[#2d1f42]">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          © 2024 Borne-Kébè
-                        </span>
+                  {/* Sélecteur de langue */}
+                  <motion.div
+                    className="px-6 py-4 border-t border-gray-200/50 dark:border-gray-800/50"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <div className="flex items-center gap-4">
+                      {['fr', 'en', 'nl'].map((l) => (
+                        <motion.button
+                          key={l}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => {
+                            handleLanguageChange(l as Lang)
+                            setIsOpen(false)
+                          }}
+                          className={`flex items-center gap-2 p-2 rounded-lg ${
+                            urlLang === l 
+                              ? 'bg-purple-50 dark:bg-purple-900/20' 
+                              : 'hover:bg-gray-50 dark:hover:bg-gray-800/30'
+                          }`}
+                        >
+                          <Image
+                            src={`/flags/${l}.svg`}
+                            alt={l === 'fr' ? 'Français' : l === 'en' ? 'English' : 'Nederlands'}
+                            width={24}
+                            height={24}
+                            className="rounded-sm"
+                          />
+                          <span className={`text-sm ${
+                            urlLang === l 
+                              ? 'text-purple-600 dark:text-purple-400 font-medium' 
+                              : 'text-gray-600 dark:text-gray-400'
+                          }`}>
+                            {l.toUpperCase()}
+                          </span>
+                        </motion.button>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Pied de page */}
+                  <motion.div 
+                    className="p-6 border-t border-gray-200/50 dark:border-gray-800/50"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        © 2024 Borne-Kébè
+                      </span>
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={handleThemeToggle}
-                          className="hover:bg-gray-100 dark:hover:bg-[#2d1f42]"
+                          className="hover:bg-gray-100/50 dark:hover:bg-gray-800/50"
                         >
                           {theme === 'dark' ? 
-                            <Sun className="h-5 w-5" /> : 
-                            <Moon className="h-5 w-5" />
+                            <Sun className="h-5 w-5 text-yellow-500" /> : 
+                            <Moon className="h-5 w-5 text-purple-600" />
                           }
                         </Button>
-                      </div>
+                      </motion.div>
                     </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
+                  </motion.div>
+                </motion.div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   )
 } 

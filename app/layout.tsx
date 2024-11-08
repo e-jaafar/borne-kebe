@@ -103,7 +103,7 @@ export default function RootLayout({
           <LangProvider>
             <div className="min-h-screen flex flex-col">
               <Navbar />
-              <main className="flex-grow pb-20 md:pb-0">
+              <main className="flex-grow  md:pb-0">
                 {children}
               </main>
               <Footer />

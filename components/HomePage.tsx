@@ -6,30 +6,36 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Users, Camera, Zap, CheckCircle, Star, Share2, Settings, Mail, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import { useState, useEffect, useRef } from 'react'
-import { XMLParser } from 'fast-xml-parser'
 import { DemoVideo } from '@/components/DemoVideo'
 import { FadeIn } from '@/components/ui/motion'
 import { type HomePageTranslations } from '@/types/translations'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Particles, { initParticlesEngine } from "@tsparticles/react"
-import { loadSlim } from "@tsparticles/slim"
+import { loadStarsPreset } from "@tsparticles/preset-stars"
 import { MasonryGrid } from '@/components/MasonryGrid'
+import { TypeAnimation } from 'react-type-animation'
 
-type S3Image = {
-  Key: string
-  LastModified: string
-  ETag: string
-  Size: number
-  StorageClass: string
-}
+// type S3Image = {
+//   Key: string
+//   LastModified: string
+//   ETag: string
+//   Size: number
+//   StorageClass: string
+// }
 
 type HomePageProps = {
   lang: string
   translations: HomePageTranslations
 }
 
+// Type pour les images
+type LocalImage = {
+  src: string
+  alt: string
+}
+
 export function HomePage({ lang, translations: t }: HomePageProps) {
-  const [galleryImages, setGalleryImages] = useState<S3Image[]>([])
+  const [galleryImages, setGalleryImages] = useState<LocalImage[]>([])
   const [init, setInit] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [isNearBottom, setIsNearBottom] = useState(false)
@@ -46,7 +52,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   // Initialisation des particules
   useEffect(() => {
     initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
+      await loadStarsPreset(engine)
     }).then(() => {
       setInit(true)
     })
@@ -54,27 +60,18 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
   // Chargement des images
   useEffect(() => {
-    const fetchImages = async () => {
+    // Fonction pour charger les images
+    const loadImages = async () => {
       try {
-        const response = await fetch('https://nouveau-storage-2150dbb5225628-staging.s3.eu-west-1.amazonaws.com/')
-        const xmlData = await response.text()
-        const parser = new XMLParser()
-        const result = parser.parse(xmlData)
-        
-        const images = result.ListBucketResult.Contents
-          .filter((item: S3Image) => 
-            item.Key.toLowerCase().match(/\.(jpg|jpeg|png|gif|webp)$/)
-          )
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 10)
-
+        const response = await fetch('/api/getImages')
+        const images = await response.json()
         setGalleryImages(images)
       } catch (error) {
         console.error('Erreur lors du chargement des images:', error)
       }
     }
 
-    fetchImages()
+    loadImages()
   }, [])
 
   // Gestion du bouton scroll to top
@@ -104,13 +101,74 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   }, [])
 
   return (
-    <main role="main" className="flex flex-col items-center relative pb-16">
-      {/* Hero Section avec Parallax */}
+    <main role="main" className="flex flex-col items-center relative">
+      {/* Particules interactives - pour tout le site */}
+      {init && (
+        <Particles
+          id="tsparticles"
+          className="fixed inset-0 z-20"
+          options={{
+            preset: "stars",
+            fullScreen: { enable: false },
+            background: {
+              opacity: 0
+            },
+            particles: {
+              number: {
+                value: 40,
+                density: {
+                  enable: true
+                }
+              },
+              color: {
+                value: ["#ffffff", "#9333ea"]
+              },
+              move: {
+                enable: true,
+                speed: 0.3,
+                direction: "none"
+              },
+              size: {
+                value: { min: 0.5, max: 2 }
+              },
+              opacity: {
+                value: { min: 0.2, max: 0.5 }
+              }
+            },
+            interactivity: {
+              events: {
+                onHover: {
+                  enable: true,
+                  mode: "bubble"
+                },
+                onClick: {
+                  enable: true,
+                  mode: "repulse"
+                }
+              },
+              modes: {
+                bubble: {
+                  distance: 200,
+                  size: 3,
+                  opacity: 0.8
+                },
+                repulse: {
+                  distance: 200
+                }
+              }
+            },
+            detectRetina: true
+          }}
+        />
+      )}
+
+      {/* Hero Section améliorée */}
       <section 
         ref={heroRef} 
         aria-label="Hero section"
-        className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden"
+        className="relative w-full min-h-[90vh] flex items-center py-12 md:py-24 lg:py-32 xl:py-40 overflow-hidden"
       >
+        {/* Background avec Parallax amélioré */}
         <motion.div 
           style={{ y, opacity }} 
           className="absolute inset-0 z-0"
@@ -122,151 +180,128 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             priority
             loading="eager"
             quality={90}
-            className="object-cover scale-110"
+            className="object-cover scale-110 transform transition-transform duration-500"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 backdrop-blur-sm z-10" />
         </motion.div>
-
-        {/* Particules */}
-        {init && (
-          <div aria-hidden="true">
-            <Particles
-              id="tsparticles"
-              className="absolute inset-0 z-10"
-              options={{
-                particles: {
-                  color: {
-                    value: "#ffffff"
-                  },
-                  number: {
-                    value: 30
-                  },
-                  opacity: {
-                    value: { min: 0.1, max: 0.3 },
-                    animation: {
-                      enable: true,
-                      speed: 1,
-                      sync: false,
-                      startValue: "min",
-                      destroy: "max"
-                    }
-                  },
-                  size: {
-                    value: { min: 1, max: 3 },
-                    animation: {
-                      enable: true,
-                      speed: 2,
-                      sync: false,
-                      startValue: "min",
-                      destroy: "max"
-                    }
-                  },
-                  move: {
-                    enable: true,
-                    speed: 1,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    outModes: {
-                      default: "out"
-                    }
-                  }
-                },
-                interactivity: {
-                  events: {
-                    onHover: {
-                      enable: true,
-                      mode: "bubble"
-                    }
-                  },
-                  modes: {
-                    bubble: {
-                      distance: 200,
-                      size: 6,
-                      duration: 0.3,
-                      opacity: 0.8
-                    }
-                  }
-                },
-                background: {
-                  color: "transparent"
-                },
-                detectRetina: true
-              }}
-            />
-          </div>
-        )}
 
         {/* Contenu du Hero */}
         <div className="relative z-20 container mx-auto max-w-7xl px-4 md:px-6">
-          <FadeIn>
-            <div className="flex flex-col items-center space-y-6 text-center">
-              <header className="space-y-4 max-w-[800px] mx-auto">
-                <motion.h1 
-                  className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                  {t.hero.title.split(' ').map((word, i) => (
-                    <motion.span
-                      key={i}
-                      className="inline-block mr-2"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.8,
-                        ease: "easeOut",
-                        delay: i * 0.1
-                      }}
-                    >
-                      {word}
-                    </motion.span>
-                  ))}
-                </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-col items-center space-y-6 text-center"
+          >
+            <header className="space-y-4 max-w-[800px] mx-auto">
+              <motion.h1 
+                className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <TypeAnimation
+                  sequence={[
+                    t.hero.title,
+                    1000,
+                    t.hero.sequences?.[0] || 'Photobooth Premium',
+                    1000,
+                    t.hero.sequences?.[1] || 'Événements Uniques',
+                    1000,
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
+                  className="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent"
+                />
+              </motion.h1>
 
-                <motion.p 
-                  className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                >
-                  {t.hero.subtitle}
-                </motion.p>
-              </header>
+              <motion.p 
+                className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+              >
+                {t.hero.subtitle}
+              </motion.p>
+            </header>
 
-              <nav aria-label="Actions principales">
-                <motion.div 
-                  className="flex flex-col sm:flex-row gap-4 sm:space-x-4 w-full sm:w-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            <motion.nav 
+              aria-label="Actions principales"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+            >
+              <div className="flex flex-col sm:flex-row gap-4 sm:space-x-4 w-full sm:w-auto">
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 0 20px rgba(168,85,247,0.4)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <Button 
                     asChild 
                     size="lg" 
-                    className="w-full sm:w-auto bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white transition-all duration-300 shadow-lg"
+                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group"
                   >
-                    <Link href={`/${lang}/pricing`} aria-label={`${t.hero.cta1} - Voir nos tarifs`}>
-                      {t.hero.cta1}
+                    <Link href={`/${lang}/pricing`}>
+                      <span className="relative z-10">{t.hero.cta1}</span>
+                      <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                     </Link>
                   </Button>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 0 20px rgba(255,255,255,0.2)"
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Button 
                     asChild 
                     variant="outline" 
                     size="lg" 
-                    className="w-full sm:w-auto border-2 border-white text-white bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg"
+                    className="w-full sm:w-auto border-2 border-white text-white bg-transparent hover:bg-white/10 transition-all duration-300 shadow-lg backdrop-blur-sm"
                   >
-                    <Link href={`/${lang}/features`} aria-label={`${t.hero.cta2} - Découvrir nos fonctionnalités`}>
+                    <Link href={`/${lang}/features`}>
                       {t.hero.cta2}
                     </Link>
                   </Button>
                 </motion.div>
-              </nav>
-            </div>
-          </FadeIn>
+              </div>
+            </motion.nav>
+          </motion.div>
         </div>
+
+        {/* Effet de scroll indicator */}
+        <motion.div
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20"
+          animate={{
+            y: [0, 10, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center p-2">
+            <motion.div
+              className="w-1 h-1 bg-white/80 rounded-full"
+              animate={{
+                y: [0, 16, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
+        </motion.div>
       </section>
 
       {/* Why Choose Us Section */}

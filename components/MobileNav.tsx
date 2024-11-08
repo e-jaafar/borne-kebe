@@ -114,6 +114,7 @@ export function MobileNav() {
   const { lang } = useLang()
   const pathname = usePathname()
   const currentLang = lang || 'fr'
+  // Utiliser les boutons de la langue courante ou fallback sur le français
   const buttons = actionButtons[currentLang] || actionButtons.fr
 
   return (
