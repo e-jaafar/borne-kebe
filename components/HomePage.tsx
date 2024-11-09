@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Camera, Zap, CheckCircle, Mail, ArrowUp } from "lucide-react"
+import { Users, Camera, Zap, Mail, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import { useState, useEffect, useRef } from 'react'
 import { DemoVideo } from '@/components/DemoVideo'
@@ -115,7 +115,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {init && (
         <Particles
           id="tsparticles"
-          className="fixed inset-0 z-20 pointer-events-none"
+          className="fixed inset-0 z-10 pointer-events-none"
           options={{
             particles: {
               number: {
@@ -153,14 +153,14 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                     mode: "slow",
                     parallax: {
                       enable: true,
-                      force: 20,
-                      smooth: 200
+                      force: 10,
+                      smooth: 300
                     }
                   }
                 },
                 modes: {
                   slow: {
-                    factor: 3,
+                    factor: 4,
                     radius: 200
                   },
                   grab: {
@@ -337,38 +337,120 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <FadeIn direction="left">
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-gray-900 dark:text-gray-100">
-                  {t.why.title}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-300 md:text-lg">
-                  {t.why.description}
-                </p>
-                <ul className="space-y-2">
-                  {t.why.items.map((item, index) => (
-                    <li key={index} className="flex items-center space-x-2">
-                      <CheckCircle className="h-5 w-5 text-gray-900 dark:text-gray-100" />
-                      <span className="text-gray-600 dark:text-gray-300">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="mt-4 bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300"
-                >
-                  <Link href={`/${lang}/contact`}>{t.why.cta}</Link>
-                </Button>
+      <section className="w-full py-24 bg-gradient-to-b from-[#1a0f2e] to-[#140b24] relative overflow-hidden">
+        {/* Particules de fond améliorées */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-purple-500/10 via-purple-400/5 to-transparent rounded-full blur-[120px] animate-pulse-slow" />
+          <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-gradient-to-tr from-purple-700/10 via-purple-600/5 to-transparent rounded-full blur-[120px] animate-pulse-slower" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <FadeIn>
+            <div className="text-center mb-20">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 mb-6">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                </span>
+                <span className="text-sm font-medium">Découvrez nos avantages</span>
               </div>
-            </FadeIn>
-            <FadeIn direction="right">
-              <DemoVideo />
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                {t.why.title}
+              </h2>
+              <p className="text-lg md:text-xl text-gray-300/90 max-w-3xl mx-auto">
+                {t.why.description}
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* Vidéo avec meilleur design et halo */}
+          <div className="mb-20 max-w-4xl mx-auto perspective-1000 relative z-30">
+            <FadeIn>
+              {/* Halo radieux */}
+              <div className="absolute -inset-10 bg-gradient-to-r from-purple-600/30 via-purple-400/20 to-purple-600/30 rounded-[30px] blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
+              
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="relative rounded-2xl overflow-hidden shadow-2xl border border-purple-500/20 backdrop-blur-sm group"
+              >
+                {/* Effet de brillance supplémentaire */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-20 pointer-events-none" />
+                
+                {/* Effet de halo animé */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/50 via-fuchsia-500/50 to-purple-600/50 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-700 -z-10" />
+                
+                <div className="relative z-30">
+                  <DemoVideo />
+                </div>
+                
+                {/* Gradient du bas plus subtil */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f2e] via-transparent to-transparent opacity-30 pointer-events-none" />
+                
+                {/* Effet de scintillement */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700" />
+              </motion.div>
             </FadeIn>
           </div>
+
+          {/* Grille des avantages */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {t.why.items.map((item, index) => (
+              <FadeIn key={index} delay={index * 0.1}>
+                <motion.div
+                  whileHover={{ y: -10 }}
+                  className="relative group h-full"
+                >
+                  {/* Effet de halo amélioré */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-purple-500/10 to-purple-800/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
+                  
+                  <div className="relative bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/10 hover:border-purple-500/30 transition-all duration-300 h-[220px] flex flex-col justify-between group">
+                    {/* Icône numérotée avec animation */}
+                    <div className="relative">
+                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <span className="text-2xl font-bold text-white">{index + 1}</span>
+                      </div>
+                      <div className="absolute inset-0 bg-purple-500/20 rounded-xl blur group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
+                    </div>
+
+                    {/* Texte avec meilleur espacement */}
+                    <h3 className="text-xl font-semibold text-white group-hover:text-purple-300 transition-colors mt-6">
+                      {item}
+                    </h3>
+                  </div>
+                </motion.div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* CTA amélioré */}
+          <FadeIn delay={0.4}>
+            <div className="text-center mt-20 relative z-50">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block"
+              >
+                <Button 
+                  asChild 
+                  size="lg"
+                  className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white shadow-lg hover:shadow-purple-500/25 relative overflow-hidden group px-8 py-6"
+                >
+                  <Link href={`/${lang}/contact`} className="relative z-50">
+                    <span className="relative z-10 flex items-center gap-2 text-lg pointer-events-auto">
+                      {t.why.cta}
+                      <motion.span
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                      >
+                        →
+                      </motion.span>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 

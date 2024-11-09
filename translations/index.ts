@@ -2,7 +2,7 @@ export const translations = {
   fr: {
     nav: {
       home: "Accueil",
-      features: "Services",
+      features: "Features",
       pricing: "Tarifs",
       contact: "Contact",
       menu: "Menu"
@@ -223,7 +223,7 @@ export const translations = {
         {
           value: "500+",
           label: "Événements réalisés",
-          description: "Des mariages aux événements d'entreprise"
+          description: "Des mariages aux év��nements d'entreprise"
         },
         {
           value: "50K+",
@@ -287,7 +287,7 @@ export const translations = {
   en: {
     nav: {
       home: "Home",
-      features: "Services",
+      features: "Features",
       pricing: "Pricing",
       contact: "Contact",
       menu: "Menu"
@@ -572,7 +572,7 @@ export const translations = {
   nl: {
     nav: {
       home: "Home",
-      features: "Diensten",
+      features: "Features",
       pricing: "Prijzen",
       contact: "Contact",
       menu: "Menu"

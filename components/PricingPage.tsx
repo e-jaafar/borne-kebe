@@ -1,13 +1,13 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check, Sparkles } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Check, Sparkles, Star } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { FadeIn } from '@/components/ui/motion'
+import { motion } from 'framer-motion'
 import { type PricingTranslations, type Plan } from '@/types/translations'
 
-// Correction du typage des props
 interface PricingPageProps {
   translations: PricingTranslations
 }
@@ -15,10 +15,33 @@ interface PricingPageProps {
 export function PricingPage({ translations: t }: PricingPageProps) {
   return (
     <div className="relative min-h-[calc(100vh-4rem)] flex items-center py-20">
-      {/* Arrière-plan décoratif */}
+      {/* Arrière-plan amélioré */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-gradient-to-b from-primary/20 to-transparent rounded-full blur-3xl opacity-30" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-t from-secondary/20 to-transparent rounded-full blur-2xl opacity-20" />
+        <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-gradient-to-t from-secondary/20 to-transparent rounded-full blur-2xl opacity-20" />
+        
+        {/* Particules scintillantes */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-purple-400/30 rounded-full"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                opacity: [0.2, 1, 0.2],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 2 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="container relative mx-auto max-w-7xl px-4">
@@ -40,68 +63,94 @@ export function PricingPage({ translations: t }: PricingPageProps) {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-[1200px] mx-auto">
           {t.pricing.plans.map((plan: Plan, index: number) => (
             <FadeIn key={index} delay={index * 0.1}>
-              <Card className={cn(
-                "relative group h-full transition-all duration-500 hover:translate-y-[-8px]",
-                plan.popular ? [
-                  "bg-gradient-to-b from-primary/[0.15] to-transparent border-primary/50",
-                  "before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-primary/[0.05] before:rounded-[inherit]",
-                  "after:absolute after:inset-0 after:rounded-[inherit] after:shadow-[0_0_30px_2px] after:shadow-primary/20 after:opacity-0 after:transition-opacity after:duration-500",
-                  "hover:after:opacity-100"
-                ] : "hover:border-primary/50"
-              )}>
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <div className="relative px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full">
-                      <span className="relative z-10 text-sm font-medium text-white">
-                        {t.pricing.popularBadge}
-                      </span>
-                      <div className="absolute inset-0 bg-white/20 rounded-full blur-md" />
-                    </div>
-                  </div>
-                )}
-
-                <CardHeader className="text-center pt-10">
-                  <CardTitle className="text-2xl font-bold mb-4">{plan.name}</CardTitle>
-                  <div className="flex items-baseline justify-center gap-x-2">
-                    <span className="text-5xl font-bold bg-gradient-to-br from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
-                      {plan.price}
-                    </span>
-                    <span className="text-gray-500 dark:text-gray-400">
-                      {plan.duration}
-                    </span>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="mt-6">
-                  <ul className="space-y-5 mb-8">
-                    {plan.features.map((feature: string, i: number) => (
-                      <li key={i} className="flex items-start group/item">
-                        <div className="rounded-full p-1 bg-primary/10 group-hover/item:bg-primary/20 transition-colors">
-                          <Check className="h-4 w-4 text-primary" />
+              <motion.div
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="h-full"
+              >
+                <Card className={cn(
+                  "relative h-full transition-all duration-500",
+                  plan.popular && "bg-gradient-to-b from-purple-500/[0.15] to-transparent border-purple-500/50"
+                )}>
+                  {/* Badge Populaire amélioré */}
+                  {plan.popular && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="relative"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-400 blur-lg opacity-50" />
+                        <div className="relative px-6 py-2 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full flex items-center gap-2">
+                          <Star className="w-4 h-4 text-white" fill="white" />
+                          <span className="text-sm font-medium text-white">
+                            {t.pricing.popularBadge}
+                          </span>
                         </div>
-                        <span className="ml-3 text-gray-700 dark:text-gray-300">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+                      </motion.div>
+                    </div>
+                  )}
 
-                  <Button 
-                    className={cn(
-                      "w-full relative overflow-hidden transition-all duration-300",
-                      plan.popular ? [
-                        "bg-gradient-to-r from-primary to-secondary hover:opacity-90",
-                        "after:absolute after:inset-0 after:bg-white/20 after:translate-x-[-100%] after:hover:translate-x-[100%] after:transition-transform after:duration-300"
-                      ] : [
-                        "bg-gray-900 dark:bg-gray-800 hover:bg-gray-800 dark:hover:bg-gray-700",
-                        "border border-gray-200 dark:border-gray-700"
-                      ]
-                    )}
-                  >
-                    {plan.cta}
-                  </Button>
-                </CardContent>
-              </Card>
+                  {/* Contenu de la carte */}
+                  <div className="p-8">
+                    <div className="mb-8 space-y-4">
+                      <h3 className="text-2xl font-bold">{plan.name}</h3>
+                      <div className="flex items-baseline gap-x-2">
+                        <span className="text-5xl font-bold bg-gradient-to-br from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 bg-clip-text text-transparent">
+                          {plan.price}
+                        </span>
+                        <span className="text-gray-500 dark:text-gray-400">
+                          {plan.duration}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Liste des fonctionnalités avec animations */}
+                    <ul className="space-y-5 mb-8">
+                      {plan.features.map((feature: string, i: number) => (
+                        <motion.li
+                          key={i}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                          viewport={{ once: true }}
+                          className="flex items-start group"
+                        >
+                          <div className="rounded-full p-1 bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                            <Check className="h-4 w-4 text-primary" />
+                          </div>
+                          <span className="ml-3 text-gray-700 dark:text-gray-300">
+                            {feature}
+                          </span>
+                        </motion.li>
+                      ))}
+                    </ul>
+
+                    {/* Bouton avec effet de brillance */}
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Button 
+                        className={cn(
+                          "w-full relative overflow-hidden transition-all duration-300",
+                          plan.popular ? [
+                            "bg-gradient-to-r from-purple-600 to-purple-800 hover:opacity-90",
+                            "after:absolute after:inset-0 after:bg-white/20 after:translate-x-[-100%] after:hover:translate-x-[100%] after:transition-transform after:duration-300"
+                          ] : [
+                            "bg-gray-900 dark:bg-gray-800 hover:bg-gray-800 dark:hover:bg-gray-700",
+                            "border border-gray-200 dark:border-gray-700"
+                          ]
+                        )}
+                      >
+                        {plan.cta}
+                      </Button>
+                    </motion.div>
+                  </div>
+
+                  {/* Effet de brillance au hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700" />
+                </Card>
+              </motion.div>
             </FadeIn>
           ))}
         </div>
