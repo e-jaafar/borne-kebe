@@ -220,6 +220,47 @@ export const translations = {
           description: "Une équipe à votre écoute"
         }
       ]
+    },
+    legal: {
+      title: "Légal",
+      privacy: {
+        title: "Politique de confidentialité",
+        content: [
+          "Introduction",
+          "Cette politique de confidentialité décrit comment Borne Kébè collecte, utilise et protège vos données personnelles.",
+          "Données collectées",
+          "Nous collectons uniquement les données nécessaires au bon fonctionnement de nos services : nom, email, photos prises lors des événements.",
+          "Utilisation des données",
+          "Vos données sont utilisées uniquement pour fournir nos services et sont supprimées après 30 jours.",
+          "Protection des données",
+          "Nous utilisons des mesures de sécurité avancées pour protéger vos données personnelles."
+        ]
+      },
+      terms: {
+        title: "Conditions d'utilisation",
+        content: [
+          "Acceptation des conditions",
+          "En utilisant nos services, vous acceptez nos conditions d'utilisation.",
+          "Services proposés",
+          "Location de photobooths pour événements avec personnel qualifié.",
+          "Responsabilités",
+          "Nous nous engageons à fournir un service de qualité et à protéger vos données.",
+          "Limitations",
+          "Notre responsabilité est limitée au montant de la prestation."
+        ]
+      },
+      cookies: {
+        title: "Politique des cookies",
+        content: [
+          "Utilisation des cookies",
+          "Nous utilisons des cookies pour améliorer votre expérience.",
+          "Types de cookies",
+          "Cookies essentiels pour le fonctionnement du site.",
+          "Cookies analytiques pour comprendre l'utilisation.",
+          "Gestion des cookies",
+          "Vous pouvez gérer vos préférences de cookies à tout moment."
+        ]
+      }
     }
   },
   en: {
@@ -443,6 +484,47 @@ export const translations = {
           description: "A team at your service"
         }
       ]
+    },
+    legal: {
+      title: "Legal",
+      privacy: {
+        title: "Privacy Policy",
+        content: [
+          "Introduction",
+          "This privacy policy describes how Borne Kébè collects, uses and protects your personal data.",
+          "Data collected",
+          "We only collect data necessary for our services: name, email, photos taken during events.",
+          "Data usage",
+          "Your data is only used to provide our services and is deleted after 30 days.",
+          "Data protection",
+          "We use advanced security measures to protect your personal data."
+        ]
+      },
+      terms: {
+        title: "Terms of Use",
+        content: [
+          "Terms acceptance",
+          "By using our services, you accept our terms of use.",
+          "Services offered",
+          "Photobooth rental for events with qualified staff.",
+          "Responsibilities",
+          "We commit to providing quality service and protecting your data.",
+          "Limitations",
+          "Our liability is limited to the amount of the service."
+        ]
+      },
+      cookies: {
+        title: "Cookie Policy",
+        content: [
+          "Cookie usage",
+          "We use cookies to improve your experience.",
+          "Cookie types",
+          "Essential cookies for site operation.",
+          "Analytical cookies to understand usage.",
+          "Cookie management",
+          "You can manage your cookie preferences at any time."
+        ]
+      }
     }
   },
   nl: {
@@ -666,6 +748,47 @@ export const translations = {
           description: "Een team tot uw dienst"
         }
       ]
+    },
+    legal: {
+      title: "Juridisch",
+      privacy: {
+        title: "Privacybeleid",
+        content: [
+          "Introductie",
+          "Dit privacybeleid beschrijft hoe Borne Kébè uw persoonlijke gegevens verzamelt, gebruikt en beschermt.",
+          "Verzamelde gegevens",
+          "We verzamelen alleen gegevens die nodig zijn voor onze diensten: naam, e-mail, foto's gemaakt tijdens evenementen.",
+          "Gebruik van gegevens",
+          "Uw gegevens worden alleen gebruikt om onze diensten te leveren en worden na 30 dagen verwijderd.",
+          "Gegevensbescherming",
+          "We gebruiken geavanceerde beveiligingsmaatregelen om uw persoonlijke gegevens te beschermen."
+        ]
+      },
+      terms: {
+        title: "Gebruiksvoorwaarden",
+        content: [
+          "Acceptatie voorwaarden",
+          "Door gebruik te maken van onze diensten, accepteert u onze gebruiksvoorwaarden.",
+          "Aangeboden diensten",
+          "Verhuur van photobooths voor evenementen met gekwalificeerd personeel.",
+          "Verantwoordelijkheden",
+          "Wij verplichten ons tot het leveren van kwaliteitsdiensten en het beschermen van uw gegevens.",
+          "Beperkingen",
+          "Onze aansprakelijkheid is beperkt tot het bedrag van de dienst."
+        ]
+      },
+      cookies: {
+        title: "Cookiebeleid",
+        content: [
+          "Gebruik van cookies",
+          "We gebruiken cookies om uw ervaring te verbeteren.",
+          "Soorten cookies",
+          "Essentiële cookies voor de werking van de site.",
+          "Analytische cookies om gebruik te begrijpen.",
+          "Cookie-beheer",
+          "U kunt uw cookievoorkeuren op elk moment beheren."
+        ]
+      }
     }
   }
 } as const
