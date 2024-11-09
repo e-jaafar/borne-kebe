@@ -78,9 +78,30 @@ export const translations = {
     reviews: {
       title: "Ce que disent nos clients",
       items: [
-        { name: "Marie D.", comment: "Borne Kébè a transformé notre mariage en une expérience inoubliable. Qualité exceptionnelle !" },
-        { name: "Pierre L.", comment: "Parfait pour nos événements d'entreprise. Professionnel et innovant." },
-        { name: "Sophie M.", comment: "Le partage instantané a été un grand succès auprès de nos invités. Très recommandé !" }
+        { 
+          name: "Marie D.", 
+          comment: "Borne Kébè a transformé notre mariage en une expérience inoubliable. La qualité des photos est exceptionnelle et le service est irréprochable !" 
+        },
+        { 
+          name: "Pierre L.", 
+          comment: "Parfait pour nos événements d'entreprise. L'équipe est professionnelle et la technologie est vraiment innovante. Nos collaborateurs ont adoré !" 
+        },
+        { 
+          name: "Sophie M.", 
+          comment: "Le partage instantané a été un grand succès auprès de nos invités. Très recommandé pour tout type d'événement !" 
+        },
+        { 
+          name: "Thomas B.", 
+          comment: "La personnalisation complète a donné une touche unique à notre événement. Le support technique était excellent !" 
+        },
+        { 
+          name: "Julie R.", 
+          comment: "Interface super intuitive et photos de qualité professionnelle. Nos invités n'arrêtaient pas de prendre des photos !" 
+        },
+        { 
+          name: "Marc V.", 
+          comment: "Service client exceptionnel et installation rapide. La borne a été le point fort de notre soirée d'entreprise." 
+        }
       ]
     },
     contact: {
@@ -342,9 +363,30 @@ export const translations = {
     reviews: {
       title: "What Our Clients Say",
       items: [
-        { name: "Mary D.", comment: "Borne Kébè transformed our wedding into an unforgettable experience. Exceptional quality!" },
-        { name: "Peter L.", comment: "Perfect for our corporate events. Professional and innovative." },
-        { name: "Sophie M.", comment: "The instant sharing was a big hit with our guests. Highly recommended!" }
+        { 
+          name: "Mary D.", 
+          comment: "Borne Kébè transformed our wedding into an unforgettable experience. The photo quality is exceptional and the service is flawless!" 
+        },
+        { 
+          name: "Peter L.", 
+          comment: "Perfect for our corporate events. The team is professional and the technology is truly innovative. Our colleagues loved it!" 
+        },
+        { 
+          name: "Sophie M.", 
+          comment: "Instant sharing was a huge hit with our guests. Highly recommended for any type of event!" 
+        },
+        { 
+          name: "Tom B.", 
+          comment: "Complete customization gave our event a unique touch. Technical support was excellent!" 
+        },
+        { 
+          name: "Julie R.", 
+          comment: "Super intuitive interface and professional quality photos. Our guests couldn't stop taking pictures!" 
+        },
+        { 
+          name: "Mark V.", 
+          comment: "Exceptional customer service and quick setup. The booth was the highlight of our company party." 
+        }
       ]
     },
     contact: {
@@ -606,9 +648,30 @@ export const translations = {
     reviews: {
       title: "Wat Onze Klanten Zeggen",
       items: [
-        { name: "Marie D.", comment: "Borne Kébè heeft onze bruiloft omgetoverd tot een onvergetelijke ervaring. Uitzonderlijke kwaliteit!" },
-        { name: "Peter L.", comment: "Perfect voor onze bedrijfsevenementen. Professioneel en innovatief." },
-        { name: "Sophie M.", comment: "Het direct delen was een groot succes bij onze gasten. Zeer aanbevolen!" }
+        { 
+          name: "Marie D.", 
+          comment: "Borne Kébè heeft onze bruiloft omgetoverd tot een onvergetelijke ervaring. De fotokwaliteit is uitzonderlijk en de service is vlekkeloos!" 
+        },
+        { 
+          name: "Peter L.", 
+          comment: "Perfect voor onze bedrijfsevenementen. Het team is professioneel en de technologie is echt innovatief. Onze collega's vonden het geweldig!" 
+        },
+        { 
+          name: "Sophie M.", 
+          comment: "Direct delen was een groot succes bij onze gasten. Zeer aanbevolen voor elk type evenement!" 
+        },
+        { 
+          name: "Tom B.", 
+          comment: "Volledige aanpassing gaf ons evenement een unieke touch. Technische ondersteuning was uitstekend!" 
+        },
+        { 
+          name: "Julie R.", 
+          comment: "Super intuïtieve interface en professionele fotokwaliteit. Onze gasten konden niet stoppen met foto's maken!" 
+        },
+        { 
+          name: "Mark V.", 
+          comment: "Uitzonderlijke klantenservice en snelle installatie. De photobooth was het hoogtepunt van ons bedrijfsfeest." 
+        }
       ]
     },
     contact: {

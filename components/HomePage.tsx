@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Camera, Zap, CheckCircle, Star, Mail, ArrowUp } from "lucide-react"
+import { Users, Camera, Zap, CheckCircle, Mail, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import { useState, useEffect, useRef } from 'react'
 import { DemoVideo } from '@/components/DemoVideo'
@@ -15,6 +15,7 @@ import { loadStarsPreset } from "@tsparticles/preset-stars"
 import { MasonryGrid } from '@/components/MasonryGrid'
 import { TypeAnimation } from 'react-type-animation'
 import { HowItWorks } from '@/components/HowItWorks'
+import { TestimonialsCarousel } from '@/components/TestimonialsCarousel'
 // type S3Image = {
 //   Key: string
 //   LastModified: string
@@ -474,37 +475,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </div>
       </section>
 
-      {/* Reviews Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-[#140b24]">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <FadeIn>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">
-              {t.reviews.title}
-            </h2>
-          </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {t.reviews.items.map((review, index) => (
-              <FadeIn key={index} delay={index * 0.1}>
-                <Card className="h-full hover:shadow-lg transition-all duration-300">
-                  <CardContent className="flex flex-col items-center h-full p-6">
-                    <div className="flex items-center space-x-1 mb-6">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-current text-yellow-500" />
-                      ))}
-                    </div>
-                    <p className="text-center text-gray-600 dark:text-gray-300 flex-1 flex items-center">
-                      {review.comment}
-                    </p>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 w-full text-center">
-                      {review.name}
-                    </p>
-                  </CardContent>
-                </Card>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Section témoignages améliorée */}
+      <TestimonialsCarousel 
+        reviews={t.reviews.items}
+        title={t.reviews.title}
+      />
 
       {/* Gallery Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
