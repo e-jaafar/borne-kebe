@@ -184,7 +184,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           style={{ scale: imageScale }}
         >
           <Image
-            src="/videos/photobooth.jpg"
+            src="/videos/hero1.jpg"
             alt="Photobooth professionnel en action"
             fill
             priority
