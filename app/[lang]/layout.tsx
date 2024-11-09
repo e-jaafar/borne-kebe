@@ -9,7 +9,10 @@ type LayoutProps = {
   params: { lang: string }
 }
 
-const baseUrl = 'https://www.xn--borne-kb-80ai.com'
+const domains = {
+  main: 'https://www.xn--borne-kb-80ai.com',
+  alt: 'https://www.borne-kebe.com'
+}
 
 export default function Layout({ children, params: { lang } }: LayoutProps) {
   if (!isValidLang(lang)) {
@@ -26,6 +29,13 @@ export default function Layout({ children, params: { lang } }: LayoutProps) {
 }
 
 export async function generateMetadata({ params: { lang } }: { params: { lang: string } }): Promise<Metadata> {
+  const ogImage = {
+    url: `${domains.main}/og-image.jpg`,
+    width: 1200,
+    height: 630,
+    alt: 'Borne Kébè Photobooth'
+  }
+
   return {
     title: "Borne Kébè | Location de Photobooth Professionnel",
     description: "Location de photobooths haut de gamme pour vos événements professionnels et privés. Qualité studio, partage instantané et personnalisation complète.",
@@ -33,28 +43,37 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: s
     openGraph: {
       title: "Borne Kébè | Location de Photobooth Professionnel",
       description: "Location de photobooths haut de gamme pour vos événements",
-      images: [{
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Borne Kébè Photobooth'
-      }],
+      images: [
+        ogImage,
+        // Version alternative pour le domaine sans accent
+        {
+          ...ogImage,
+          url: `${domains.alt}/og-image.jpg`
+        }
+      ],
       locale: 'fr_FR',
       type: 'website',
-      url: baseUrl,
+      url: domains.main,
       siteName: 'Borne Kébè',
+      // Domaines alternatifs
+      alternateUrls: [domains.alt]
     },
     twitter: {
       card: 'summary_large_image',
       title: 'Borne Kébè | Location de Photobooth Professionnel',
       description: 'Location de photobooths haut de gamme pour vos événements',
-      images: ['/og-image.jpg'],
+      images: [ogImage.url],
     },
     alternates: {
-      canonical: `${baseUrl}/${lang}`,
+      canonical: `${domains.main}/${lang}`,
       languages: Object.fromEntries(
-        languages.map(l => [l, `${baseUrl}/${l}`])
+        languages.map(l => [l, `${domains.main}/${l}`])
       ),
+      // URLs alternatives pour le domaine sans accent
+      alternate: languages.map(l => ({
+        hrefLang: l,
+        href: `${domains.alt}/${l}`
+      }))
     },
     robots: {
       index: true,
