@@ -45,7 +45,6 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: s
       description: "Location de photobooths haut de gamme pour vos événements",
       images: [
         ogImage,
-        // Version alternative pour le domaine sans accent
         {
           ...ogImage,
           url: `${domains.alt}/og-image.jpg`
@@ -54,9 +53,7 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: s
       locale: 'fr_FR',
       type: 'website',
       url: domains.main,
-      siteName: 'Borne Kébè',
-      // Domaines alternatifs
-      alternateUrls: [domains.alt]
+      siteName: 'Borne Kébè'
     },
     twitter: {
       card: 'summary_large_image',
@@ -66,14 +63,14 @@ export async function generateMetadata({ params: { lang } }: { params: { lang: s
     },
     alternates: {
       canonical: `${domains.main}/${lang}`,
-      languages: Object.fromEntries(
-        languages.map(l => [l, `${domains.main}/${l}`])
-      ),
-      // URLs alternatives pour le domaine sans accent
-      alternate: languages.map(l => ({
-        hrefLang: l,
-        href: `${domains.alt}/${l}`
-      }))
+      languages: {
+        ...Object.fromEntries(
+          languages.map(l => [l, `${domains.main}/${l}`])
+        ),
+        ...Object.fromEntries(
+          languages.map(l => [l, `${domains.alt}/${l}`])
+        )
+      }
     },
     robots: {
       index: true,
