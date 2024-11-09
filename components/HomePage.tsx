@@ -111,62 +111,82 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
   return (
     <main role="main" className="flex flex-col items-center relative">
-      {/* Particules interactives - pour tout le site */}
+      {/* Particules interactives avec paramètres optimisés */}
       {init && (
         <Particles
           id="tsparticles"
           className="fixed inset-0 z-20 pointer-events-none"
           options={{
-            preset: "stars",
-            fullScreen: { enable: false },
-            background: {
-              opacity: 0
-            },
             particles: {
               number: {
-                value: 40,
+                value: 50,
                 density: {
-                  enable: true
+                  enable: true,
+                  width: 1920,
+                  height: 1080
                 }
               },
               color: {
-                value: ["#ffffff", "#9333ea"]
+                value: ["#ffffff", "#9333ea", "#a855f7", "#c084fc"]
               },
               move: {
                 enable: true,
-                speed: 0.3,
-                direction: "none"
+                speed: 0.5,
+                direction: "none",
+                random: true,
+                straight: false,
+                outModes: {
+                  default: "bounce"
+                }
               },
               size: {
-                value: { min: 0.5, max: 2 }
+                value: { min: 2, max: 4 }
               },
               opacity: {
-                value: { min: 0.2, max: 0.5 }
-              }
-            },
-            interactivity: {
-              events: {
-                onHover: {
-                  enable: false,
-                  mode: "bubble"
+                value: { min: 0.3, max: 0.7 }
+              },
+              interactivity: {
+                detectsOn: "window",
+                events: {
+                  onHover: {
+                    enable: true,
+                    mode: "slow",
+                    parallax: {
+                      enable: true,
+                      force: 20,
+                      smooth: 200
+                    }
+                  }
                 },
-                onClick: {
-                  enable: false,
-                  mode: "repulse"
+                modes: {
+                  slow: {
+                    factor: 3,
+                    radius: 200
+                  },
+                  grab: {
+                    distance: 400,
+                    links: {
+                      opacity: 0.3,
+                      width: 2
+                    }
+                  }
                 }
               },
-              modes: {
-                bubble: {
-                  distance: 200,
-                  size: 3,
-                  opacity: 0.8
-                },
-                repulse: {
-                  distance: 200
-                }
+              links: {
+                enable: true,
+                distance: 200,
+                color: "#9333ea",
+                opacity: 0.2,
+                width: 1.5
               }
             },
-            detectRetina: true
+            fullScreen: {
+              enable: false
+            },
+            detectRetina: true,
+            background: {
+              color: "transparent"
+            }
           }}
         />
       )}
