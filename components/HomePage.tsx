@@ -39,6 +39,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   const [init, setInit] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [isNearBottom, setIsNearBottom] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 })
 
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -46,10 +47,17 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
     offset: ["start start", "end start"]
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
-  // Initialisation des particules
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!heroRef.current) return
+    const rect = heroRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width
+    const y = (e.clientY - rect.top) / rect.height
+    setMousePosition({ x, y })
+  }
+
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadStarsPreset(engine)
@@ -165,38 +173,43 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {/* Hero Section améliorée */}
       <section 
         ref={heroRef} 
+        onMouseMove={handleMouseMove}
         aria-label="Hero section"
-        className="relative w-full min-h-[90vh] flex items-center py-12 md:py-24 lg:py-32 xl:py-40 overflow-hidden"
+        className="relative w-full min-h-[90vh] flex items-center py-12 md:py-24 lg:py-32 xl:py-40 overflow-hidden bg-[#1a0f2e]"
       >
-        {/* Background avec Parallax amélioré */}
+        {/* Background avec Parallaxe amélioré */}
         <motion.div 
-          style={{ y, opacity }} 
           className="absolute inset-0 z-0"
+          style={{ scale: imageScale }}
         >
           <Image
             src="/videos/photobooth.jpg"
-            alt="Photobooth professionnel en action lors d'un événement"
+            alt="Photobooth professionnel en action"
             fill
             priority
-            loading="eager"
             quality={90}
-            className="object-cover scale-110 transform transition-transform duration-500"
-            sizes="100vw"
+            className="object-cover transition-transform duration-300 ease-out"
+            style={{
+              transform: `scale(1.1) translate(${(mousePosition.x - 0.5) * 10}px, ${(mousePosition.y - 0.5) * 10}px)`
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 backdrop-blur-sm z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f2e]/90 via-[#1a0f2e]/70 to-[#1a0f2e]/90 backdrop-blur-[2px]" />
         </motion.div>
 
-        {/* Contenu du Hero */}
-        <div className="relative z-20 container mx-auto max-w-7xl px-4 md:px-6">
+        {/* Contenu optimisé pour mobile */}
+        <motion.div 
+          className="relative z-30 container mx-auto max-w-7xl px-4 md:px-6"
+          style={{ opacity: contentOpacity }}
+        >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col items-center space-y-6 text-center"
+            className="flex flex-col items-center space-y-8 md:space-y-6 text-center"
           >
-            <header className="space-y-4 max-w-[800px] mx-auto">
+            <header className="space-y-6 md:space-y-4 max-w-[800px] mx-auto">
               <motion.h1 
-                className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white drop-shadow-lg"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white drop-shadow-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -205,10 +218,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                   sequence={[
                     t.hero.title,
                     1000,
-                    t.hero.sequences?.[0] || 'Photobooth Premium',
-                    1000,
-                    t.hero.sequences?.[1] || 'Événements Uniques',
-                    1000,
+                    ...t.hero.sequences,
                   ]}
                   wrapper="span"
                   speed={50}
@@ -218,7 +228,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               </motion.h1>
 
               <motion.p 
-                className="mx-auto max-w-[700px] text-gray-100 md:text-xl drop-shadow-md"
+                className="text-base sm:text-lg md:text-xl text-gray-100 max-w-[90%] mx-auto leading-relaxed px-4 md:px-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
@@ -227,58 +237,46 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               </motion.p>
             </header>
 
-            <motion.nav 
-              aria-label="Actions principales"
+            {/* Boutons CTA optimisés pour mobile */}
+            <motion.div 
+              className="flex flex-col sm:flex-row w-full sm:w-auto gap-4 px-6 sm:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
             >
-              <div className="flex flex-col sm:flex-row gap-4 sm:space-x-4 w-full sm:w-auto">
-                <motion.div
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 0 20px rgba(168,85,247,0.4)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button 
-                    asChild 
-                    size="lg" 
-                    className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group"
-                  >
-                    <Link href={`/${lang}/pricing`}>
-                      <span className="relative z-10">{t.hero.cta1}</span>
-                      <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
-                    </Link>
-                  </Button>
-                </motion.div>
+              <Button 
+                asChild 
+                size="lg" 
+                className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg relative overflow-hidden group bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 shadow-lg"
+              >
+                <Link href={`/${lang}/pricing`}>
+                  <span className="relative z-10">{t.hero.cta1}</span>
+                  <motion.div 
+                    className="absolute inset-0 bg-white/20"
+                    initial={{ x: '-100%' }}
+                    whileHover={{ x: '100%' }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </Link>
+              </Button>
 
-                <motion.div
-                  whileHover={{ 
-                    scale: 1.05,
-                    boxShadow: "0 0 20px rgba(255,255,255,0.2)"
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button 
-                    asChild 
-                    variant="outline" 
-                    size="lg" 
-                    className="w-full sm:w-auto border-2 border-white text-white bg-transparent hover:bg-white/10 transition-all duration-300 shadow-lg backdrop-blur-sm"
-                  >
-                    <Link href={`/${lang}/features`}>
-                      {t.hero.cta2}
-                    </Link>
-                  </Button>
-                </motion.div>
-              </div>
-            </motion.nav>
+              <Button 
+                asChild 
+                variant="outline" 
+                size="lg" 
+                className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg border-2 border-white text-white bg-transparent hover:bg-white/10"
+              >
+                <Link href={`/${lang}/features`}>
+                  {t.hero.cta2}
+                </Link>
+              </Button>
+            </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
 
-        {/* Effet de scroll indicator */}
+        {/* Indicateur de scroll amélioré */}
         <motion.div
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
           animate={{
             y: [0, 10, 0],
           }}
@@ -288,11 +286,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             ease: "easeInOut",
           }}
         >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center p-2">
+          <div className="w-8 h-14 border-2 border-white/50 rounded-full flex justify-center p-2 backdrop-blur-sm">
             <motion.div
-              className="w-1 h-1 bg-white/80 rounded-full"
+              className="w-2 h-2 bg-white rounded-full"
               animate={{
-                y: [0, 16, 0],
+                y: [0, 20, 0],
               }}
               transition={{
                 duration: 1.5,
@@ -301,6 +299,19 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               }}
             />
           </div>
+          <motion.p 
+            className="text-white/70 text-sm mt-2 text-center font-light tracking-wider"
+            animate={{
+              opacity: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            SCROLL
+          </motion.p>
         </motion.div>
       </section>
 
