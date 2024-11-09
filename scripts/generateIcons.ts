@@ -16,16 +16,16 @@ const sizes = [
   { name: 'favicon-16x16.png', size: 16 }
 ];
 
-const createInitialsSVG = (size: number) => `
+const createPhotoboothSVG = (size: number) => `
   <svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#2B3A67;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#1B1B3A;stop-opacity:1" />
+        <stop offset="0%" style="stop-color:#1a0f2e;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#2d1f42;stop-opacity:1" />
       </linearGradient>
-      <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+      <linearGradient id="lensGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#9333ea;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
       </linearGradient>
       <filter id="glow">
         <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
@@ -34,44 +34,91 @@ const createInitialsSVG = (size: number) => `
           <feMergeNode in="SourceGraphic"/>
         </feMerge>
       </filter>
+      <filter id="innerShadow">
+        <feOffset dx="0" dy="1"/>
+        <feGaussianBlur stdDeviation="1"/>
+        <feComposite operator="out" in="SourceGraphic"/>
+        <feComponentTransfer>
+          <feFuncA type="linear" slope="0.7"/>
+        </feComponentTransfer>
+        <feBlend mode="multiply" in2="SourceGraphic"/>
+      </filter>
     </defs>
 
     <!-- Fond avec coins arrondis -->
     <rect width="${size}" height="${size}" fill="url(#bgGrad)" rx="${size * 0.2}" />
 
-    <!-- K stylisé -->
-    <path 
-      d="
-        M${size * 0.3} ${size * 0.25}
-        L${size * 0.3} ${size * 0.75}
-        M${size * 0.3} ${size * 0.5}
-        L${size * 0.7} ${size * 0.25}
-        M${size * 0.3} ${size * 0.5}
-        L${size * 0.7} ${size * 0.75}
-      "
-      stroke="url(#accentGrad)"
-      stroke-width="${size * 0.08}"
-      stroke-linecap="round"
-      fill="none"
+    <!-- Corps du photobooth -->
+    <rect 
+      x="${size * 0.2}" 
+      y="${size * 0.15}" 
+      width="${size * 0.6}" 
+      height="${size * 0.7}" 
+      fill="url(#lensGrad)"
+      rx="${size * 0.1}"
       filter="url(#glow)"
     />
 
-    <!-- Éléments décoratifs -->
+    <!-- Objectif principal -->
     <circle 
-      cx="${size * 0.7}" 
-      cy="${size * 0.3}" 
-      r="${size * 0.05}" 
-      fill="url(#accentGrad)"
+      cx="${size * 0.5}" 
+      cy="${size * 0.4}" 
+      r="${size * 0.15}" 
+      fill="#140b24"
+      stroke="url(#lensGrad)"
+      stroke-width="${size * 0.02}"
       filter="url(#glow)"
     />
-    
-    <!-- Ligne décorative -->
-    <path
-      d="M${size * 0.2} ${size * 0.85} L${size * 0.8} ${size * 0.85}"
-      stroke="url(#accentGrad)"
-      stroke-width="${size * 0.02}"
-      stroke-linecap="round"
-      opacity="0.6"
+
+    <!-- Reflet de l'objectif -->
+    <circle 
+      cx="${size * 0.5}" 
+      cy="${size * 0.4}" 
+      r="${size * 0.12}" 
+      fill="none"
+      stroke="rgba(255,255,255,0.2)"
+      stroke-width="${size * 0.01}"
+    />
+
+    <!-- Flash -->
+    <rect
+      x="${size * 0.65}"
+      y="${size * 0.25}"
+      width="${size * 0.1}"
+      height="${size * 0.1}"
+      fill="#ffffff"
+      rx="${size * 0.02}"
+      filter="url(#glow)"
+    />
+
+    <!-- Bande décorative -->
+    <rect
+      x="${size * 0.2}"
+      y="${size * 0.65}"
+      width="${size * 0.6}"
+      height="${size * 0.05}"
+      fill="rgba(255,255,255,0.1)"
+      rx="${size * 0.02}"
+    />
+
+    <!-- Sortie photo -->
+    <rect
+      x="${size * 0.35}"
+      y="${size * 0.75}"
+      width="${size * 0.3}"
+      height="${size * 0.05}"
+      fill="#140b24"
+      rx="${size * 0.01}"
+    />
+
+    <!-- Effet de brillance -->
+    <rect
+      x="${size * 0.2}"
+      y="${size * 0.15}"
+      width="${size * 0.6}"
+      height="${size * 0.1}"
+      fill="rgba(255,255,255,0.1)"
+      rx="${size * 0.05}"
     />
   </svg>
 `;
@@ -85,7 +132,7 @@ async function generateIcons() {
 
     // Générer les icônes PNG
     for (const { name, size } of sizes) {
-      const svg = createInitialsSVG(size);
+      const svg = createPhotoboothSVG(size);
       const outputPath = join(publicDir, name);
       
       await sharp(Buffer.from(svg))
