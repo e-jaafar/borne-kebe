@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Camera, Zap, CheckCircle, Star, Share2, Settings, Mail, ArrowUp } from "lucide-react"
+import { Users, Camera, Zap, CheckCircle, Star, Mail, ArrowUp } from "lucide-react"
 import Image from "next/image"
 import { useState, useEffect, useRef } from 'react'
 import { DemoVideo } from '@/components/DemoVideo'
