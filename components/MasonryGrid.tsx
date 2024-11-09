@@ -106,15 +106,6 @@ export function MasonryGrid({ images }: MasonryGridProps) {
 
   return (
     <>
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
-          Nos Événements
-        </h2>
-        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Découvrez les moments magiques capturés lors des événements où notre photobooth a créé des souvenirs inoubliables.
-        </p>
-      </div>
-
       <div ref={containerRef} className="w-full px-4 py-8">
         <motion.div 
           initial={{ opacity: 0 }}

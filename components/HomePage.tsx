@@ -494,7 +494,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
                 {t.gallery.title}
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-400">

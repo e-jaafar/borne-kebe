@@ -118,8 +118,8 @@ export const translations = {
       ]
     },
     gallery: {
-      title: "Notre galerie",
-      subtitle: "Découvrez les moments magiques capturés lors de nos événements"
+      title: "Nos Événements",
+      subtitle: "Découvrez les moments magiques capturés lors des événements où notre photobooth a créé des souvenirs inoubliables."
     },
     scrollToTop: '',
     pricing: {
@@ -341,8 +341,8 @@ export const translations = {
       ]
     },
     gallery: {
-      title: "Our Gallery",
-      subtitle: "Discover the magical moments captured during our events"
+      title: "Our Events",
+      subtitle: "Discover the magical moments captured during events where our photobooth created unforgettable memories."
     },
     scrollToTop: '',
     pricing: {
@@ -564,8 +564,8 @@ export const translations = {
       ]
     },
     gallery: {
-      title: "Onze Galerij",
-      subtitle: "Ontdek de magische momenten vastgelegd tijdens onze evenementen"
+      title: "Onze Evenementen",
+      subtitle: "Ontdek de magische momenten vastgelegd tijdens evenementen waar onze photobooth onvergetelijke herinneringen heeft gecreëerd."
     },
     scrollToTop: '',
     pricing: {

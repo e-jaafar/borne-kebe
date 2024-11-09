@@ -17,13 +17,7 @@ const translations = {
     links: "Navigation",
     services: "Services",
     pricing: "Tarifs",
-    about: "À propos",
-    legal: {
-      title: "Légal",
-      privacy: "Politique de confidentialité",
-      terms: "Conditions d'utilisation",
-      cookies: "Politique des cookies"
-    }
+    about: "À propos"
   },
   en: {
     copyright: "All rights reserved",
@@ -36,13 +30,7 @@ const translations = {
     links: "Navigation",
     services: "Services",
     pricing: "Pricing",
-    about: "About",
-    legal: {
-      title: "Legal",
-      privacy: "Privacy Policy",
-      terms: "Terms of Use",
-      cookies: "Cookie Policy"
-    }
+    about: "About"
   },
   nl: {
     copyright: "Alle rechten voorbehouden",
@@ -55,13 +43,7 @@ const translations = {
     links: "Navigatie",
     services: "Diensten",
     pricing: "Prijzen",
-    about: "Over ons",
-    legal: {
-      title: "Juridisch",
-      privacy: "Privacybeleid",
-      terms: "Gebruiksvoorwaarden",
-      cookies: "Cookiebeleid"
-    }
+    about: "Over ons"
   }
 }
 
@@ -133,7 +115,7 @@ export function Footer() {
       </div>
 
       <div className="container mx-auto max-w-7xl px-4 md:px-6 pt-16 pb-8 md:pb-8 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           {/* Section Logo et Description */}
           <div className="space-y-4">
             <Link 
@@ -247,39 +229,6 @@ export function Footer() {
                   <Clock className="w-4 h-4" />
                   <span>Lun-Ven: 9h-18h</span>
                 </div>
-              </li>
-            </ul>
-          </div>
-
-          {/* Section Légal */}
-          <div>
-            <h3 className="font-semibold text-lg mb-4 text-gray-900 dark:text-gray-100">
-              {t.legal.title}
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link 
-                  href={`/${lang}/privacy`}
-                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-                >
-                  {t.legal.privacy}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href={`/${lang}/terms`}
-                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-                >
-                  {t.legal.terms}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href={`/${lang}/cookies`}
-                  className="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-                >
-                  {t.legal.cookies}
-                </Link>
               </li>
             </ul>
           </div>
