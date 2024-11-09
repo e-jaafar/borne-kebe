@@ -53,8 +53,8 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative max-w-5xl mx-auto">
+        {/* Timeline - Version Desktop */}
+        <div className="relative max-w-5xl mx-auto hidden md:block">
           {/* Ligne de connexion */}
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-500/20 to-purple-500/40 rounded-full" />
 
@@ -108,6 +108,62 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
               )
             })}
           </div>
+        </div>
+
+        {/* Version Mobile */}
+        <div className="md:hidden space-y-8">
+          {stepsWithIcons.map((step, index) => {
+            const Icon = step.icon
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative"
+              >
+                {/* Carte */}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="bg-white dark:bg-[#2d1f42] p-6 rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-800/50 relative overflow-hidden"
+                >
+                  {/* En-tête avec icône et numéro */}
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="flex-shrink-0">
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-600 shadow-lg flex items-center justify-center"
+                      >
+                        <Icon className="w-6 h-6 text-white" />
+                      </motion.div>
+                    </div>
+                    <div className="flex-grow">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {step.title}
+                      </h3>
+                      <span className="text-sm text-purple-500 dark:text-purple-400">
+                        Étape {index + 1}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Description */}
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                    {step.description}
+                  </p>
+
+                  {/* Effet de brillance */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                </motion.div>
+
+                {/* Ligne de connexion (sauf pour le dernier élément) */}
+                {index < stepsWithIcons.length - 1 && (
+                  <div className="absolute left-6 top-full h-8 w-px bg-gradient-to-b from-purple-500/20 to-purple-500/40" />
+                )}
+              </motion.div>
+            )
+          })}
         </div>
       </section>
     </div>
