@@ -1,30 +1,43 @@
-import { MetadataRoute } from 'next'
 import { languages } from '@/config/i18n'
+import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.xn--borne-kb-80ai.com'
   const lastModified = new Date()
 
-  // Routes principales
-  const mainRoutes = ['', '/features', '/pricing', '/contact']
-  
+  // Routes principales avec priorités SEO
+  const routes = [
+    {
+      url: '',
+      priority: 1.0,
+      changeFreq: 'weekly'
+    },
+    {
+      url: '/pricing',
+      priority: 0.9,
+      changeFreq: 'weekly'
+    },
+    {
+      url: '/contact',
+      priority: 0.8,
+      changeFreq: 'monthly'
+    },
+    {
+      url: '/features',
+      priority: 0.8,
+      changeFreq: 'monthly'
+    },
+  ]
+
   // Générer toutes les URLs pour chaque langue
-  const urls = mainRoutes.flatMap(route => 
+  const urls = routes.flatMap(route => 
     languages.map(lang => ({
-      url: `${baseUrl}/${lang}${route}`,
+      url: `${baseUrl}/${lang}${route.url}`,
       lastModified,
-      changeFrequency: route === '' ? 'weekly' : 'monthly' as 'weekly' | 'monthly',
-      priority: route === '' ? 1 : 0.8,
+      changeFrequency: route.changeFreq as 'weekly' | 'monthly',
+      priority: route.priority,
     }))
   )
-
-  // Ajouter les URLs spéciales
-  urls.push({
-    url: `${baseUrl}/sitemap.xml`,
-    lastModified,
-    changeFrequency: 'monthly',
-    priority: 0.4,
-  })
 
   return urls
 } 
