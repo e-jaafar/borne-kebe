@@ -13,10 +13,11 @@ const sizes = [
   { name: 'apple-icon.png', size: 180 },
   { name: 'mstile-150x150.png', size: 150 },
   { name: 'favicon-32x32.png', size: 32 },
-  { name: 'favicon-16x16.png', size: 16 }
+  { name: 'favicon-16x16.png', size: 16 },
+  { name: 'favicon.png', size: 32 }
 ];
 
-const createPhotoboothSVG = (size: number) => `
+export const createPhotoboothSVG = (size: number) => `
   <svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
