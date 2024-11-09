@@ -78,14 +78,24 @@ const config: Config = {
                 'float-slower': {
                     '0%, 100%': { transform: 'translateY(0) scale(1.1)' },
                     '50%': { transform: 'translateY(-8px) scale(0.9)' }
+                },
+                'pulse-glow': {
+                    '0%, 100%': { opacity: '0.5', transform: 'scale(1)' },
+                    '50%': { opacity: '1', transform: 'scale(1.05)' }
+                },
+                'shimmer': {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(100%)' }
                 }
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
-                'float': 'float 4s ease-in-out infinite',
+                'float': 'float 6s ease-in-out infinite',
                 'float-slow': 'float-slow 6s ease-in-out infinite',
-                'float-slower': 'float-slower 8s ease-in-out infinite'
+                'float-slower': 'float-slower 8s ease-in-out infinite',
+                'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                'shimmer': 'shimmer 2s infinite'
             },
         },
     },

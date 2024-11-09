@@ -106,7 +106,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {init && (
         <Particles
           id="tsparticles"
-          className="fixed inset-0 z-20"
+          className="fixed inset-0 z-20 pointer-events-none"
           options={{
             preset: "stars",
             fullScreen: { enable: false },
@@ -138,11 +138,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             interactivity: {
               events: {
                 onHover: {
-                  enable: true,
+                  enable: false,
                   mode: "bubble"
                 },
                 onClick: {
-                  enable: true,
+                  enable: false,
                   mode: "repulse"
                 }
               },
@@ -375,42 +375,83 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-100 to-white dark:from-[#140b24] dark:to-[#1a0f2e]">
+      {/* Features Section avec effets 3D et micro-interactions */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-purple-200 dark:to-white bg-clip-text text-transparent">
               {t.features.title}
             </h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {t.features.items.slice(0, 3).map((feature, index) => (
               <FadeIn key={index} delay={index * 0.1}>
-                <Card className="hover:shadow-lg transition-all duration-300">
-                  <CardContent className="flex flex-col items-center space-y-4 p-6">
-                    {index === 0 && <Users className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
-                    {index === 1 && <Camera className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
-                    {index === 2 && <Zap className="h-12 w-12 text-gray-900 dark:text-gray-200" />}
-                    <h3 className="text-xl font-bold text-center text-gray-900 dark:text-gray-50 mb-4">
-                      {feature.title}
-                    </h3>
-                    <p className="text-base text-center text-gray-600 dark:text-gray-300">
-                      {feature.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.02,
+                    rotateY: 5,
+                    rotateX: 5,
+                    translateZ: 20
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  className="h-full perspective-1000"
+                >
+                  <Card className="relative h-full overflow-hidden bg-gradient-to-br from-white to-gray-50/50 dark:from-[#2d1f42]/80 dark:to-[#1a0f2e]/80 hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-purple-900/20 backdrop-blur-sm group">
+                    {/* Effet de brillance au hover */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                    </div>
+
+                    {/* Cercle décoratif avec animation */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full -mr-16 -mt-16 transform group-hover:scale-150 group-hover:rotate-45 transition-transform duration-500" />
+
+                    <CardContent className="flex flex-col items-center space-y-4 p-6 relative z-10">
+                      {/* Icône avec animation */}
+                      <motion.div
+                        whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                        transition={{ duration: 0.5 }}
+                        className="relative"
+                      >
+                        <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-900 flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 shadow-lg">
+                          {index === 0 && <Users className="h-8 w-8 text-white" />}
+                          {index === 1 && <Camera className="h-8 w-8 text-white" />}
+                          {index === 2 && <Zap className="h-8 w-8 text-white" />}
+                          
+                          {/* Effet de pulse */}
+                          <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transform scale-90 group-hover:scale-150 transition-all duration-700" />
+                        </div>
+                      </motion.div>
+
+                      <h3 className="text-xl font-bold text-center text-gray-900 dark:text-gray-50 group-hover:text-purple-700 dark:group-hover:text-purple-400 transition-colors duration-300">
+                        {feature.title}
+                      </h3>
+
+                      <p className="text-base text-center text-gray-600 dark:text-gray-300">
+                        {feature.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               </FadeIn>
             ))}
           </div>
           <FadeIn delay={0.4}>
             <div className="text-center mt-12">
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-gray-900 dark:bg-gray-200 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 transition-all duration-300"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <Link href={`/${lang}/features`}>{t.features.cta}</Link>
-              </Button>
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group"
+                >
+                  <Link href={`/${lang}/features`}>
+                    <span className="relative z-10">{t.features.cta}</span>
+                    <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
+                  </Link>
+                </Button>
+              </motion.div>
             </div>
           </FadeIn>
         </div>

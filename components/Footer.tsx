@@ -302,7 +302,7 @@ export function Footer() {
               </motion.div>
               <span>{t.by}</span>
               <Link 
-                href={`/${lang}/contact`}
+                href={`https://www.linkedin.com/in/jaafar-el/`}
                 className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium ml-1"
               >
                 Jaafar
