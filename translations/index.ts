@@ -86,8 +86,10 @@ export const translations = {
     contact: {
       title: "Une question, besoin d'information ?",
       subtitle: "Notre équipe est là pour vous aider",
+      description: "Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.",
       cta: "Contactez-nous",
-      floating_button: "Nous contacter"
+      floating_button: "Nous contacter",
+      dropzone: "Déposez vos fichiers ici"
     },
     howItWorks: {
       title: "Comment ça marche ?",
@@ -182,9 +184,10 @@ export const translations = {
       error: "Une erreur est survenue. Veuillez réessayer.",
       required: "Ce champ est requis",
       invalidEmail: "Email invalide",
-      attachment: "Pièce jointe (max 5MB)",
+      attachment: "Ajouter une pièce jointe",
       attachmentTooLarge: "Le fichier est trop volumineux (max 5MB)",
-      invalidFileType: "Type de fichier non supporté"
+      invalidFileType: "Type de fichier non supporté",
+      dropzone: "Déposez vos fichiers ici"
     },
     info: {
       title: "Informations de contact",
@@ -304,10 +307,12 @@ export const translations = {
       ]
     },
     contact: {
-      title: "Got a question or need information?",
+      title: "Have a question, need information?",
       subtitle: "Our team is here to help",
+      description: "Fill out the form below and we'll get back to you as soon as possible.",
       cta: "Contact us",
-      floating_button: "Contact us"
+      floating_button: "Contact us",
+      dropzone: "Drop your files here"
     },
     howItWorks: {
       title: "How it works?",
@@ -404,7 +409,8 @@ export const translations = {
       invalidEmail: "Invalid email",
       attachment: "Attachment (max 5MB)",
       attachmentTooLarge: "File is too large (max 5MB)",
-      invalidFileType: "Unsupported file type"
+      invalidFileType: "Unsupported file type",
+      dropzone: "Drop your files here"
     },
     info: {
       title: "Contact Information",
@@ -524,10 +530,12 @@ export const translations = {
       ]
     },
     contact: {
-      title: "Een vraag of informatie nodig?",
+      title: "Een vraag, informatie nodig?",
       subtitle: "Ons team staat voor u klaar",
-      cta: "Neem contact op",
-      floating_button: "Contact"
+      description: "Vul het onderstaande formulier in en we nemen zo snel mogelijk contact met u op.",
+      cta: "Contacteer ons",
+      floating_button: "Contact",
+      dropzone: "Drop your files here"
     },
     howItWorks: {
       title: "Hoe werkt het?",
@@ -624,7 +632,8 @@ export const translations = {
       invalidEmail: "Ongeldig e-mailadres",
       attachment: "Bijlage (max 5MB)",
       attachmentTooLarge: "Bestand is te groot (max 5MB)",
-      invalidFileType: "Niet-ondersteund bestandstype"
+      invalidFileType: "Niet-ondersteund bestandstype",
+      dropzone: "Drop your files here"
     },
     info: {
       title: "Contactgegevens",

@@ -8,9 +8,26 @@ export async function POST(request: Request) {
     const body = await request.json()
     const { name, email, subject, message } = body
 
+    // Validation des données
+    if (!name || !email || !subject || !message) {
+      return NextResponse.json(
+        { error: 'Tous les champs sont requis' },
+        { status: 400 }
+      )
+    }
+
+    // Validation de l'email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Email invalide' },
+        { status: 400 }
+      )
+    }
+
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'elmrabet.jaafar@gmail.com',
+      from: 'Borne Kébè <onboarding@resend.dev>',
+      to: ['elmrabet.jaafar@gmail.com'], // Mettre votre email en tableau
       subject: `Nouveau message de ${name}: ${subject}`,
       replyTo: email,
       text: `
@@ -22,13 +39,15 @@ export async function POST(request: Request) {
         ${message}
       `,
       html: `
-        <h2>Nouveau message de contact</h2>
-        <p><strong>Nom:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Sujet:</strong> ${subject}</p>
-        <br/>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br/>')}</p>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #6b21a8;">Nouveau message de contact</h2>
+          <p><strong>Nom:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Sujet:</strong> ${subject}</p>
+          <br/>
+          <p><strong>Message:</strong></p>
+          <p style="white-space: pre-line;">${message}</p>
+        </div>
       `
     })
 

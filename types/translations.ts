@@ -17,6 +17,13 @@ export type HomePageTranslations = {
     cta1: string
     cta2: string
   }
+  contact: {
+    title: string
+    subtitle: string
+    description: string
+    cta: string
+    floating_button: string
+  }
   features: {
     title: string
     subtitle: string
@@ -39,12 +46,6 @@ export type HomePageTranslations = {
       name: string
       comment: string
     }>
-  }
-  contact: {
-    title: string
-    subtitle: string
-    cta: string
-    floating_button: string
   }
   howItWorks: {
     title: string
@@ -86,6 +87,9 @@ export type ContactTranslations = {
     attachment: string
     attachmentTooLarge: string
     invalidFileType: string
+    dropzone: string
+    required: string
+    invalidEmail: string
   }
   info: {
     title: string

@@ -39,7 +39,7 @@ export function PricingPage({ translations: t }: PricingPageProps) {
                   >
                     <Card 
                       className={cn(
-                        "flex-1 relative transition-all duration-300 h-full",
+                        "flex-1 relative transition-all duration-300 h-full pt-8",
                         plan.popular && [
                           "border-primary",
                           "shadow-lg",
@@ -52,7 +52,7 @@ export function PricingPage({ translations: t }: PricingPageProps) {
                       )}
                     >
                       {plan.popular && (
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground rounded-full text-sm whitespace-nowrap">
+                        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-600 to-purple-800 text-white px-6 py-1.5 rounded-full text-sm font-medium whitespace-nowrap shadow-lg">
                           {t.pricing.popularBadge}
                         </div>
                       )}
