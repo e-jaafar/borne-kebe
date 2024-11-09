@@ -14,7 +14,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadStarsPreset } from "@tsparticles/preset-stars"
 import { MasonryGrid } from '@/components/MasonryGrid'
 import { TypeAnimation } from 'react-type-animation'
-
+import { HowItWorks } from '@/components/HowItWorks'
 // type S3Image = {
 //   Key: string
 //   LastModified: string
@@ -374,6 +374,12 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           </div>
         </div>
       </section>
+         {/* How it works Section */}
+         <HowItWorks 
+  title={t.howItWorks.title}
+  subtitle={t.howItWorks.subtitle}
+  steps={t.howItWorks.steps}
+/>
 
       {/* Features Section avec effets 3D et micro-interactions */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
@@ -509,47 +515,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </div>
       </section>
 
-      {/* How it works Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
-          <FadeIn>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
-                {t.howItWorks.title}
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400">
-                {t.howItWorks.subtitle}
-              </p>
-            </div>
-          </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {t.howItWorks.steps.map((step, index) => {
-              const Icon = {
-                Camera: Camera,
-                Users: Users,
-                Settings: Settings,
-                Share2: Share2
-              }[step.icon] || Camera;
-
-              return (
-                <FadeIn key={index} delay={index * 0.1}>
-                  <div className="flex flex-col items-center text-center space-y-4 relative">
-                    <div className="absolute left-0 -top-4 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">
-                      {index + 1}
-                    </div>
-                    <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
-                      {Icon && <Icon className="h-8 w-8 text-purple-600 dark:text-purple-400" />}
-                    </div>
-                    <h3 className="text-xl font-semibold">{step.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
-                  </div>
-                </FadeIn>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
+   
       {/* Contact Section */}
       <section className="w-full py-8 md:py-12 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
