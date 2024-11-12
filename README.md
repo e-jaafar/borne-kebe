@@ -1,8 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Borne Kébè - Location de Photobooth Professionnel
 
-## Getting Started
+![Borne Kébè](public/og-image.jpg)
 
-First, run the development server:
+## 🎯 À propos
+
+Borne Kébè est une plateforme web moderne dédiée à la location de photobooths haut de gamme pour vos événements professionnels et privés. Notre solution combine technologie de pointe et design élégant pour offrir une expérience photo unique.
+
+## ✨ Caractéristiques
+
+- 🌍 Site multilingue (FR/EN/NL)
+- 🎨 Design moderne et responsive
+- 🚀 Performance optimisée
+- 📱 Interface adaptative
+- 🔒 Sécurité renforcée
+- 🎯 SEO optimisé
+
+## 🛠 Technologies Utilisées
+
+- **Frontend:**
+  - Next.js 14
+  - React
+  - TypeScript
+  - TailwindCSS
+  - Framer Motion
+  - Shadcn/ui
+
+- **Backend:**
+  - API Routes Next.js
+  - Resend (Email)
+
+- **Performance:**
+  - Images optimisées
+  - Lazy loading
+  - Code splitting
+
+- **Sécurité:**
+  - Headers de sécurité
+  - Protection CSRF
+  - Validation des données
+
+## 🚀 Démarrage
 
 ```bash
 npm run dev

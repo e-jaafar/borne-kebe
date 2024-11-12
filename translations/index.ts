@@ -223,7 +223,7 @@ export const translations = {
         {
           value: "500+",
           label: "Événements réalisés",
-          description: "Des mariages aux év��nements d'entreprise"
+          description: "Des mariages aux événements d'entreprise"
         },
         {
           value: "50K+",

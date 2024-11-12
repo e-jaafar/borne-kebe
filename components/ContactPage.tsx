@@ -88,32 +88,20 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    const newErrors: FormErrors = {}
-    Object.entries(formData).forEach(([key, value]) => {
-      const error = validateField(key as keyof FormData, value)
-      if (error) newErrors[key as keyof FormData] = error
-    })
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
+    const submitFormData = new FormData()
+    submitFormData.append('name', formData.name)
+    submitFormData.append('email', formData.email)
+    submitFormData.append('subject', formData.subject)
+    submitFormData.append('message', formData.message)
+    
+    if (formData.attachment) {
+      submitFormData.append('file', formData.attachment)
     }
-
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
 
     try {
       const response = await fetch('/api/send', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message
-        })
+        body: submitFormData
       })
 
       if (!response.ok) throw new Error('Failed to send message')
@@ -369,17 +357,23 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
             </div>
           </div>
 
-          {/* Carte Google Maps */}
-          <div className="aspect-video w-full rounded-xl overflow-hidden shadow-lg">
+          {/* Carte Google Maps avec gestion mobile améliorée */}
+          <div className="relative w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-lg">
+            {/* Placeholder pendant le chargement */}
+            <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 animate-pulse" />
+            
+            {/* Carte */}
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.698168171767!2d4.3517!3d50.8503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDUxJzAxLjEiTiA0wrAyMScwNi4xIkU!5e0!3m2!1sfr!2sbe!4v1650000000000!5m2!1sfr!2sbe"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.698168171767!2d4.3517!3d50.8503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c38150702ee9%3A0xb283ebb7da71b23e!2sRue%20Saint-Michel%205%2C%201000%20Bruxelles!5e0!3m2!1sfr!2sbe!4v1731161910725!5m2!1sfr!2sbe"
+              className="absolute inset-0 w-full h-full border-0 z-10"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title="Google Maps"
+              aria-label="Carte de localisation"
             />
+            
+            {/* Overlay pour améliorer la visibilité */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-black/10" />
           </div>
         </motion.div>
       </div>

@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Users, Camera, Zap, Mail, ArrowUp } from "lucide-react"
-import Image from "next/image"
-import { useState, useEffect, useRef } from 'react'
-import { DemoVideo } from '@/components/DemoVideo'
-import { FadeIn } from '@/components/ui/motion'
-import { type HomePageTranslations } from '@/types/translations'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import Particles, { initParticlesEngine } from "@tsparticles/react"
-import { loadStarsPreset } from "@tsparticles/preset-stars"
-import { MasonryGrid } from '@/components/MasonryGrid'
-import { TypeAnimation } from 'react-type-animation'
-import { HowItWorks } from '@/components/HowItWorks'
-import { TestimonialsCarousel } from '@/components/TestimonialsCarousel'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Users, Camera, Zap, Mail, ArrowUp } from "lucide-react";
+import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
+import { DemoVideo } from "@/components/DemoVideo";
+import { FadeIn } from "@/components/ui/motion";
+import { type HomePageTranslations } from "@/types/translations";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadStarsPreset } from "@tsparticles/preset-stars";
+import { MasonryGrid } from "@/components/MasonryGrid";
+import { TypeAnimation } from "react-type-animation";
+import { HowItWorks } from "@/components/HowItWorks";
+import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 // type S3Image = {
 //   Key: string
 //   LastModified: string
@@ -25,89 +25,103 @@ import { TestimonialsCarousel } from '@/components/TestimonialsCarousel'
 // }
 
 type HomePageProps = {
-  lang: string
-  translations: HomePageTranslations
-}
+  lang: string;
+  translations: HomePageTranslations;
+};
 
 // Type pour les images
 type LocalImage = {
-  src: string
-  alt: string
-}
+  src: string;
+  alt: string;
+};
 
 export function HomePage({ lang, translations: t }: HomePageProps) {
-  const [galleryImages, setGalleryImages] = useState<LocalImage[]>([])
-  const [init, setInit] = useState(false)
-  const [showScrollTop, setShowScrollTop] = useState(false)
-  const [isNearBottom, setIsNearBottom] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 })
+  const [galleryImages, setGalleryImages] = useState<LocalImage[]>([]);
+  const [init, setInit] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isNearBottom, setIsNearBottom] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  const [showScroll, setShowScroll] = useState(true);
 
-  const heroRef = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end start"]
-  })
+    offset: ["start start", "end start"],
+  });
 
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!heroRef.current) return
-    const rect = heroRef.current.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width
-    const y = (e.clientY - rect.top) / rect.height
-    setMousePosition({ x, y })
-  }
+    if (!heroRef.current) return;
+    const rect = heroRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    setMousePosition({ x, y });
+  };
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
-      await loadStarsPreset(engine)
+      await loadStarsPreset(engine);
     }).then(() => {
-      setInit(true)
-    })
-  }, [])
+      setInit(true);
+    });
+  }, []);
 
   // Chargement des images
   useEffect(() => {
     // Fonction pour charger les images
     const loadImages = async () => {
       try {
-        const response = await fetch('/api/getImages')
-        const images = await response.json()
-        setGalleryImages(images)
+        const response = await fetch("/api/getImages");
+        const images = await response.json();
+        setGalleryImages(images);
       } catch (error) {
-        console.error('Erreur lors du chargement des images:', error)
+        console.error("Erreur lors du chargement des images:", error);
       }
-    }
+    };
 
-    loadImages()
-  }, [])
+    loadImages();
+  }, []);
 
   // Gestion du bouton scroll to top
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300)
-    }
+      setShowScrollTop(window.scrollY > 300);
+    };
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Gestion du scroll pour le bouton CTA
   useEffect(() => {
     const handleScroll = () => {
-      const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
-      const scrollTop = window.scrollY
-      
-      // Détecte quand on est proche du bas (par exemple, à 100px du bas)
-      const nearBottom = documentHeight - (scrollTop + windowHeight) < 100
-      setIsNearBottom(nearBottom)
-    }
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      // Détecte quand on est proche du bas (par exemple, à 100px du bas)
+      const nearBottom = documentHeight - (scrollTop + windowHeight) < 100;
+      setIsNearBottom(nearBottom);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowScroll(false);
+      } else {
+        setShowScroll(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <main role="main" className="flex flex-col items-center relative">
@@ -123,11 +137,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 density: {
                   enable: true,
                   width: 1920,
-                  height: 1080
-                }
+                  height: 1080,
+                },
               },
               color: {
-                value: ["#ffffff", "#9333ea", "#a855f7", "#c084fc"]
+                value: ["#ffffff", "#9333ea", "#a855f7", "#c084fc"],
               },
               move: {
                 enable: true,
@@ -136,14 +150,14 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 random: true,
                 straight: false,
                 outModes: {
-                  default: "bounce"
-                }
+                  default: "bounce",
+                },
               },
               size: {
-                value: { min: 2, max: 4 }
+                value: { min: 2, max: 4 },
               },
               opacity: {
-                value: { min: 0.3, max: 0.7 }
+                value: { min: 0.3, max: 0.7 },
               },
               interactivity: {
                 detectsOn: "window",
@@ -154,52 +168,52 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                     parallax: {
                       enable: true,
                       force: 10,
-                      smooth: 300
-                    }
-                  }
+                      smooth: 300,
+                    },
+                  },
                 },
                 modes: {
                   slow: {
                     factor: 4,
-                    radius: 200
+                    radius: 200,
                   },
                   grab: {
                     distance: 400,
                     links: {
                       opacity: 0.3,
-                      width: 2
-                    }
-                  }
-                }
+                      width: 2,
+                    },
+                  },
+                },
               },
               links: {
                 enable: true,
                 distance: 200,
                 color: "#9333ea",
                 opacity: 0.2,
-                width: 1.5
-              }
+                width: 1.5,
+              },
             },
             fullScreen: {
-              enable: false
+              enable: false,
             },
             detectRetina: true,
             background: {
-              color: "transparent"
-            }
+              color: "transparent",
+            },
           }}
         />
       )}
 
       {/* Hero Section améliorée */}
-      <section 
-        ref={heroRef} 
+      <section
+        ref={heroRef}
         onMouseMove={handleMouseMove}
         aria-label="Hero section"
         className="relative w-full min-h-[90vh] flex items-center py-12 md:py-24 lg:py-32 xl:py-40 overflow-hidden bg-[#1a0f2e]"
       >
         {/* Background avec Parallaxe amélioré */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 z-0"
           style={{ scale: imageScale }}
         >
@@ -211,14 +225,16 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             quality={90}
             className="object-cover transition-transform duration-300 ease-out"
             style={{
-              transform: `scale(1.1) translate(${(mousePosition.x - 0.5) * 10}px, ${(mousePosition.y - 0.5) * 10}px)`
+              transform: `scale(1.1) translate(${
+                (mousePosition.x - 0.5) * 10
+              }px, ${(mousePosition.y - 0.5) * 10}px)`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f2e]/90 via-[#1a0f2e]/70 to-[#1a0f2e]/90 backdrop-blur-[2px]" />
         </motion.div>
 
         {/* Contenu optimisé pour mobile */}
-        <motion.div 
+        <motion.div
           className="relative z-30 container mx-auto max-w-7xl px-4 md:px-6"
           style={{ opacity: contentOpacity }}
         >
@@ -229,7 +245,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             className="flex flex-col items-center space-y-8 md:space-y-6 text-center"
           >
             <header className="space-y-6 md:space-y-4 max-w-[800px] mx-auto">
-              <motion.h1 
+              <motion.h1
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white drop-shadow-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -238,17 +254,22 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 <TypeAnimation
                   sequence={[
                     t.hero.title,
-                    1000,
-                    ...t.hero.sequences,
+                    3000, // Pause plus longue après le titre (3 secondes)
+                    ...t.hero.sequences.flatMap((text) => [
+                      text,
+                      2500, // Pause de 2.5 secondes après chaque texte
+                    ]),
                   ]}
                   wrapper="span"
-                  speed={50}
+                  speed={30} // Vitesse de frappe lente
+                  deletionSpeed={30} // Vitesse de suppression plus lente
                   repeat={Infinity}
+                  cursor={true}
                   className="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent"
                 />
               </motion.h1>
 
-              <motion.p 
+              <motion.p
                 className="text-base sm:text-lg md:text-xl text-gray-100 max-w-[90%] mx-auto leading-relaxed px-4 md:px-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -259,37 +280,35 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             </header>
 
             {/* Boutons CTA optimisés pour mobile */}
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row w-full sm:w-auto gap-4 px-6 sm:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
             >
-              <Button 
-                asChild 
-                size="lg" 
+              <Button
+                asChild
+                size="lg"
                 className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg relative overflow-hidden group bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 shadow-lg"
               >
                 <Link href={`/${lang}/pricing`}>
                   <span className="relative z-10">{t.hero.cta1}</span>
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 bg-white/20"
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: '100%' }}
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
                     transition={{ duration: 0.5 }}
                   />
                 </Link>
               </Button>
 
-              <Button 
-                asChild 
-                variant="outline" 
-                size="lg" 
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
                 className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg border-2 border-white text-white bg-transparent hover:bg-white/10"
               >
-                <Link href={`/${lang}/features`}>
-                  {t.hero.cta2}
-                </Link>
+                <Link href={`/${lang}/features`}>{t.hero.cta2}</Link>
               </Button>
             </motion.div>
           </motion.div>
@@ -297,13 +316,14 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
         {/* Indicateur de scroll amélioré */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
+          className="absolute bottom-8 left-0 right-0 mx-auto z-30 flex flex-col items-center justify-center w-fit"
+          initial={{ opacity: 1 }}
           animate={{
-            y: [0, 10, 0],
+            opacity: showScroll ? 1 : 0,
+            y: showScroll ? 0 : 20,
           }}
           transition={{
-            duration: 1.5,
-            repeat: Infinity,
+            duration: 0.3,
             ease: "easeInOut",
           }}
         >
@@ -320,7 +340,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               }}
             />
           </div>
-          <motion.p 
+          <motion.p
             className="text-white/70 text-sm mt-2 text-center font-light tracking-wider"
             animate={{
               opacity: [0.5, 1, 0.5],
@@ -337,27 +357,29 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="w-full py-24 bg-gradient-to-b from-[#1a0f2e] to-[#140b24] relative overflow-hidden">
+      <section className="w-full py-24 bg-gradient-to-b from-white to-gray-50 dark:from-[#1a0f2e] dark:to-[#140b24] relative overflow-hidden">
         {/* Particules de fond améliorées */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-purple-500/10 via-purple-400/5 to-transparent rounded-full blur-[120px] animate-pulse-slow" />
-          <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-gradient-to-tr from-purple-700/10 via-purple-600/5 to-transparent rounded-full blur-[120px] animate-pulse-slower" />
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-purple-500/5 via-purple-400/5 to-transparent dark:from-purple-500/10 dark:via-purple-400/5 dark:to-transparent rounded-full blur-[120px] animate-pulse-slow" />
+          <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-gradient-to-tr from-purple-700/5 via-purple-600/5 to-transparent dark:from-purple-700/10 dark:via-purple-600/5 dark:to-transparent rounded-full blur-[120px] animate-pulse-slower" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <FadeIn>
             <div className="text-center mb-20">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/5 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
                 </span>
-                <span className="text-sm font-medium">Découvrez nos avantages</span>
+                <span className="text-sm font-medium">
+                  Découvrez nos avantages
+                </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-purple-200 bg-clip-text text-transparent">
                 {t.why.title}
               </h2>
-              <p className="text-lg md:text-xl text-gray-300/90 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300/90 max-w-3xl mx-auto">
                 {t.why.description}
               </p>
             </div>
@@ -368,24 +390,24 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             <FadeIn>
               {/* Halo radieux */}
               <div className="absolute -inset-10 bg-gradient-to-r from-purple-600/30 via-purple-400/20 to-purple-600/30 rounded-[30px] blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
-              
+
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 className="relative rounded-2xl overflow-hidden shadow-2xl border border-purple-500/20 backdrop-blur-sm group"
               >
                 {/* Effet de brillance supplémentaire */}
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-20 pointer-events-none" />
-                
+
                 {/* Effet de halo animé */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/50 via-fuchsia-500/50 to-purple-600/50 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-700 -z-10" />
-                
+
                 <div className="relative z-30">
                   <DemoVideo />
                 </div>
-                
+
                 {/* Gradient du bas plus subtil */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a0f2e] via-transparent to-transparent opacity-30 pointer-events-none" />
-                
+
                 {/* Effet de scintillement */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-700" />
               </motion.div>
@@ -401,19 +423,21 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                   className="relative group h-full"
                 >
                   {/* Effet de halo amélioré */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-purple-500/10 to-purple-800/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
-                  
-                  <div className="relative bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/10 hover:border-purple-500/30 transition-all duration-300 h-[220px] flex flex-col justify-between group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-purple-500/5 to-purple-800/10 dark:from-purple-600/20 dark:via-purple-500/10 dark:to-purple-800/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
+
+                  <div className="relative bg-white/80 dark:bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-gray-200 dark:border-purple-500/10 hover:border-purple-500/30 dark:hover:border-purple-500/30 transition-all duration-300 h-[220px] flex flex-col justify-between group shadow-sm hover:shadow-xl">
                     {/* Icône numérotée avec animation */}
                     <div className="relative">
                       <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <span className="text-2xl font-bold text-white">{index + 1}</span>
+                        <span className="text-2xl font-bold text-white">
+                          {index + 1}
+                        </span>
                       </div>
                       <div className="absolute inset-0 bg-purple-500/20 rounded-xl blur group-hover:blur-xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
                     </div>
 
-                    {/* Texte avec meilleur espacement */}
-                    <h3 className="text-xl font-semibold text-white group-hover:text-purple-300 transition-colors mt-6">
+                    {/* Texte avec meilleur contraste */}
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors mt-6">
                       {item}
                     </h3>
                   </div>
@@ -430,8 +454,8 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 whileTap={{ scale: 0.95 }}
                 className="inline-block"
               >
-                <Button 
-                  asChild 
+                <Button
+                  asChild
                   size="lg"
                   className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white shadow-lg hover:shadow-purple-500/25 relative overflow-hidden group px-8 py-6"
                 >
@@ -463,7 +487,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 <div className="relative group h-full">
                   {/* Effet de halo */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg blur-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
-                  
+
                   {/* Card avec hauteur fixe */}
                   <div className="relative bg-white dark:bg-[#2d1f42] p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col justify-between min-h-[200px]">
                     {/* Contenu principal */}
@@ -478,7 +502,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                         {stat.description}
                       </p>
                     </div>
-                    
+
                     {/* Effet de brillance */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl" />
                   </div>
@@ -488,12 +512,12 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           </div>
         </div>
       </section>
-         {/* How it works Section */}
-         <HowItWorks 
-  title={t.howItWorks.title}
-  subtitle={t.howItWorks.subtitle}
-  steps={t.howItWorks.steps}
-/>
+      {/* How it works Section */}
+      <HowItWorks
+        title={t.howItWorks.title}
+        subtitle={t.howItWorks.subtitle}
+        steps={t.howItWorks.steps}
+      />
 
       {/* Features Section avec effets 3D et micro-interactions */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
@@ -507,11 +531,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             {t.features.items.slice(0, 3).map((feature, index) => (
               <FadeIn key={index} delay={index * 0.1}>
                 <motion.div
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.02,
                     rotateY: 5,
                     rotateX: 5,
-                    translateZ: 20
+                    translateZ: 20,
                   }}
                   whileTap={{ scale: 0.98 }}
                   className="h-full perspective-1000"
@@ -533,10 +557,16 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                         className="relative"
                       >
                         <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-600 dark:to-purple-900 flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 shadow-lg">
-                          {index === 0 && <Users className="h-8 w-8 text-white" />}
-                          {index === 1 && <Camera className="h-8 w-8 text-white" />}
-                          {index === 2 && <Zap className="h-8 w-8 text-white" />}
-                          
+                          {index === 0 && (
+                            <Users className="h-8 w-8 text-white" />
+                          )}
+                          {index === 1 && (
+                            <Camera className="h-8 w-8 text-white" />
+                          )}
+                          {index === 2 && (
+                            <Zap className="h-8 w-8 text-white" />
+                          )}
+
                           {/* Effet de pulse */}
                           <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transform scale-90 group-hover:scale-150 transition-all duration-700" />
                         </div>
@@ -561,9 +591,9 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
-                  asChild 
-                  size="lg" 
+                <Button
+                  asChild
+                  size="lg"
                   className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group"
                 >
                   <Link href={`/${lang}/features`}>
@@ -578,10 +608,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </section>
 
       {/* Section témoignages améliorée */}
-      <TestimonialsCarousel 
-        reviews={t.reviews.items}
-        title={t.reviews.title}
-      />
+      <TestimonialsCarousel reviews={t.reviews.items} title={t.reviews.title} />
 
       {/* Gallery Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
@@ -597,13 +624,10 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             </div>
           </FadeIn>
 
-          <MasonryGrid 
-            images={galleryImages}
-          />
+          <MasonryGrid images={galleryImages} />
         </div>
       </section>
 
-   
       {/* Contact Section */}
       <section className="w-full py-8 md:py-12 bg-white dark:bg-[#1a0f2e]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
@@ -615,14 +639,12 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-6">
                 {t.contact.subtitle}
               </p>
-              <Button 
-                asChild 
+              <Button
+                asChild
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white transition-colors"
               >
-                <Link href={`/${lang}/contact`}>
-                  {t.contact.cta}
-                </Link>
+                <Link href={`/${lang}/contact`}>{t.contact.cta}</Link>
               </Button>
             </div>
           </FadeIn>
@@ -630,13 +652,13 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </section>
 
       {/* Floating Contact Button avec animation de translation */}
-      <div 
+      <div
         className={`fixed bottom-8 right-8 z-50 hidden md:block transition-transform duration-300 ${
-          isNearBottom ? 'translate-y-[-100px]' : 'translate-y-0'
+          isNearBottom ? "translate-y-[-100px]" : "translate-y-0"
         }`}
       >
-        <Button 
-          asChild 
+        <Button
+          asChild
           size="lg"
           className="group bg-primary/80 hover:bg-primary text-white shadow-lg rounded-full px-8 py-6
             transform transition-all duration-1000 ease-out
@@ -657,11 +679,13 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 <Mail className="w-5 h-5 transition-all duration-1000 ease-out group-hover:scale-105" />
                 <div className="absolute inset-0 animate-pulse opacity-0 group-hover:opacity-50 bg-white rounded-full duration-1000" />
               </div>
-              
+
               <span className="relative">
                 {t.contact.floating_button}
-                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white/80
-                  origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
+                <span
+                  className="absolute bottom-0 left-0 w-full h-[1px] bg-white/80
+                  origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"
+                />
               </span>
             </span>
           </Link>
@@ -669,15 +693,15 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </div>
 
       {/* Scroll to Top Button - Repositionné */}
-      <div 
+      <div
         className={`fixed md:bottom-8 md:left-8 bottom-20 left-4 z-50 transition-all duration-500 ease-in-out ${
-          showScrollTop 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-10 pointer-events-none'
+          showScrollTop
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-10 pointer-events-none"
         }`}
       >
         <Button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           size="icon"
           aria-label="Retour en haut de la page"
           className="bg-primary hover:bg-primary/90 text-white shadow-lg rounded-full w-10 h-10 p-0
@@ -685,10 +709,13 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]
             relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 animate-pulse" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 animate-pulse"
+            aria-hidden="true"
+          />
           <ArrowUp className="w-5 h-5 relative z-10" aria-hidden="true" />
         </Button>
       </div>
     </main>
-  )
-} 
+  );
+}

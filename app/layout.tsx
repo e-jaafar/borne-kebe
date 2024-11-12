@@ -6,6 +6,7 @@ import { LangProvider } from "@/context/LangContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import { MobileNav } from "@/components/MobileNav";
+import { RootLayoutClient } from "@/components/RootLayoutClient";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -77,34 +78,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1a0f2e" />
-        <meta name="msapplication-TileColor" content="#1a0f2e" />
-        <meta name="theme-color" content="#1a0f2e" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark')
-                }
-              } catch (_) {}
-            `,
-          }}
-        />
-      </head>
+    <html lang="fr" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider>
           <LangProvider>
             <div className="min-h-screen flex flex-col">
               <Navbar />
-              <main className="flex-grow  md:pb-0">
-                {children}
+              <main className="flex-grow md:pb-0">
+                <RootLayoutClient>
+                  {children}
+                </RootLayoutClient>
               </main>
               <Footer />
               <MobileNav />
@@ -113,5 +96,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
