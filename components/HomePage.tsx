@@ -366,23 +366,20 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
         <div className="container mx-auto px-4 relative z-10">
           <FadeIn>
+
             <div className="text-center mb-20">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/5 dark:bg-purple-500/10 text-purple-700 dark:text-purple-300 mb-6">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-                </span>
-                <span className="text-sm font-medium">
-                  Découvrez nos avantages
-                </span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-purple-200 bg-clip-text text-transparent">
-                {t.why.title}
-              </h2>
-              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300/90 max-w-3xl mx-auto">
-                {t.why.description}
-              </p>
-            </div>
+  <span className="inline-block text-base font-medium text-purple-600 dark:text-purple-400 mb-6 tracking-wide uppercase relative">
+    <span className="absolute left-0 right-0 h-[1px] bottom-0 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+
+  </span>
+  <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r text-purple-600 dark:text-purple-400 mb-6 tracking-wide uppercase relative from-gray-900 to-gray-600 dark:from-white dark:to-purple-200 bg-clip-text text-transparent">
+    {t.why.title}
+  </h2>
+  <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300/90 max-w-3xl mx-auto">
+    {t.why.description}
+  </p>
+</div>
+
           </FadeIn>
 
           {/* Vidéo avec meilleur design et halo */}

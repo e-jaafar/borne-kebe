@@ -105,6 +105,20 @@ export async function middleware(request: NextRequest) {
       response.headers.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
     }
 
+    // Ajout des en-têtes de sécurité
+    response.headers.set(
+      'Content-Security-Policy',
+      `
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' *.google.com;
+        frame-src 'self' *.google.com;
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: blob: *.google.com;
+        font-src 'self';
+        connect-src 'self';
+      `.replace(/\s{2,}/g, ' ').trim()
+    )
+
     return response
   } catch (error) {
     console.error('Middleware error:', error)

@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Check } from "lucide-react"
 import { useLang } from "@/context/LangContext"
 import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import { Star } from "lucide-react"
 
 const translations = {
   fr: {
@@ -195,21 +197,26 @@ export default function PricingPage() {
                 >
                   <Card 
                     className={cn(
-                      "flex-1 relative transition-all duration-300 h-full",
-                      plan.popular && [
-                        "border-primary",
-                        "shadow-lg",
-                        "scale-100",
-                        "sm:scale-100 lg:scale-105",
-                        "hover:scale-105",
-                        "sm:hover:scale-105 lg:hover:scale-110",
-                        "z-10"
-                      ]
+                      "relative h-full transition-all duration-500",
+                      "before:absolute before:-top-4 before:left-0 before:right-0 before:h-4",
+                      plan.popular && "bg-gradient-to-b from-purple-500/[0.15] to-transparent border-purple-500/50"
                     )}
                   >
                     {plan.popular && (
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground rounded-full text-sm whitespace-nowrap">
-                        {t.popularBadge}
+                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="relative"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-400 blur-lg opacity-50" />
+                          <div className="relative px-6 py-2 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full flex items-center gap-2">
+                            <Star className="w-4 h-4 text-white" fill="white" />
+                            <span className="text-sm font-medium text-white whitespace-nowrap">
+                              {t.popularBadge}
+                            </span>
+                          </div>
+                        </motion.div>
                       </div>
                     )}
                     <CardHeader className="text-center">

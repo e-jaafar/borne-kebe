@@ -357,12 +357,12 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
             </div>
           </div>
 
-          {/* Carte Google Maps avec gestion mobile améliorée */}
+          {/* Carte Google Maps sécurisée */}
           <div className="relative w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-lg">
             {/* Placeholder pendant le chargement */}
             <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 animate-pulse" />
             
-            {/* Carte */}
+            {/* Carte avec URL sécurisée */}
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.698168171767!2d4.3517!3d50.8503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c38150702ee9%3A0xb283ebb7da71b23e!2sRue%20Saint-Michel%205%2C%201000%20Bruxelles!5e0!3m2!1sfr!2sbe!4v1731161910725!5m2!1sfr!2sbe"
               className="absolute inset-0 w-full h-full border-0 z-10"
@@ -370,6 +370,7 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
               referrerPolicy="no-referrer-when-downgrade"
               title="Google Maps"
               aria-label="Carte de localisation"
+              allowFullScreen
             />
             
             {/* Overlay pour améliorer la visibilité */}

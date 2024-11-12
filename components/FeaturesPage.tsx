@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Camera, Share2, Smartphone, Palette, Cloud, Shield, Printer, Users } from "lucide-react"
 import { FadeIn } from '@/components/ui/motion'
 import { translations } from '@/translations'
+import { Sparkles } from "lucide-react"
 
 type FeaturesPageProps = {
   translations: typeof translations[keyof typeof translations]
@@ -24,15 +25,19 @@ export function FeaturesPage({ translations: t }: FeaturesPageProps) {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center py-12 md:py-24 lg:py-32 px-4 md:px-6">
       <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-8 md:mb-16">
-          <FadeIn>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3 md:mb-4 text-gray-900 dark:text-white">
-              {t.features.title}
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-200">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm font-medium bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
               {t.features.subtitle}
-            </p>
-          </FadeIn>
+            </span>
+          </div>
+          <h1 className="text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 dark:from-purple-400 dark:via-pink-400 dark:to-purple-400 bg-clip-text text-transparent">
+            {t.features.title}
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            {t.features.subtitle}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
