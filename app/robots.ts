@@ -12,8 +12,6 @@ export default function robots(): MetadataRoute.Robots {
           '/api/',
           '/_next/',
           '/private/',
-          '*.json',
-          '*.xml',
           '/images/',
           '/og-image.jpg',
           '/favicon.ico'
