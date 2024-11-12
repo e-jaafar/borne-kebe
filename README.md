@@ -1,5 +1,5 @@
 <img width="1440" alt="Capture d’écran 2024-11-09 à 14 57 53" src="https://github.com/user-attachments/assets/fabcbd50-6935-4cbb-9509-87ec1f878242">
-## Borne Kébè - Location de Photobooth Professionnel
+Borne Kébè - Location de Photobooth Professionnel
 
 
 ## 🎯 À propos
