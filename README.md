@@ -10,7 +10,7 @@ Borne Kébè est une plateforme moderne dédiée à la location de photobooths h
 
 1. **Cloner le dépôt**  
    ```bash
-   git clone https://github.com/votre-username/borne-kebe.git
+   git clone https://github.com/e-jaafar/borne-kebe
    ```
 
 2. **Installer les dépendances**  
