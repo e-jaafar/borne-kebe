@@ -6,7 +6,7 @@ import { Check, Sparkles, Star } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { FadeIn } from '@/components/ui/motion'
 import { motion } from 'framer-motion'
-import { type PricingTranslations, type Plan } from '@/types/translations'
+import { type PricingTranslations } from '@/types/translations'
 
 interface PricingPageProps {
   translations: PricingTranslations
@@ -49,40 +49,48 @@ export function PricingPage({ translations: t }: PricingPageProps) {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
               <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">{t.pricing.subtitle}</span>
+              <span className="text-sm font-medium bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                {t.pricing.subtitle}
+              </span>
             </div>
-            <h1 className="text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold tracking-tight mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 dark:from-purple-400 dark:via-pink-400 dark:to-purple-400 bg-clip-text text-transparent">
               {t.pricing.title}
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
               {t.pricing.subtitle}
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-[1200px] mx-auto">
-          {t.pricing.plans.map((plan: Plan, index: number) => (
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-[1200px] mx-auto pt-4">
+          {t.pricing.plans.map((plan, index) => (
             <FadeIn key={index} delay={index * 0.1}>
               <motion.div
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="h-full"
+                whileHover={{ y: -8 }}
+                className={cn(
+                  "flex flex-col relative",
+                  "overflow-visible",
+                  plan.popular && "lg:-mt-4 lg:-mb-4"
+                )}
               >
-                <Card className={cn(
-                  "relative h-full transition-all duration-500",
-                  plan.popular && "bg-gradient-to-b from-purple-500/[0.15] to-transparent border-purple-500/50"
-                )}>
-                  {/* Badge Populaire amélioré */}
+                <Card 
+                  className={cn(
+                    "relative h-full transition-all duration-500",
+                    "overflow-visible",
+                    plan.popular && "bg-gradient-to-b from-purple-500/[0.15] to-transparent border-purple-500/50"
+                  )}
+                >
                   {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 w-full">
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="relative"
+                        className="relative flex justify-center"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-purple-400 blur-lg opacity-50" />
-                        <div className="relative px-6 py-2 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full flex items-center gap-2">
+                        <div className="relative px-6 py-2 bg-gradient-to-r from-purple-600 to-purple-400 rounded-full flex items-center gap-2 shadow-lg">
                           <Star className="w-4 h-4 text-white" fill="white" />
-                          <span className="text-sm font-medium text-white">
+                          <span className="text-sm font-medium text-white whitespace-nowrap">
                             {t.pricing.popularBadge}
                           </span>
                         </div>
