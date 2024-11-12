@@ -14,6 +14,9 @@ export default function robots(): MetadataRoute.Robots {
           '/private/',
           '*.json',
           '*.xml',
+          '/images/',
+          '/og-image.jpg',
+          '/favicon.ico'
         ],
       },
       {
