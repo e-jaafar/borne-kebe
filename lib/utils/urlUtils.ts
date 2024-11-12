@@ -6,4 +6,10 @@ export function getAsciiDomain(urlString: string): string {
     console.error('Invalid URL:', error);
     return '';
   }
+}
+
+export function getSiteUrl() {
+  return process.env.NEXT_PUBLIC_ENV === 'development' 
+    ? process.env.NEXT_PUBLIC_LOCAL_URL 
+    : process.env.NEXT_PUBLIC_SITE_URL
 } 
