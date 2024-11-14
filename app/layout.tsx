@@ -24,10 +24,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Borne Kébè | Location de Photobooth Professionnel",
     description: "Location de photobooths haut de gamme pour vos événements",
-    images: ['/og-image.jpg'],
+    images: [{
+      url: '/og-image.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Borne Kébè Photobooth',
+      type: 'image/jpeg',
+    }],
     locale: 'fr_FR',
     type: 'website',
     url: 'https://www.xn--borne-kb-80ai.com',
+    siteName: 'Borne Kébè'
   },
   alternates: {
     canonical: 'https://www.xn--borne-kb-80ai.com',
