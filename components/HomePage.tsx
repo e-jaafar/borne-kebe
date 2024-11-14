@@ -242,7 +242,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col items-center space-y-8 md:space-y-6 text-center -mt-16 sm:mt-0"
+            className="flex flex-col items-center space-y-8 md:space-y-6 text-center -mt-20 sm:mt-0"
           >
             <header className="space-y-6 md:space-y-4 max-w-[800px] mx-auto">
               <motion.h1
@@ -313,10 +313,9 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             </motion.div>
           </motion.div>
         </motion.div>
-
         {/* Indicateur de scroll amélioré */}
         <motion.div
-          className="absolute bottom-8 left-0 right-0 mx-auto z-30 flex flex-col items-center justify-center w-fit"
+          className="absolute bottom-24 left-0 right-0 mx-auto z-30 flex flex-col items-center justify-center w-fit"
           initial={{ opacity: 1 }}
           animate={{
             opacity: showScroll ? 1 : 0,
