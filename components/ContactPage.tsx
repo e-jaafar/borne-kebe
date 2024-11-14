@@ -121,13 +121,13 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 md:px-6 py-12">
+    <div className="container mx-auto max-w-7xl px-4 md:px-6 py-12 bg-background">
       {/* En-tête de la page */}
       <div className="text-center mb-12">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4 bg-gradient-to-r from-gray-900 to-gray-800 dark:from-white dark:to-gray-200 bg-clip-text text-transparent"
+          className="text-foreground text-3xl font-bold tracking-tighter mb-4"
         >
           {t.contact.title}
         </motion.h1>
@@ -135,7 +135,7 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-gray-600 dark:text-gray-300"
+          className="text-muted-foreground text-lg"
         >
           {t.contact.subtitle}
         </motion.p>
@@ -172,9 +172,9 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
                         onBlur={() => handleBlur(fieldKey)}
                         placeholder={t.form[fieldKey]}
                         className={`
-                          transition-all duration-300 bg-gray-50 dark:bg-[#140b24]/50
-                          ${hasError ? 'border-red-500 dark:border-red-400' : 'focus:border-purple-500 dark:focus:border-purple-400'}
-                          ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-green-500 dark:border-green-400' : ''}
+                          transition-all duration-300 bg-background
+                          ${hasError ? 'border-destructive' : 'focus:border-primary'}
+                          ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-primary/50' : ''}
                         `}
                       />
                     ) : (
@@ -185,9 +185,9 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
                         onBlur={() => handleBlur(fieldKey)}
                         placeholder={t.form[fieldKey]}
                         className={`
-                          transition-all duration-300 bg-gray-50 dark:bg-[#140b24]/50
-                          ${hasError ? 'border-red-500 dark:border-red-400' : 'focus:border-purple-500 dark:focus:border-purple-400'}
-                          ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-green-500 dark:border-green-400' : ''}
+                          transition-all duration-300 bg-background
+                          ${hasError ? 'border-destructive' : 'focus:border-primary'}
+                          ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-primary/50' : ''}
                         `}
                       />
                     )}

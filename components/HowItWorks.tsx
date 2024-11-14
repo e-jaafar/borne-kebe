@@ -36,84 +36,23 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
   }))
 
   return (
-    <div className="w-full bg-gradient-to-b from-white to-gray-50 dark:from-[#1a0f2e] dark:to-[#140b24]">
-      <section className="py-20 container mx-auto px-4">
-        {/* En-tête */}
+    <div className="w-full bg-background">
+      <section className="py-12 md:py-20 container mx-auto px-4">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-foreground text-3xl md:text-4xl font-bold mb-4">
             {title}
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
+          <p className="text-muted-foreground text-base md:text-xl max-w-2xl mx-auto">
             {subtitle}
           </p>
         </motion.div>
 
-        {/* Timeline - Version Desktop */}
-        <div className="relative max-w-5xl mx-auto hidden md:block">
-          {/* Ligne de connexion */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-purple-500/20 to-purple-500/40 rounded-full" />
-
-          {/* Étapes */}
-          <div className="space-y-24">
-            {stepsWithIcons.map((step, index) => {
-              const Icon = step.icon
-              const isEven = index % 2 === 0
-
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className={`relative flex items-center ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
-                >
-                  {/* Contenu */}
-                  <div className={`w-1/2 ${isEven ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      className="bg-white dark:bg-[#2d1f42] p-8 rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-800/50 relative overflow-hidden group"
-                    >
-                      {/* Effet de brillance */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                      
-                      <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {step.description}
-                      </p>
-                    </motion.div>
-                  </div>
-
-                  {/* Icône centrale */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                    <motion.div
-                      whileHover={{ scale: 1.2, rotate: 360 }}
-                      className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-600 shadow-lg flex items-center justify-center z-10"
-                    >
-                      <Icon className="w-8 h-8 text-white" />
-                    </motion.div>
-                    {/* Numéro */}
-                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-2xl font-bold text-purple-500 dark:text-purple-400">
-                      {index + 1}
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-
         {/* Version Mobile */}
-        <div className="md:hidden space-y-8">
+        <div className="md:hidden space-y-6">
           {stepsWithIcons.map((step, index) => {
-            const Icon = step.icon
+            const StepIcon = step.icon
             return (
               <motion.div
                 key={index}
@@ -123,47 +62,87 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="relative"
               >
-                {/* Carte */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-white dark:bg-[#2d1f42] p-6 rounded-2xl shadow-xl border border-gray-200/50 dark:border-gray-800/50 relative overflow-hidden"
-                >
-                  {/* En-tête avec icône et numéro */}
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="flex-shrink-0">
+                <div className="bg-card text-card-foreground rounded-xl shadow-lg border border-border p-6">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="relative">
                       <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 dark:from-purple-400 dark:to-purple-600 shadow-lg flex items-center justify-center"
+                        whileHover={{ scale: 1.05 }}
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg flex items-center justify-center"
                       >
-                        <Icon className="w-6 h-6 text-white" />
+                        <StepIcon className="w-6 h-6 text-white" />
                       </motion.div>
+                      <div className="absolute -top-2 -right-2 w-auto h-6 px-2 rounded-full bg-primary/20 flex items-center justify-center whitespace-nowrap">
+                        <span className="text-sm font-bold text-primary">
+                          Étape {index + 1}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex-grow">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                    
+                    <div className="flex-1">
+                      <h3 className="text-foreground text-lg font-semibold mb-1">
                         {step.title}
                       </h3>
-                      <span className="text-sm text-purple-500 dark:text-purple-400">
-                        Étape {index + 1}
-                      </span>
+                      <p className="text-muted-foreground text-sm">
+                        {step.description}
+                      </p>
                     </div>
                   </div>
-                  
-                  {/* Description */}
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
-                    {step.description}
-                  </p>
 
-                  {/* Effet de brillance */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                </motion.div>
-
-                {/* Ligne de connexion (sauf pour le dernier élément) */}
-                {index < stepsWithIcons.length - 1 && (
-                  <div className="absolute left-6 top-full h-8 w-px bg-gradient-to-b from-purple-500/20 to-purple-500/40" />
-                )}
+                  {index < stepsWithIcons.length - 1 && (
+                    <div className="absolute left-6 -bottom-6 w-[1px] h-6 bg-gradient-to-b from-primary/50 to-transparent" />
+                  )}
+                </div>
               </motion.div>
             )
           })}
+        </div>
+
+        {/* Version Desktop - Timeline */}
+        <div className="hidden md:block relative max-w-5xl mx-auto">
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary/20 to-primary/40 rounded-full" />
+          
+          <div className="space-y-24">
+            {stepsWithIcons.map((step, index) => {
+              const StepIcon = step.icon
+              const isEven = index % 2 === 0
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  className={`relative flex items-center ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
+                >
+                  <div className={`w-1/2 ${isEven ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      className="bg-card text-card-foreground p-8 rounded-2xl shadow-xl border border-border relative overflow-hidden group"
+                    >
+                      <h3 className="text-foreground text-2xl font-bold mb-4">
+                        {step.title}
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {step.description}
+                      </p>
+                    </motion.div>
+                  </div>
+
+                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-lg flex items-center justify-center z-10"
+                    >
+                      <StepIcon className="w-8 h-8 text-white" />
+                    </motion.div>
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-lg font-bold text-primary whitespace-nowrap">
+                      Étape {index + 1}
+                    </div>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
       </section>
     </div>

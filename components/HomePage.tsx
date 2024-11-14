@@ -242,11 +242,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col items-center space-y-8 md:space-y-6 text-center"
+            className="flex flex-col items-center space-y-8 md:space-y-6 text-center -mt-16 sm:mt-0"
           >
             <header className="space-y-6 md:space-y-4 max-w-[800px] mx-auto">
               <motion.h1
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-white drop-shadow-lg"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-foreground drop-shadow-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -520,9 +520,14 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center mb-12 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-purple-200 dark:to-white bg-clip-text text-transparent">
-              {t.features.title}
-            </h2>
+            <div className="text-center mb-16">
+              <h2 className="text-foreground text-3xl font-bold">
+                {t.features.title}
+              </h2>
+              <p className="text-muted-foreground">
+                {t.features.subtitle}
+              </p>
+            </div>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {t.features.items.slice(0, 3).map((feature, index) => (
@@ -608,14 +613,14 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       <TestimonialsCarousel reviews={t.reviews.items} title={t.reviews.title} />
 
       {/* Gallery Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-[#1a0f2e]">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
+              <h2 className="text-foreground text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
                 {t.gallery.title}
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400">
+              <p className="text-muted-foreground text-xl">
                 {t.gallery.subtitle}
               </p>
             </div>

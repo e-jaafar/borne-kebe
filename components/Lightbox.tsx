@@ -30,7 +30,7 @@ export function Lightbox({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-background/95 z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
         {/* Boutons de navigation */}
@@ -39,7 +39,7 @@ export function Lightbox({
             e.stopPropagation()
             onClose()
           }}
-          className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-50"
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors z-50"
         >
           <X size={24} />
         </button>
@@ -50,7 +50,7 @@ export function Lightbox({
               e.stopPropagation()
               onPrevious()
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors z-50 p-2 hover:bg-white/10 rounded-full"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors z-50 p-2 hover:bg-muted rounded-full"
           >
             <ChevronLeft size={32} />
           </button>

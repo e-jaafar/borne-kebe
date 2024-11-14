@@ -69,7 +69,7 @@ export function TestimonialsCarousel({ reviews, title }: TestimonialsCarouselPro
                 {reviews.map((review, index) => (
                   <div key={index} className="flex-[0_0_100%] min-w-0 pl-4 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]">
                     <div className="p-1">
-                      <Card className="border-0 bg-white dark:bg-[#2d1f42] shadow-lg hover:shadow-xl transition-all duration-300 p-6 h-full">
+                      <Card className="bg-card text-card-foreground shadow-lg hover:shadow-xl transition-all duration-300 p-6 h-full">
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
@@ -78,25 +78,25 @@ export function TestimonialsCarousel({ reviews, title }: TestimonialsCarouselPro
                           className="flex flex-col h-full"
                         >
                           <div className="mb-4">
-                            <Quote className="w-8 h-8 text-purple-500 dark:text-purple-400 opacity-50" />
+                            <Quote className="w-8 h-8 text-primary opacity-50" />
                           </div>
 
                           <div className="flex items-center space-x-1 mb-4">
                             {[...Array(5)].map((_, i) => (
                               <Star 
                                 key={i} 
-                                className="h-5 w-5 fill-current text-yellow-500"
+                                className="h-5 w-5 fill-current text-primary"
                                 fill="currentColor"
                               />
                             ))}
                           </div>
 
-                          <p className="flex-1 text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-4 italic">
+                          <p className="text-muted-foreground text-lg leading-relaxed mb-4 italic">
                             &ldquo;{review.comment}&rdquo;
                           </p>
 
                           <div className="mt-auto">
-                            <p className="font-semibold text-gray-900 dark:text-gray-100 text-right">
+                            <p className="font-semibold text-foreground text-right">
                               — {review.name}
                             </p>
                           </div>

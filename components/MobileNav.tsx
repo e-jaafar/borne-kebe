@@ -124,7 +124,7 @@ export function MobileNav() {
       transition={{ type: "spring", stiffness: 260, damping: 20 }}
       className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
     >
-      <div className="bg-white/80 dark:bg-[#1a0f2e]/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800">
+      <div className="bg-background/80 backdrop-blur-lg border-t border-border">
         <div className="max-w-screen-xl mx-auto">
           <div className="grid grid-cols-4 h-16">
             {buttons.map((button, index) => {
@@ -146,7 +146,7 @@ export function MobileNav() {
                         scale: isActive ? 1 : 0.6,
                         opacity: isActive ? 1 : 0
                       }}
-                      className={`absolute inset-0 m-2 rounded-xl ${button.bgColor}`}
+                      className={`absolute inset-0 m-2 rounded-xl bg-primary/10`}
                     />
 
                     <motion.div
@@ -154,13 +154,13 @@ export function MobileNav() {
                       whileHover={{ scale: 1.1 }}
                       className="relative z-10"
                     >
-                      <Icon className={`h-6 w-6 ${button.color}`} />
+                      <Icon className={`h-6 w-6 text-primary`} />
                     </motion.div>
 
                     <motion.span 
                       initial={{ opacity: 0.5, y: 5 }}
                       whileHover={{ opacity: 1, y: 0 }}
-                      className={`text-xs font-medium ${button.color} mt-1`}
+                      className={`text-xs font-medium text-primary mt-1`}
                     >
                       {button.label}
                     </motion.span>
