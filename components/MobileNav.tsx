@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLang } from '@/context/LangContext'
-import { Phone, Mail, MapPin, MessageCircle, } from 'lucide-react'
+import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 // Définition du type pour les boutons
@@ -16,36 +16,37 @@ type ActionButton = {
   notifications?: boolean;
 }
 
-// Définir les boutons pour toutes les langues
+// Définir les boutons pour toutes les langues avec des couleurs améliorées
 const actionButtons: Record<string, ActionButton[]> = {
   fr: [
     {
       icon: Phone,
       href: "tel:+32488952150",
       label: "Appeler",
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
+      color: "text-blue-600 dark:text-blue-400",
+      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
     },
     {
       icon: Mail,
       href: "mailto:alchimistelab@hotmail.com",
       label: "Email",
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
+      color: "text-indigo-600 dark:text-indigo-400",
+      bgColor: "bg-indigo-500/10 dark:bg-indigo-400/10"
     },
     {
       icon: MapPin,
       href: "https://maps.google.com/?q=Rue+saint+michel+5+1000+Bruxelles",
       label: "Adresse",
-      color: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-500/10 dark:bg-red-400/10"
+      color: "text-purple-600 dark:text-purple-400",
+      bgColor: "bg-purple-500/10 dark:bg-purple-400/10"
     },
     {
       icon: MessageCircle,
       href: "https://wa.me/+32488952150",
       label: "WhatsApp",
       color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
+      bgColor: "bg-green-500/10 dark:bg-green-400/10",
+      notifications: true
     }
   ],
   en: [
@@ -53,29 +54,30 @@ const actionButtons: Record<string, ActionButton[]> = {
       icon: Phone,
       href: "tel:+32488952150",
       label: "Call",
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
+      color: "text-blue-600 dark:text-blue-400",
+      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
     },
     {
       icon: Mail,
       href: "mailto:alchimistelab@hotmail.com",
       label: "Email",
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
+      color: "text-indigo-600 dark:text-indigo-400",
+      bgColor: "bg-indigo-500/10 dark:bg-indigo-400/10"
     },
     {
       icon: MapPin,
       href: "https://maps.google.com/?q=Rue+saint+michel+5+1000+Bruxelles",
       label: "Address",
-      color: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-500/10 dark:bg-red-400/10"
+      color: "text-purple-600 dark:text-purple-400",
+      bgColor: "bg-purple-500/10 dark:bg-purple-400/10"
     },
     {
       icon: MessageCircle,
       href: "https://wa.me/+32488952150",
       label: "WhatsApp",
       color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
+      bgColor: "bg-green-500/10 dark:bg-green-400/10",
+      notifications: true
     }
   ],
   nl: [
@@ -83,29 +85,30 @@ const actionButtons: Record<string, ActionButton[]> = {
       icon: Phone,
       href: "tel:+32488952150",
       label: "Bellen",
-      color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
+      color: "text-blue-600 dark:text-blue-400",
+      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
     },
     {
       icon: Mail,
       href: "mailto:alchimistelab@hotmail.com",
       label: "E-mail",
-      color: "text-blue-600 dark:text-blue-400",
-      bgColor: "bg-blue-500/10 dark:bg-blue-400/10"
+      color: "text-indigo-600 dark:text-indigo-400",
+      bgColor: "bg-indigo-500/10 dark:bg-indigo-400/10"
     },
     {
       icon: MapPin,
       href: "https://maps.google.com/?q=Rue+saint+michel+5+1000+Bruxelles",
       label: "Adres",
-      color: "text-red-600 dark:text-red-400",
-      bgColor: "bg-red-500/10 dark:bg-red-400/10"
+      color: "text-purple-600 dark:text-purple-400",
+      bgColor: "bg-purple-500/10 dark:bg-purple-400/10"
     },
     {
       icon: MessageCircle,
       href: "https://wa.me/+32488952150",
       label: "WhatsApp",
       color: "text-green-600 dark:text-green-400",
-      bgColor: "bg-green-500/10 dark:bg-green-400/10"
+      bgColor: "bg-green-500/10 dark:bg-green-400/10",
+      notifications: true
     }
   ]
 }
@@ -146,7 +149,7 @@ export function MobileNav() {
                         scale: isActive ? 1 : 0.6,
                         opacity: isActive ? 1 : 0
                       }}
-                      className={`absolute inset-0 m-2 rounded-xl bg-primary/10`}
+                      className={`absolute inset-0 m-2 rounded-xl ${button.bgColor}`}
                     />
 
                     <motion.div
@@ -154,13 +157,13 @@ export function MobileNav() {
                       whileHover={{ scale: 1.1 }}
                       className="relative z-10"
                     >
-                      <Icon className={`h-6 w-6 text-primary`} />
+                      <Icon className={`h-6 w-6 ${button.color}`} />
                     </motion.div>
 
                     <motion.span 
                       initial={{ opacity: 0.5, y: 5 }}
                       whileHover={{ opacity: 1, y: 0 }}
-                      className={`text-xs font-medium text-primary mt-1`}
+                      className={`text-xs font-medium ${button.color} mt-1`}
                     >
                       {button.label}
                     </motion.span>
