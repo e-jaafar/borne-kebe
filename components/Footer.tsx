@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { useLang } from "@/context/LangContext"
-import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Linkedin, Heart } from "lucide-react"
-import { motion, useReducedMotion } from "framer-motion"
+import { Mail, Phone, MapPin, Clock, Heart } from "lucide-react"
+import { motion, } from "framer-motion"
 
 const translations = {
   fr: {
