@@ -77,6 +77,14 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   metadataBase: new URL('https://www.xn--borne-kb-80ai.com'),
+  verification: {
+    google: 'your-google-verification-code',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Borne Kébè',
+  },
 }
 
 export default function RootLayout({

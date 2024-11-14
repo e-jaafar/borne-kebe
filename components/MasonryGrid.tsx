@@ -130,10 +130,10 @@ export function MasonryGrid({ images }: MasonryGridProps) {
                     className="relative group cursor-pointer"
                     onClick={() => handleImageClick(image, globalIndex)}
                   >
-                    <div className={`relative ${aspectRatio} w-full overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all duration-300`}>
+                    <div className={`relative ${aspectRatio} w-full overflow-hidden rounded-lg bg-card shadow-sm hover:shadow-md transition-all duration-300`}>
                       {!loadedImages.has(image.src) && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-700">
-                          <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-muted">
+                          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                         </div>
                       )}
                       <Image
@@ -148,7 +148,7 @@ export function MasonryGrid({ images }: MasonryGridProps) {
                         priority={imageIndex === 0}
                         onLoad={() => handleImageLoad(image.src)}
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300" />
                     </div>
                   </motion.div>
                 )
