@@ -195,58 +195,99 @@ export function Footer() {
         {/* Ligne gradient supérieure */}
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
 
-        {/* Première vague */}
+        {/* Première vague principale */}
         <svg
-          className="absolute top-0 left-0 right-0 w-full opacity-[0.07] transform translate-y-[-50%]"
-          height="120"
-          viewBox="0 0 1920 120"
+          className="absolute top-0 left-0 right-0 w-full opacity-[0.08] transform translate-y-[-45%]"
+          height="150"
+          viewBox="0 0 1920 150"
           preserveAspectRatio="none"
         >
           <path
-            d="M0,0 C320,80 640,120 960,120 C1280,120 1600,80 1920,0 L1920,-10 L0,-10 Z"
+            d="M0,0 C320,100 640,150 960,150 C1280,150 1600,100 1920,0 L1920,-10 L0,-10 Z"
             fill="currentColor"
             className="text-purple-500 dark:text-purple-400"
           >
             <animate
               attributeName="d"
-              dur="5s"
+              dur="8s"
               repeatCount="indefinite"
               values="
-                M0,0 C320,80 640,120 960,120 C1280,120 1600,80 1920,0 L1920,-10 L0,-10 Z;
-                M0,0 C320,120 640,80 960,120 C1280,80 1600,120 1920,0 L1920,-10 L0,-10 Z;
-                M0,0 C320,80 640,120 960,120 C1280,120 1600,80 1920,0 L1920,-10 L0,-10 Z
+                M0,0 C320,100 640,150 960,150 C1280,150 1600,100 1920,0 L1920,-10 L0,-10 Z;
+                M0,50 C320,150 640,100 960,150 C1280,100 1600,150 1920,50 L1920,-10 L0,-10 Z;
+                M0,0 C320,100 640,150 960,150 C1280,150 1600,100 1920,0 L1920,-10 L0,-10 Z
               "
             />
           </path>
         </svg>
 
-        {/* Deuxième vague (plus petite et décalée) */}
+        {/* Deuxième vague (plus petite et plus rapide) */}
         <svg
-          className="absolute top-0 left-0 right-0 w-full opacity-[0.05] transform translate-y-[-30%]"
-          height="100"
-          viewBox="0 0 1920 100"
+          className="absolute top-0 left-0 right-0 w-full opacity-[0.06] transform translate-y-[-35%]"
+          height="120"
+          viewBox="0 0 1920 120"
           preserveAspectRatio="none"
         >
           <path
-            d="M0,0 C480,60 960,100 1440,100 C1920,100 1920,60 1920,0 L1920,-10 L0,-10 Z"
+            d="M0,0 C480,80 960,120 1440,120 C1920,120 1920,80 1920,0 L1920,-10 L0,-10 Z"
             fill="currentColor"
             className="text-purple-600 dark:text-purple-500"
           >
             <animate
               attributeName="d"
-              dur="7s"
+              dur="6s"
               repeatCount="indefinite"
               values="
-                M0,0 C480,60 960,100 1440,100 C1920,100 1920,60 1920,0 L1920,-10 L0,-10 Z;
-                M0,0 C480,100 960,60 1440,100 C1920,60 1920,100 1920,0 L1920,-10 L0,-10 Z;
-                M0,0 C480,60 960,100 1440,100 C1920,100 1920,60 1920,0 L1920,-10 L0,-10 Z
+                M0,0 C480,80 960,120 1440,120 C1920,120 1920,80 1920,0 L1920,-10 L0,-10 Z;
+                M0,40 C480,120 960,80 1440,120 C1920,80 1920,120 1920,40 L1920,-10 L0,-10 Z;
+                M0,0 C480,80 960,120 1440,120 C1920,120 1920,80 1920,0 L1920,-10 L0,-10 Z
               "
             />
           </path>
         </svg>
 
-        {/* Effet de brillance */}
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-purple-500/5 to-transparent" />
+        {/* Troisième vague (la plus petite et la plus rapide) */}
+        <svg
+          className="absolute top-0 left-0 right-0 w-full opacity-[0.04] transform translate-y-[-25%]"
+          height="100"
+          viewBox="0 0 1920 100"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0 C640,60 1280,100 1920,100 L1920,-10 L0,-10 Z"
+            fill="currentColor"
+            className="text-purple-700 dark:text-purple-600"
+          >
+            <animate
+              attributeName="d"
+              dur="4s"
+              repeatCount="indefinite"
+              values="
+                M0,0 C640,60 1280,100 1920,100 L1920,-10 L0,-10 Z;
+                M0,30 C640,100 1280,60 1920,100 L1920,-10 L0,-10 Z;
+                M0,0 C640,60 1280,100 1920,100 L1920,-10 L0,-10 Z
+              "
+            />
+          </path>
+        </svg>
+
+        {/* Effet de brillance et de gradient */}
+        <div className="absolute inset-x-0 top-0 h-60 bg-gradient-to-b from-purple-500/5 via-purple-500/3 to-transparent" />
+        
+        {/* Points brillants animés */}
+        <div className="absolute inset-0">
+          {[...Array(3)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 rounded-full bg-purple-400/30 animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${i * 2}s`,
+                animationDuration: `${8 + i * 2}s`
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="container mx-auto max-w-7xl px-4 md:px-6 pt-16 pb-8 md:pb-8 pb-24 text-center md:text-left">
