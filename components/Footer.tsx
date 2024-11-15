@@ -59,6 +59,12 @@ const translations = {
           "Vous pouvez gérer vos préférences de cookies à tout moment."
         ]
       }
+    },
+    footer: {
+      description: "Solutions de photobooth haut de gamme pour vos événements professionnels et privés.",
+      copyright: "Tous droits réservés",
+      developedBy: "Développé avec",
+      by: "par",
     }
   },
   en: {
@@ -113,6 +119,12 @@ const translations = {
           "You can manage your cookie preferences at any time."
         ]
       }
+    },
+    footer: {
+      description: "High-end photobooth solutions for your professional and private events.",
+      copyright: "All rights reserved",
+      developedBy: "Developed with",
+      by: "by",
     }
   },
   nl: {
@@ -167,6 +179,12 @@ const translations = {
           "U kunt uw cookievoorkeuren op elk moment beheren."
         ]
       }
+    },
+    footer: {
+      description: "Hoogwaardige photobooth-oplossingen voor uw professionele en privé-evenementen.",
+      copyright: "Alle rechten voorbehouden",
+      developedBy: "Ontwikkeld met",
+      by: "door",
     }
   }
 }
@@ -314,7 +332,7 @@ export function Footer() {
               Borne Kébè
             </Link>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-              Solutions de photobooth haut de gamme pour vos événements professionnels et privés.
+              {t.footer.description}
             </p>
             {/* <div className="flex space-x-4">
               <motion.a

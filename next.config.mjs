@@ -31,6 +31,21 @@ const nextConfig = {
       apiKey: process.env.RESEND_API_KEY,
     },
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          }
+        ]
+      }
+    ]
+  },
+  poweredByHeader: false,
+  reactStrictMode: true,
 }
 
 export default nextConfig
