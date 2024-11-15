@@ -3,7 +3,6 @@
 import { Camera, Share2, Smartphone, Palette, Cloud, Shield, Printer, Users } from "lucide-react"
 import { Sparkles } from "lucide-react"
 import { motion } from 'framer-motion'
-import { useLang } from '@/context/LangContext'
 import { translations } from '@/translations'
 
 type FeaturesPageProps = {
@@ -26,7 +25,6 @@ const iconComponents = {
 type IconName = keyof typeof iconComponents
 
 export function FeaturesPage({ translations: t }: FeaturesPageProps) {
-  const { lang } = useLang()
   const currentFeatures = t.features.items
 
   // Fonction pour obtenir le composant d'icône
@@ -72,7 +70,9 @@ export function FeaturesPage({ translations: t }: FeaturesPageProps) {
                 </div>
 
                 {/* Effet de liquide de développement amélioré */}
-                <div className="absolute inset-0 bg-gradient-to-b from-red-500/20 via-red-500/10 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-[1.5s] ease-in-out">
+                <div 
+                  className="absolute inset-0 bg-gradient-to-b from-red-500/20 via-red-500/10 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-1000 ease-in-out"
+                >
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.1),transparent_70%)]" />
                 </div>
 
@@ -88,28 +88,25 @@ export function FeaturesPage({ translations: t }: FeaturesPageProps) {
                     </div>
                   </div>
 
-                  {/* Point lumineux repositionné */}
-                  <div className="absolute right-4 top-4 w-3 h-3 rounded-full bg-white/60 blur-[1px] group-hover:scale-150 transition-transform duration-700" />
-
-                  {/* Titre et description avec ajustement de l'espacement */}
+                  {/* Titre et description avec transition immédiate */}
                   <div className="flex flex-col flex-grow">
-                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100 group-hover:opacity-0 transition-all duration-75 group-hover:-translate-y-2">
+                    <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100 group-hover:opacity-0 transition-[opacity] duration-0 group-hover:-translate-y-2">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:opacity-0 transition-all duration-75 group-hover:-translate-y-2 line-clamp-2">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:opacity-0 transition-[opacity] duration-0 group-hover:-translate-y-2 line-clamp-2">
                       {feature.description}
                     </p>
                   </div>
                 </div>
 
-                {/* Contenu révélé amélioré */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 delay-75">
+                {/* Contenu révélé avec transition ajustée */}
+                <div className="absolute inset-0 p-6 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-[opacity] duration-300 delay-0">
                   <div className="relative">
-                    <h3 className="text-lg font-semibold mb-4 text-red-400 dark:text-red-300 opacity-0 group-hover:opacity-100 transition-all duration-200 delay-100 group-hover:translate-y-0 translate-y-4">
+                    <h3 className="text-lg font-semibold mb-4 text-red-400 dark:text-red-300 opacity-0 group-hover:opacity-100 transition-[opacity] duration-200 delay-0 group-hover:translate-y-0 translate-y-4">
                       {feature.title}
                     </h3>
                     
-                    <p className="text-white/90 leading-relaxed text-sm opacity-0 group-hover:opacity-100 transition-all duration-200 delay-150 group-hover:translate-y-0 translate-y-4">
+                    <p className="text-white/90 leading-relaxed text-sm opacity-0 group-hover:opacity-100 transition-[opacity] duration-200 delay-0 group-hover:translate-y-0 translate-y-4">
                       {feature.details}
                     </p>
 

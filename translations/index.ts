@@ -313,6 +313,7 @@ export const translations = {
     features: {
       title: "Borne Kébè Excellence",
       subtitle: "Innovative features for a unique experience",
+      cta: "Explore all our features",
       items: [
         
         { 
@@ -606,6 +607,7 @@ export const translations = {
     features: {
       title: "Borne Kébè Excellentie",
       subtitle: "Innovatieve functies voor een unieke ervaring",
+      cta: "Ontdek al onze functies",
       items: [
        
         { 

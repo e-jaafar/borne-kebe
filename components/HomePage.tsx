@@ -210,7 +210,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         ref={heroRef}
         onMouseMove={handleMouseMove}
         aria-label="Hero section"
-        className="relative w-full min-h-[90vh] flex items-center py-12 md:py-24 lg:py-32 xl:py-40 overflow-hidden bg-[#1a0f2e]"
+        className="relative w-full min-h-[90vh] flex items-center py-12 md:py-24 lg:py-32 xl:py-40 overflow-hidden bg-white dark:bg-[#1a0f2e] transition-colors duration-300"
       >
         {/* Background avec Parallaxe amélioré */}
         <motion.div
@@ -230,7 +230,8 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               }px, ${(mousePosition.y - 0.5) * 10}px)`,
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f2e]/90 via-[#1a0f2e]/70 to-[#1a0f2e]/90 backdrop-blur-[2px]" />
+          {/* Gradient overlay modifié pour le mode clair/sombre */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px] transition-colors duration-300" />
         </motion.div>
 
         {/* Contenu optimisé pour mobile */}
@@ -254,23 +255,20 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 <TypeAnimation
                   sequence={[
                     t.hero.title,
-                    3000, // Pause plus longue après le titre (3 secondes)
-                    ...t.hero.sequences.flatMap((text) => [
-                      text,
-                      2500, // Pause de 2.5 secondes après chaque texte
-                    ]),
+                    3000,
+                    ...t.hero.sequences.flatMap((text) => [text, 2500]),
                   ]}
                   wrapper="span"
-                  speed={30} // Vitesse de frappe lente
-                  deletionSpeed={30} // Vitesse de suppression plus lente
+                  speed={30}
+                  deletionSpeed={30}
                   repeat={Infinity}
                   cursor={true}
-                  className="bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent"
+                  className="bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-purple-200 bg-clip-text text-transparent transition-all duration-300"
                 />
               </motion.h1>
 
               <motion.p
-                className="text-base sm:text-lg md:text-xl text-gray-100 max-w-[90%] mx-auto leading-relaxed px-4 md:px-0"
+                className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-100 max-w-[90%] mx-auto leading-relaxed px-4 md:px-0 transition-colors duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}

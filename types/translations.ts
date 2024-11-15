@@ -122,13 +122,14 @@ export type FeatureItem = {
   title: string
   description: string
   details: string
-  icon?: string
+  icon: string
 }
 
 export type FeaturesTranslations = {
   features: {
     title: string
     subtitle: string
+    cta: string
     items: readonly FeatureItem[]
   }
 } 

@@ -17,6 +17,9 @@ export default function Page({ params: { lang } }: { params: { lang: string } })
     },
     features: {
       ...translations[currentLang].features,
+      title: translations[currentLang].features.title,
+      subtitle: translations[currentLang].features.subtitle,
+      cta: translations[currentLang].features.cta,
       items: [...translations[currentLang].features.items]
     },
     why: {
