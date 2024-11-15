@@ -25,41 +25,49 @@ export const translations = {
         { 
           title: "Reconnaissance faciale avancée", 
           description: "Technologie de pointe pour une expérience utilisateur optimale",
+          icon: "Users",
           details: "Notre système de reconnaissance faciale utilise l'IA pour identifier et regrouper automatiquement les photos par personne, facilitant la recherche et le partage de vos moments préférés."
         },
         { 
           title: "Qualité professionnelle", 
           description: "Images haute résolution dignes des plus grands événements",
+          icon: "Camera",
           details: "Équipement professionnel avec capteurs haute résolution, éclairage LED ajustable et impression sublimation pour des photos d'une qualité exceptionnelle."
         },
         { 
           title: "Partage instantané", 
           description: "Diffusion immédiate sur vos plateformes préférées",
+          icon: "Share2",
           details: "Partagez vos photos instantanément par email, SMS ou sur les réseaux sociaux. Créez des albums en ligne privés accessibles à tous vos invités."
         },
         { 
           title: "Personnalisation complète", 
           description: "Une expérience sur mesure pour votre événement",
+          icon: "Palette",
           details: "Interface personnalisable avec vos couleurs, logo et thème. Création de cadres et filtres spécifiques pour votre événement."
         },
         { 
           title: "Stockage sécurisé", 
           description: "Vos souvenirs en sécurité dans le cloud",
+          icon: "Cloud",
           details: "Stockage automatique et sécurisé de toutes vos photos dans le cloud, accessibles pendant 30 jours avec possibilité d'extension."
         },
         { 
           title: "Protection des données", 
           description: "Confidentialité et sécurité garanties",
+          icon: "Shield",
           details: "Conformité RGPD, cryptage des données et suppression automatique après l'événement. Votre vie privée est notre priorité."
         },
         { 
           title: "Impression illimitée", 
           description: "Des souvenirs tangibles à emporter",
+          icon: "Printer",
           details: "Impression haute qualité sur place avec choix de formats et de finitions. Possibilité de réimpressions illimitées pendant l'événement."
         },
         { 
           title: "Support dédié", 
           description: "Une équipe à votre service",
+          icon: "Smartphone",
           details: "Personnel qualifié sur place pour assurer le bon fonctionnement. Support technique disponible 24/7 pendant votre événement."
         }
       ]
@@ -305,46 +313,54 @@ export const translations = {
     features: {
       title: "Borne Kébè Excellence",
       subtitle: "Innovative features for a unique experience",
-      cta: "Explore all our features",
       items: [
+        
         { 
           title: "Advanced Facial Recognition", 
           description: "Cutting-edge technology for an optimal user experience",
+          icon: "Users",
           details: "Our facial recognition system uses AI to automatically identify and group photos by person, making it easy to find and share your favorite moments."
         },
         { 
           title: "Professional Quality", 
           description: "High-resolution images worthy of the grandest events",
+          icon: "Camera",
           details: "Professional equipment with high-resolution sensors, adjustable LED lighting, and sublimation printing for exceptional quality photos."
         },
         { 
           title: "Instant Sharing", 
           description: "Immediate distribution on your favorite platforms",
+          icon: "Share2",
           details: "Share your photos instantly via email, SMS, or social media. Create private online albums accessible to all your guests."
         },
         { 
           title: "Complete Customization", 
           description: "A customized experience for your event",
+          icon: "Palette",
           details: "Customizable interface with your colors, logo, and theme. Create specific frames and filters for your event."
         },
         { 
           title: "Secure Storage", 
           description: "Your memories securely stored in the cloud",
+          icon: "Cloud",
           details: "Automatic and secure cloud storage for your photos, accessible for 30 days with the option to extend."
         },
         { 
           title: "Data Protection", 
           description: "Confidentiality and security guaranteed",
+          icon: "Shield",
           details: "GDPR compliance, data encryption, and automatic deletion after the event. Your privacy is our priority."
         },
         { 
           title: "Unlimited Printing", 
           description: "High-quality prints on demand",
+          icon: "Printer",
           details: "High-quality prints on-site with a variety of formats and finishes. Possibility of unlimited reprints during the event."
         },
         { 
           title: "Dedicated Support", 
           description: "A team at your service",
+          icon: "Smartphone",
           details: "Qualified personnel on-site to ensure smooth operation. Technical support available 24/7 during your event."
         }
       ]
@@ -590,46 +606,54 @@ export const translations = {
     features: {
       title: "Borne Kébè Excellentie",
       subtitle: "Innovatieve functies voor een unieke ervaring",
-      cta: "Ontdek al onze functies",
       items: [
+       
         { 
           title: "Geavanceerde Gezichtsherkenning", 
           description: "Geavanceerde technologie voor een optimale gebruikerservaring",
+          icon: "Users",
           details: "Ons gezichtsherkenningssysteem gebruikt AI om automatisch foto's per persoon te identificeren en te groeperen, waardoor het gemakkelijk is om uw favoriete momenten te vinden en te delen."
         },
         { 
           title: "Professionele Kwaliteit", 
           description: "Hoge resolutie beelden waardig aan de grootste evenementen",
+          icon: "Camera",
           details: "Professioneel materiaal met hoge resolutie sensoren, aanpasbare LED-verlichting en sublimatie-afdruk voor hoge kwaliteit."
         },
         { 
           title: "Direct Delen", 
           description: "Onmiddellijke verspreiding op uw favoriete platforms",
+          icon: "Share2",
           details: "Deel uw foto's direct via email, SMS of sociale netwerken. Maak privé online albums beschikbaar voor alle gasten."
         },
         { 
           title: "Volledige aanpassing", 
           description: "Een unieke ervaring voor uw evenement",
+          icon: "Palette",
           details: "Aanpasbare interface met uw kleuren, logo en thema. Maak specifieke frames en filters voor uw evenement."
         },
         { 
           title: "Veilige opslag", 
           description: "Uw herinneringen veilig opgeslagen in de cloud",
+          icon: "Cloud",
           details: "Automatische veilige cloudopslag voor uw foto's, beschikbaar voor 30 dagen met mogelijkheid tot uitbreiding."
         },
         { 
           title: "Gegevensbescherming", 
           description: "Vertrouwelijkheid en veiligheid gegarandeerd",
+          icon: "Shield",
           details: "Naleving van de RGPD, gegevenscryptie en automatische verwijdering na het evenement. Uw privacy is onze prioriteit."
         },
         { 
           title: "Onbeperkte afdrukken", 
           description: "Hoge kwaliteit afdrukken op aanvraag",
+          icon: "Printer",
           details: "Hoge kwaliteit afdrukken op locatie met een variëteit aan formaten en afwerkingen. Mogelijkheid tot onbeperkte herafdrukken tijdens het evenement."
         },
         { 
           title: "Gespecialiseerd ondersteuning", 
           description: "Een team op uw hoogte",
+          icon: "Smartphone",
           details: "Gekwalificeerd personeel op locatie om een goed functioneren te waarborgen. Technische ondersteuning beschikbaar 24/7 tijdens het evenement."
         }
       ]
