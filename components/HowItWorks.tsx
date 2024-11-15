@@ -67,11 +67,11 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
                     <div className="relative">
                       <motion.div
                         whileHover={{ scale: 1.05 }}
-                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg flex items-center justify-center"
+                        className="w-12 h-12 mt-5 rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg flex items-center justify-center"
                       >
                         <StepIcon className="w-6 h-6 text-white" />
                       </motion.div>
-                      <div className="absolute -top-2 -right-2 w-auto h-6 px-2 rounded-full bg-primary/20 flex items-center justify-center whitespace-nowrap">
+                      <div className="absolute backdrop-blur-lg z-10  -top-2 -right-2 w-auto h-6 px-2 rounded-full bg-primary/20 flex items-center justify-center whitespace-nowrap">
                         <span className="text-sm font-bold text-primary">
                           Étape {index + 1}
                         </span>
@@ -99,7 +99,7 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
 
         {/* Version Desktop - Timeline */}
         <div className="hidden md:block relative max-w-5xl mx-auto">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary/20 to-primary/40 rounded-full" />
+          <div className="absolute mt-12 left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary/20 to-primary/40 rounded-full" />
           
           <div className="space-y-24">
             {stepsWithIcons.map((step, index) => {
