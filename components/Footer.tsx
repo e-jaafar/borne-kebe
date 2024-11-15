@@ -4,6 +4,7 @@ import Link from "next/link"
 import { useLang } from "@/context/LangContext"
 import { Mail, Phone, MapPin, Clock, Heart } from "lucide-react"
 import { motion, useReducedMotion } from "framer-motion"
+import { useEffect, useState } from "react"
 
 const translations = {
   fr: {
@@ -183,6 +184,18 @@ export function Footer() {
     damping: 20,
   }
 
+  // État pour stocker les positions aléatoires
+  const [points, setPoints] = useState<{ left: string, top: string }[]>([])
+
+  useEffect(() => {
+    // Générer les positions aléatoires seulement côté client
+    const generatedPoints = Array.from({ length: 3 }, () => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+    }))
+    setPoints(generatedPoints)
+  }, [])
+
   return (
     <motion.footer
       initial={!prefersReducedMotion ? { opacity: 0, y: 50 } : {}}
@@ -275,13 +288,13 @@ export function Footer() {
         
         {/* Points brillants animés */}
         <div className="absolute inset-0">
-          {[...Array(3)].map((_, i) => (
+          {points.map((point, i) => (
             <div
               key={i}
               className="absolute w-1 h-1 rounded-full bg-purple-400/30 animate-float"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: point.left,
+                top: point.top,
                 animationDelay: `${i * 2}s`,
                 animationDuration: `${8 + i * 2}s`
               }}

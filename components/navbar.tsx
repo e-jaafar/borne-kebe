@@ -183,7 +183,7 @@ export function Navbar() {
                         alt={urlLang === 'fr' ? 'Français' : urlLang === 'en' ? 'English' : 'Nederlands'}
                         width={24}
                         height={24}
-                        className="rounded-sm"
+                        className="rounded-sm w-6 h-6"
                       />
                     </motion.div>
                   </SelectValue>
@@ -196,7 +196,7 @@ export function Navbar() {
                         alt="Français"
                         width={24}
                         height={24}
-                        className="rounded-sm"
+                        className="rounded-sm w-6 h-6"
                       />
                       <span>Français</span>
                     </div>
@@ -208,7 +208,7 @@ export function Navbar() {
                         alt="English"
                         width={24}
                         height={24}
-                        className="rounded-sm"
+                        className="rounded-sm w-6 h-6"
                       />
                       <span>English</span>
                     </div>
@@ -220,7 +220,7 @@ export function Navbar() {
                         alt="Nederlands"
                         width={24}
                         height={24}
-                        className="rounded-sm"
+                        className="rounded-sm w-6 h-6"
                       />
                       <span>Nederlands</span>
                     </div>
@@ -358,7 +358,7 @@ export function Navbar() {
                             alt={l === 'fr' ? 'Français' : l === 'en' ? 'English' : 'Nederlands'}
                             width={24}
                             height={24}
-                            className="rounded-sm"
+                            className="rounded-sm w-6 h-6"
                           />
                           <span className={`text-sm ${
                             urlLang === l 
