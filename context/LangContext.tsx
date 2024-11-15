@@ -19,21 +19,26 @@ export function LangProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const urlLang = pathname.split('/')[1]
+      
       if (languages.includes(urlLang as Lang)) {
         setLangState(urlLang as Lang)
         localStorage.setItem('preferred-lang', urlLang as Lang)
         return
       }
 
+      const browserLangs = navigator.languages || [navigator.language]
+      const detectedLang = browserLangs
+        .map(lang => lang.split('-')[0].toLowerCase())
+        .find(lang => languages.includes(lang as Lang))
+
       const savedLang = localStorage.getItem('preferred-lang') as Lang | null
-      const browserLang = navigator.language.split('-')[0]
-      const detectedLang = languages.includes(browserLang as Lang) ? browserLang as Lang : defaultLang
-      const initialLang = savedLang || detectedLang
+      const initialLang = savedLang || detectedLang as Lang || defaultLang
       
       setLangState(initialLang)
       
       if (!languages.includes(urlLang as Lang)) {
-        router.replace(`/${initialLang}${pathname}`)
+        const newPath = pathname === '/' ? `/${initialLang}` : `/${initialLang}${pathname}`
+        router.replace(newPath)
       }
     } catch (error) {
       console.error('Error setting language:', error)
@@ -45,7 +50,6 @@ export function LangProvider({ children }: { children: ReactNode }) {
       setLangState(newLang)
       localStorage.setItem('preferred-lang', newLang)
       
-      // Mettre à jour l'URL
       const newPathname = pathname.replace(/^\/[^\/]+/, `/${newLang}`)
       router.replace(newPathname)
     } catch (error) {

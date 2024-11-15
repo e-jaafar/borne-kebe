@@ -132,4 +132,14 @@ export type FeaturesTranslations = {
     cta: string
     items: readonly FeatureItem[]
   }
+}
+
+export type FooterTranslations = {
+  footer: {
+    description: string
+    copyright: string
+    developedBy: string
+    by: string
+    // ... autres traductions du footer
+  }
 } 

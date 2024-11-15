@@ -125,6 +125,11 @@ export const translations = {
       subtitle: "Une expérience simple et intuitive",
       steps: [
         {
+          title: "Nos photographes en action",
+          description: "Nos photographes vous prennent en photo tout au long de la soirée",
+          icon: "Camera"
+        },
+        {
           title: "Prenez la pose",
           description: "Placez-vous devant notre borne et laissez-vous guider par notre interface intuitive",
           icon: "Camera"
@@ -290,6 +295,12 @@ export const translations = {
           "Vous pouvez gérer vos préférences de cookies à tout moment."
         ]
       }
+    },
+    footer: {
+      description: "Solutions de photobooth haut de gamme pour vos événements professionnels et privés.",
+      copyright: "Tous droits réservés",
+      developedBy: "Développé avec",
+      by: "par"
     }
   },
   en: {
@@ -419,23 +430,28 @@ export const translations = {
       subtitle: "A simple and intuitive experience",
       steps: [
         {
-          title: "Strike a pose",
-          description: "Stand in front of our booth and let our intuitive interface guide you",
+          title: "Our Photographers in Action",
+          description: "Our photographers take your photos throughout the evening",
+          icon: "Camera"
+        },
+        {
+          title: "Strike a Pose",
+          description: "Position yourself in front of our booth and follow the intuitive interface",
           icon: "Camera"
         },
         {
           title: "Facial Recognition",
-          description: "Our technology automatically identifies faces to easily find your photos",
+          description: "Our technology automatically identifies faces to easily retrieve your photos",
           icon: "Users"
         },
         {
           title: "Instant Retouching",
-          description: "Apply professional filters and customize your photos",
+          description: "Apply professional filters and personalize your photos",
           icon: "Settings"
         },
         {
-          title: "Instant Sharing",
-          description: "Get your photos on your phone or print them instantly",
+          title: "Immediate Sharing",
+          description: "Retrieve your photos on your phone or print them instantly",
           icon: "Share2"
         }
       ]
@@ -584,6 +600,12 @@ export const translations = {
           "You can manage your cookie preferences at any time."
         ]
       }
+    },
+    footer: {
+      description: "High-end photobooth solutions for your professional and private events.",
+      copyright: "All rights reserved",
+      developedBy: "Developed with",
+      by: "by"
     }
   },
   nl: {
@@ -713,23 +735,28 @@ export const translations = {
       subtitle: "Een eenvoudige en intuïtieve ervaring",
       steps: [
         {
-          title: "Poseer",
-          description: "Ga voor onze booth staan en laat u leiden door onze intuïtieve interface",
+          title: "Onze Fotografen in Actie",
+          description: "Onze fotografen maken foto's van je gedurende de hele avond",
+          icon: "Camera"
+        },
+        {
+          title: "Neem een Pose",
+          description: "Plaats jezelf voor onze photobooth en volg de intuïtieve interface",
           icon: "Camera"
         },
         {
           title: "Gezichtsherkenning",
-          description: "Onze technologie herkent automatisch gezichten om uw foto's gemakkelijk terug te vinden",
+          description: "Onze technologie identificeert automatisch gezichten om je foto's gemakkelijk terug te vinden",
           icon: "Users"
         },
         {
-          title: "Direct Bewerken",
-          description: "Pas professionele filters toe en personaliseer uw foto's",
+          title: "Instant Retoucheren",
+          description: "Pas professionele filters toe en personaliseer je foto's",
           icon: "Settings"
         },
         {
           title: "Direct Delen",
-          description: "Ontvang uw foto's op uw telefoon of print ze direct",
+          description: "Haal je foto's op je telefoon op of print ze direct af",
           icon: "Share2"
         }
       ]
@@ -878,6 +905,12 @@ export const translations = {
           "U kunt uw cookievoorkeuren op elk moment beheren."
         ]
       }
+    },
+    footer: {
+      description: "Hoogwaardige photobooth-oplossingen voor uw professionele en privé-evenementen.",
+      copyright: "Alle rechten voorbehouden",
+      developedBy: "Ontwikkeld met",
+      by: "door"
     }
   }
 } as const

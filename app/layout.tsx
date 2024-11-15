@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import { MobileNav } from "@/components/MobileNav";
 import { RootLayoutClient } from "@/components/RootLayoutClient";
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -109,6 +110,7 @@ export default function RootLayout({
             </div>
           </LangProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
