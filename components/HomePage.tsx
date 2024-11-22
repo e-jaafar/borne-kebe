@@ -532,11 +532,12 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           </div>
         </div>
       </section>
-      {/* How it works Section */}
+      {/* How it works Section - Modification du fond */}
       <HowItWorks
         title={t.howItWorks.title}
         subtitle={t.howItWorks.subtitle}
         steps={t.howItWorks.steps}
+        className="bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]"
       />
 
       {/* Features Section avec effets 3D et micro-interactions */}
@@ -635,8 +636,8 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {/* Section témoignages améliorée */}
       <TestimonialsCarousel reviews={t.reviews.items} title={t.reviews.title} />
 
-      {/* Gallery Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-background">
+      {/* Gallery Section - Modification du fond */}
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">

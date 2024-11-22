@@ -17,9 +17,10 @@ type HowItWorksProps = {
     description: string
     icon: string
   }[]
+  className?: string
 }
 
-export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
+export function HowItWorks({ title, subtitle, steps, className = "" }: HowItWorksProps) {
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'Camera': return Camera
@@ -36,8 +37,8 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
   }))
 
   return (
-    <div className="w-full bg-background">
-      <section className="py-12 md:py-20 container mx-auto px-4">
+    <section className={`w-full py-12 md:py-24 lg:py-32 ${className}`}>
+      <div className="container mx-auto px-4">
         <motion.div 
           className="text-center mb-12"
         >
@@ -144,7 +145,7 @@ export function HowItWorks({ title, subtitle, steps }: HowItWorksProps) {
             })}
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   )
 } 
