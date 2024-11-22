@@ -1,173 +1,134 @@
-import { useRef, useState, useEffect } from 'react'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Loader2 } from 'lucide-react'
-import { Lightbox } from './Lightbox'
-import { useKeyPress } from '@/hooks/useKeyPress'
+'use client'
 
-type LocalImage = {
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { GalleryImage } from './GalleryImage'
+import { motion } from 'framer-motion'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+
+type Image = {
   src: string
   alt: string
 }
 
 type MasonryGridProps = {
-  images: LocalImage[]
+  images: Image[]
 }
 
-// function ImageSkeleton() {
-//   return (
-//     <div className="animate-pulse">
-//       <div className="bg-gray-200 dark:bg-gray-700 rounded-lg w-full h-full min-h-[200px]" />
-//     </div>
-//   )
-// }
-
 export function MasonryGrid({ images }: MasonryGridProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [columns, setColumns] = useState<number>(3)
-  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
-  const [selectedImage, setSelectedImage] = useState<LocalImage | null>(null)
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [columns, setColumns] = useState(3)
+  const [gridWidth, setGridWidth] = useState(0)
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isTablet = useMediaQuery('(max-width: 1024px)')
 
+  // Fonction pour calculer le nombre de colonnes avec useCallback
+  const calculateColumns = useCallback(() => {
+    if (isMobile) return 1
+    if (isTablet) return 2
+    return 3
+  }, [isMobile, isTablet])
+
+  // Fonction de debounce typée
+  const debounce = <T extends (...args: unknown[]) => void>(
+    func: T,
+    wait: number
+  ) => {
+    let timeout: NodeJS.Timeout
+
+    return (...args: Parameters<T>) => {
+      const later = () => {
+        clearTimeout(timeout)
+        func(...args)
+      }
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+    }
+  }
+
+  // Mise à jour des dimensions
   useEffect(() => {
-    const updateColumns = () => {
-      if (!containerRef.current) return
-      const width = containerRef.current.offsetWidth
-      if (width <= 640) setColumns(2)
-      else if (width <= 1024) setColumns(3)
-      else setColumns(4)
+    const updateDimensions = () => {
+      if (gridRef.current) {
+        setGridWidth(gridRef.current.offsetWidth)
+        setColumns(calculateColumns())
+      }
     }
 
-    updateColumns()
-    window.addEventListener('resize', updateColumns)
-    return () => window.removeEventListener('resize', updateColumns)
-  }, [])
+    updateDimensions()
 
-  const handleImageLoad = (src: string) => {
-    setLoadedImages(prev => new Set(prev).add(src))
-  }
+    const debouncedHandleResize = debounce(updateDimensions, 250)
+    window.addEventListener('resize', debouncedHandleResize)
 
-  const handleImageClick = (image: LocalImage, index: number) => {
-    setSelectedImage(image)
-    setCurrentIndex(index)
-  }
-
-  const handlePrevious = () => {
-    if (!images || images.length === 0) return
-    const newIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1
-    setCurrentIndex(newIndex)
-    setSelectedImage(images[newIndex])
-  }
-
-  const handleNext = () => {
-    if (!images || images.length === 0) return
-    const newIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0
-    setCurrentIndex(newIndex)
-    setSelectedImage(images[newIndex])
-  }
-
-  const handleClose = () => {
-    setSelectedImage(null)
-    setCurrentIndex(0)
-  }
-
-  // Gestion des touches clavier avec useKeyPress
-  useKeyPress('ArrowLeft', handlePrevious)
-  useKeyPress('ArrowRight', handleNext)
-  useKeyPress('Escape', handleClose)
-
-  const getRandomAspectRatio = () => {
-    const ratios = [
-      'aspect-[1/1.2]',
-      'aspect-[1/1]',
-      'aspect-[4/5]',
-      'aspect-[3/2]',
-      'aspect-[2/3]'
-    ]
-    return ratios[Math.floor(Math.random() * ratios.length)]
-  }
-
-  const getOptimizedColumns = () => {
-    if (!Array.isArray(images) || images.length === 0) {
-      return Array(columns).fill([])
+    return () => {
+      window.removeEventListener('resize', debouncedHandleResize)
     }
+  }, [calculateColumns])
 
-    const columnItems: LocalImage[][] = Array(columns).fill(null).map(() => [])
-    images.forEach((image: LocalImage, index: number) => {
-      const columnIndex = index % columns
-      columnItems[columnIndex].push(image)
+  // Distribution des images dans les colonnes
+  const distributeImages = useCallback(() => {
+    if (!images || images.length === 0) return []
+    
+    const columnArrays: Image[][] = Array.from({ length: columns }, () => [])
+    
+    images.forEach((image, index) => {
+      columnArrays[index % columns].push(image)
     })
-    return columnItems
-  }
+    
+    return columnArrays
+  }, [columns, images])
 
-  if (!Array.isArray(images) || images.length === 0) {
-    return <div className="text-center text-gray-500">Chargement des images...</div>
-  }
+  const columnWidth = gridWidth / columns
 
   return (
-    <>
-      <div ref={containerRef} className="w-full px-4 py-8">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="flex gap-2 max-w-5xl mx-auto"
-        >
-          {getOptimizedColumns().map((column: LocalImage[], columnIndex: number) => (
-            <div key={columnIndex} className="flex-1 flex flex-col gap-2">
-              {column.map((image: LocalImage, imageIndex: number) => {
-                const globalIndex = columnIndex * Math.ceil(images.length / columns) + imageIndex
-                const aspectRatio = getRandomAspectRatio()
-                
-                return (
-                  <motion.div
-                    key={`${columnIndex}-${imageIndex}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      delay: (columnIndex * column.length + imageIndex) * 0.1,
-                      duration: 0.5
-                    }}
-                    className="relative group cursor-pointer"
-                    onClick={() => handleImageClick(image, globalIndex)}
-                  >
-                    <div className={`relative ${aspectRatio} w-full overflow-hidden rounded-lg bg-card shadow-sm hover:shadow-md transition-all duration-300`}>
-                      {!loadedImages.has(image.src) && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-muted">
-                          <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
-                        </div>
-                      )}
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 20vw"
-                        className={`
-                          object-cover transition-transform duration-500 group-hover:scale-105
-                          ${loadedImages.has(image.src) ? 'opacity-100' : 'opacity-0'}
-                        `}
-                        priority={imageIndex === 0}
-                        onLoad={() => handleImageLoad(image.src)}
-                      />
-                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300" />
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
-          ))}
-        </motion.div>
+    <div 
+      ref={gridRef}
+      className="relative w-full"
+      style={{ 
+        height: gridWidth > 0 ? 'auto' : '100vh',
+        minHeight: '400px'
+      }}
+    >
+      <div className="flex gap-4">
+        {distributeImages().map((column, columnIndex) => (
+          <div
+            key={columnIndex}
+            className="flex-1"
+            style={{ 
+              width: `${100 / columns}%`,
+              position: 'relative'
+            }}
+          >
+            {column.map((image, imageIndex) => {
+              // Calcul de l'index global de l'image
+              const globalIndex = columnIndex + (imageIndex * columns)
+              
+              return (
+                <motion.div
+                  key={`${columnIndex}-${imageIndex}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: imageIndex * 0.1 }}
+                  className="mb-4"
+                  style={{ 
+                    position: 'relative',
+                    width: '100%',
+                    willChange: 'transform'
+                  }}
+                >
+                  <GalleryImage
+                    src={image.src}
+                    alt={image.alt}
+                    width={columnWidth}
+                    allImages={images}
+                    currentIndex={globalIndex}
+                  />
+                </motion.div>
+              )
+            })}
+          </div>
+        ))}
       </div>
-
-      {selectedImage && (
-        <Lightbox
-          image={selectedImage}
-          onClose={handleClose}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          hasNext={currentIndex < images.length - 1}
-          hasPrevious={currentIndex > 0}
-        />
-      )}
-    </>
+    </div>
   )
 }

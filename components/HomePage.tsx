@@ -103,42 +103,70 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
     loadImages();
   }, []);
 
-  // Gestion du bouton scroll to top
+  // Modification de la gestion du scroll pour le bouton CTA
   useEffect(() => {
+    let ticking = false;
+    const buffer = 250; // Zone tampon plus grande
+
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
-    };
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const windowHeight = window.innerHeight;
+          const documentHeight = document.documentElement.scrollHeight;
+          const scrollTop = window.scrollY;
+          const footerHeight = 300; // Hauteur approximative du footer
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+          // Calcul plus précis pour la détection du bas de page
+          const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
+          const nearBottom = distanceFromBottom < (buffer + footerHeight);
+          
+          setIsNearBottom(nearBottom);
+          ticking = false;
+        });
 
-  // Gestion du scroll pour le bouton CTA
-  useEffect(() => {
-    const handleScroll = () => {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY;
-
-      // Détecte quand on est proche du bas (par exemple, à 100px du bas)
-      const nearBottom = documentHeight - (scrollTop + windowHeight) < 100;
-      setIsNearBottom(nearBottom);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setShowScroll(false);
-      } else {
-        setShowScroll(true);
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Modification de la gestion du scroll pour le bouton scroll to top
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setShowScrollTop(window.scrollY > 300);
+          ticking = false;
+        });
+
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Modification de la gestion du scroll pour l'animation
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setShowScroll(window.scrollY <= 100);
+          ticking = false;
+        });
+
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -221,7 +249,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   };
 
   return (
-    <main className="relative">
+    <main className="relative overflow-x-hidden">
       {init && !shouldReduceMotion && (
         <Particles
           id="tsparticles"
@@ -378,9 +406,10 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {/* Why Choose Us Section */}
       <section className="relative z-10 w-full py-24 bg-gradient-to-b from-white/80 to-gray-50/80 dark:from-[#1a0f2e]/80 dark:to-[#140b24]/80">
         {/* Particules de fond améliorées */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-purple-500/5 via-purple-400/5 to-transparent dark:from-purple-500/10 dark:via-purple-400/5 dark:to-transparent rounded-full blur-[120px] animate-pulse-slow" />
-          <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-gradient-to-tr from-purple-700/5 via-purple-600/5 to-transparent dark:from-purple-700/10 dark:via-purple-600/5 dark:to-transparent rounded-full blur-[120px] animate-pulse-slower" />
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl translate-x-[-25%]" />
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-700/5 rounded-full blur-3xl translate-x-[25%]" />
+          <div className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] bg-gradient-to-tr from-purple-700/5 via-purple-600/5 to-transparent dark:from-purple-700/10 dark:via-purple-600/5 dark:to-transparent rounded-full blur-[120px] animate-pulse-slower" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -675,8 +704,8 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
       {/* Floating Contact Button avec animation de translation */}
       <div
-        className={`fixed bottom-8 right-8 z-50 hidden md:block transition-transform duration-300 ${
-          isNearBottom ? "translate-y-[-100px]" : "translate-y-0"
+        className={`fixed bottom-8 right-8 z-50 hidden md:block transition-transform duration-500 ease-out will-change-transform ${
+          isNearBottom ? "translate-y-[150px]" : "translate-y-0"
         }`}
       >
         <Button
@@ -716,10 +745,10 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
       {/* Scroll to Top Button - Repositionné */}
       <div
-        className={`fixed md:bottom-8 md:left-8 bottom-20 left-4 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed md:bottom-8 md:left-8 bottom-20 left-4 z-50 transition-transform duration-500 ease-out will-change-transform ${
           showScrollTop
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-10 pointer-events-none"
+            ? "translate-y-0 opacity-100"
+            : "translate-y-10 opacity-0 pointer-events-none"
         }`}
       >
         <Button

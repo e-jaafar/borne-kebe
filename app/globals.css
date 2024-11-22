@@ -117,7 +117,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 }
 
@@ -313,4 +313,17 @@ textarea {
   .particles-container {
     display: none !important;
   }
+}
+
+.bg-radial-gradient {
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}
+
+/* Désactiver le scroll du body quand le lightbox est ouvert */
+body.lightbox-open {
+  overflow: hidden;
 }

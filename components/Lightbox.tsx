@@ -1,107 +1,128 @@
-import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
+'use client'
+
+import { motion } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
+import { createPortal } from 'react-dom'
+import { useEffect } from 'react'
 
 type LightboxProps = {
-  image: {
-    src: string
-    alt: string
-    event?: string
-    date?: string
-  }
+  imageSrc: string
+  imageAlt: string
   onClose: () => void
-  onPrevious: () => void
-  onNext: () => void
-  hasNext: boolean
-  hasPrevious: boolean
+  onNext?: () => void
+  onPrev?: () => void
+  hasNext?: boolean
+  hasPrev?: boolean
 }
 
 export function Lightbox({ 
-  image, 
-  onClose, 
-  onPrevious, 
+  imageSrc, 
+  imageAlt, 
+  onClose,
   onNext,
+  onPrev,
   hasNext,
-  hasPrevious 
+  hasPrev 
 }: LightboxProps) {
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-background/95 z-50 flex items-center justify-center p-4"
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose()
+    }
+  }
+
+  // Gestion des touches clavier
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+      } else if (e.key === 'ArrowRight' && hasNext && onNext) {
+        onNext()
+      } else if (e.key === 'ArrowLeft' && hasPrev && onPrev) {
+        onPrev()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [onClose, onNext, onPrev, hasNext, hasPrev])
+
+  return createPortal(
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-lg flex items-center justify-center"
+      onClick={handleBackdropClick}
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+    >
+      {/* Bouton de fermeture */}
+      <motion.button
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
         onClick={onClose}
+        className="absolute top-4 right-4 p-3 text-white/75 hover:text-white bg-black/20 hover:bg-black/40 rounded-full backdrop-blur-sm transition-all duration-200 z-[99999]"
       >
-        {/* Boutons de navigation */}
-        <button
+        <X className="w-6 h-6" />
+      </motion.button>
+
+      {/* Boutons de navigation */}
+      {hasPrev && (
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
           onClick={(e) => {
             e.stopPropagation()
-            onClose()
+            onPrev?.()
           }}
-          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors z-50"
+          className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-white/75 hover:text-white bg-black/20 hover:bg-black/40 rounded-full backdrop-blur-sm transition-all duration-200"
         >
-          <X size={24} />
-        </button>
+          <ChevronLeft className="w-6 h-6" />
+        </motion.button>
+      )}
 
-        {hasPrevious && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              onPrevious()
-            }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors z-50 p-2 hover:bg-muted rounded-full"
-          >
-            <ChevronLeft size={32} />
-          </button>
-        )}
-
-        {hasNext && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              onNext()
-            }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors z-50 p-2 hover:bg-white/10 rounded-full"
-          >
-            <ChevronRight size={32} />
-          </button>
-        )}
-
-        {/* Container de l'image */}
-        <motion.div 
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-4xl h-[80vh]"
-          onClick={e => e.stopPropagation()}
+      {hasNext && (
+        <motion.button
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          onClick={(e) => {
+            e.stopPropagation()
+            onNext?.()
+          }}
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-white/75 hover:text-white bg-black/20 hover:bg-black/40 rounded-full backdrop-blur-sm transition-all duration-200"
         >
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            className="object-contain"
-            sizes="(max-width: 1536px) 100vw, 1536px"
-            priority
-            quality={100}
-          />
+          <ChevronRight className="w-6 h-6" />
+        </motion.button>
+      )}
 
-          {(image.event || image.date) && (
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-              {image.event && (
-                <h3 className="text-white text-xl font-medium">{image.event}</h3>
-              )}
-              {image.date && (
-                <p className="text-white/70 text-sm">{image.date}</p>
-              )}
-            </div>
-          )}
-        </motion.div>
-
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-sm">
-          Utilisez ← → pour naviguer, Échap pour fermer
-        </div>
+      {/* Image */}
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="w-[95vw] h-[95vh] relative"
+      >
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          fill
+          className="object-contain"
+          sizes="95vw"
+          priority
+          quality={100}
+          draggable={false}
+        />
       </motion.div>
-    </AnimatePresence>
+
+      {/* Raccourcis clavier */}
+      <div className="fixed bottom-4 right-4 flex gap-2 text-white/50 text-sm">
+        <span>ESC pour fermer</span>
+        {(hasNext || hasPrev) && <span>• ← → pour naviguer</span>}
+      </div>
+    </motion.div>,
+    document.body
   )
 }
