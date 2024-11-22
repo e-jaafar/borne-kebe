@@ -121,80 +121,148 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 md:px-6 py-12 bg-background">
-      {/* En-tête de la page */}
-      <div className="text-center mb-12">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-foreground text-3xl font-bold tracking-tighter mb-4"
-        >
-          {t.contact.title}
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-muted-foreground text-lg"
-        >
-          {t.contact.subtitle}
-        </motion.p>
+    <main className="relative min-h-screen bg-gradient-to-br from-gray-50/50 via-white to-gray-50/50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
+      {/* Effets de fond décoratifs */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-700/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Formulaire */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white dark:bg-[#1a0f2e]/50 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-gray-200/50 dark:border-gray-800/50"
-        >
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Champs du formulaire */}
-            {Object.entries(formData).map(([key, value]) => {
-              if (key === 'attachment') return null
-              const fieldKey = key as keyof FormData
-              const hasError = errors[fieldKey] && touched.has(fieldKey)
-              
-              return (
-                <div key={key} className="space-y-2">
-                  <motion.div
-                    initial={false}
-                    animate={{
-                      y: hasError ? [-2, 0] : 0,
-                    }}
-                    transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                  >
-                    {key === 'message' ? (
-                      <Textarea
-                        value={value as string}
-                        onChange={(e) => handleChange(fieldKey, e.target.value)}
-                        onBlur={() => handleBlur(fieldKey)}
-                        placeholder={t.form[fieldKey]}
-                        className={`
-                          transition-all duration-300 bg-background
-                          ${hasError ? 'border-destructive' : 'focus:border-primary'}
-                          ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-primary/50' : ''}
-                        `}
-                      />
-                    ) : (
-                      <Input
-                        type={key === 'email' ? 'email' : 'text'}
-                        value={value as string}
-                        onChange={(e) => handleChange(fieldKey, e.target.value)}
-                        onBlur={() => handleBlur(fieldKey)}
-                        placeholder={t.form[fieldKey]}
-                        className={`
-                          transition-all duration-300 bg-background
-                          ${hasError ? 'border-destructive' : 'focus:border-primary'}
-                          ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-primary/50' : ''}
-                        `}
-                      />
-                    )}
-                  </motion.div>
+      {/* Contenu de la page */}
+      <div className="relative z-10">
+        <div className="container mx-auto max-w-7xl px-4 md:px-6 py-12">
+          {/* En-tête de la page */}
+          <div className="text-center mb-12">
+            <motion.h1
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 dark:from-purple-400 dark:via-pink-400 dark:to-purple-400 bg-clip-text text-transparent mb-4"
+            >
+              {t.contact.title}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
+            >
+              {t.contact.subtitle}
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Formulaire */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white/80 dark:bg-[#2d1f42]/80 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-purple-200/20 dark:border-purple-500/20 hover:border-purple-500/30 dark:hover:border-purple-400/30 transition-all duration-300"
+            >
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Champs du formulaire */}
+                {Object.entries(formData).map(([key, value]) => {
+                  if (key === 'attachment') return null
+                  const fieldKey = key as keyof FormData
+                  const hasError = errors[fieldKey] && touched.has(fieldKey)
+                  
+                  return (
+                    <div key={key} className="space-y-2">
+                      <motion.div
+                        initial={false}
+                        animate={{
+                          y: hasError ? [-2, 0] : 0,
+                        }}
+                        transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                      >
+                        {key === 'message' ? (
+                          <Textarea
+                            value={value as string}
+                            onChange={(e) => handleChange(fieldKey, e.target.value)}
+                            onBlur={() => handleBlur(fieldKey)}
+                            placeholder={t.form[fieldKey]}
+                            className={`
+                              transition-all duration-300 bg-background
+                              ${hasError ? 'border-destructive' : 'focus:border-primary'}
+                              ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-primary/50' : ''}
+                            `}
+                          />
+                        ) : (
+                          <Input
+                            type={key === 'email' ? 'email' : 'text'}
+                            value={value as string}
+                            onChange={(e) => handleChange(fieldKey, e.target.value)}
+                            onBlur={() => handleBlur(fieldKey)}
+                            placeholder={t.form[fieldKey]}
+                            className={`
+                              transition-all duration-300 bg-background
+                              ${hasError ? 'border-destructive' : 'focus:border-primary'}
+                              ${touched.has(fieldKey) && !errors[fieldKey] ? 'border-primary/50' : ''}
+                            `}
+                          />
+                        )}
+                      </motion.div>
+
+                      <AnimatePresence>
+                        {hasError && (
+                          <motion.p
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="text-sm text-red-500 dark:text-red-400 flex items-center gap-1"
+                          >
+                            <AlertCircle className="w-4 h-4" />
+                            {errors[fieldKey]}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )
+                })}
+
+                {/* Zone de pièce jointe */}
+                <div className="space-y-2">
+                  <div className="relative">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      onChange={handleFileChange}
+                      accept={ALLOWED_FILE_TYPES.join(',')}
+                      className="hidden"
+                      id="file-upload"
+                    />
+                    <label
+                      htmlFor="file-upload"
+                      className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg cursor-pointer hover:border-purple-500 dark:hover:border-purple-400 transition-colors"
+                    >
+                      {formData.attachment ? (
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-600 dark:text-gray-300">
+                            {formData.attachment.name}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              removeFile()
+                            }}
+                            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+                          >
+                            <X className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center gap-2">
+                          <Upload className="w-6 h-6 text-gray-400 dark:text-gray-500" />
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {t.form.dropzone}
+                          </span>
+                        </div>
+                      )}
+                    </label>
+                  </div>
 
                   <AnimatePresence>
-                    {hasError && (
+                    {errors.attachment && (
                       <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -202,182 +270,125 @@ export function ContactPage({ translations: t }: { translations: ContactTranslat
                         className="text-sm text-red-500 dark:text-red-400 flex items-center gap-1"
                       >
                         <AlertCircle className="w-4 h-4" />
-                        {errors[fieldKey]}
+                        {errors.attachment}
                       </motion.p>
                     )}
                   </AnimatePresence>
                 </div>
-              )
-            })}
 
-            {/* Zone de pièce jointe */}
-            <div className="space-y-2">
-              <div className="relative">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  onChange={handleFileChange}
-                  accept={ALLOWED_FILE_TYPES.join(',')}
-                  className="hidden"
-                  id="file-upload"
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg cursor-pointer hover:border-purple-500 dark:hover:border-purple-400 transition-colors"
+                {/* Bouton de soumission */}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {formData.attachment ? (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-300">
-                        {formData.attachment.name}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          removeFile()
-                        }}
-                        className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
-                      >
-                        <X className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center gap-2">
-                      <Upload className="w-6 h-6 text-gray-400 dark:text-gray-500" />
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {t.form.dropzone}
-                      </span>
-                    </div>
-                  )}
-                </label>
-              </div>
-
-              <AnimatePresence>
-                {errors.attachment && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="text-sm text-red-500 dark:text-red-400 flex items-center gap-1"
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
-                    <AlertCircle className="w-4 h-4" />
-                    {errors.attachment}
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </div>
+                    {isSubmitting ? (
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    ) : (
+                      t.form.submit
+                    )}
+                  </Button>
+                </motion.div>
 
-            {/* Bouton de soumission */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                {isSubmitting ? (
-                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                ) : (
-                  t.form.submit
-                )}
-              </Button>
+                {/* Message de statut */}
+                <AnimatePresence>
+                  {submitStatus !== 'idle' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      className={`
+                        flex items-center gap-2 p-4 rounded-lg
+                        ${submitStatus === 'success' ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300' : ''}
+                        ${submitStatus === 'error' ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300' : ''}
+                      `}
+                    >
+                      {submitStatus === 'success' ? (
+                        <CheckCircle className="w-5 h-5" />
+                      ) : (
+                        <AlertCircle className="w-5 h-5" />
+                      )}
+                      <span>
+                        {submitStatus === 'success' ? t.form.success : t.form.error}
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </form>
             </motion.div>
 
-            {/* Message de statut */}
-            <AnimatePresence>
-              {submitStatus !== 'idle' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className={`
-                    flex items-center gap-2 p-4 rounded-lg
-                    ${submitStatus === 'success' ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300' : ''}
-                    ${submitStatus === 'error' ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300' : ''}
-                  `}
-                >
-                  {submitStatus === 'success' ? (
-                    <CheckCircle className="w-5 h-5" />
-                  ) : (
-                    <AlertCircle className="w-5 h-5" />
-                  )}
-                  <span>
-                    {submitStatus === 'success' ? t.form.success : t.form.error}
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </form>
-        </motion.div>
+            {/* Informations de contact */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="space-y-8"
+            >
+              <div className="bg-white/80 dark:bg-[#2d1f42]/80 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-purple-200/20 dark:border-purple-500/20 hover:border-purple-500/30 dark:hover:border-purple-400/30 transition-all duration-300">
+                <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-800 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">
+                  {t.info.title}
+                </h2>
+                <div className="space-y-6">
+                  <motion.a
+                    href={`mailto:${t.info.email}`}
+                    className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
+                    whileHover={{ x: 5 }}
+                  >
+                    <Mail className="w-5 h-5" />
+                    <span>{t.info.email}</span>
+                  </motion.a>
+                  <motion.a
+                    href={`tel:${t.info.phone}`}
+                    className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
+                    whileHover={{ x: 5 }}
+                  >
+                    <Phone className="w-5 h-5" />
+                    <span>{t.info.phone}</span>
+                  </motion.a>
+                  <motion.div
+                    className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
+                    whileHover={{ x: 5 }}
+                  >
+                    <MapPin className="w-5 h-5" />
+                    <span>{t.info.address}</span>
+                  </motion.div>
+                  <motion.div
+                    className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
+                    whileHover={{ x: 5 }}
+                  >
+                    <Clock className="w-5 h-5" />
+                    <span>{t.info.hours}</span>
+                  </motion.div>
+                </div>
+              </div>
 
-        {/* Informations de contact */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-8"
-        >
-          <div className="bg-white dark:bg-[#1a0f2e]/50 p-6 rounded-xl shadow-lg backdrop-blur-sm border border-gray-200/50 dark:border-gray-800/50">
-            <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-800 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">
-              {t.info.title}
-            </h2>
-            <div className="space-y-6">
-              <motion.a
-                href={`mailto:${t.info.email}`}
-                className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
-                whileHover={{ x: 5 }}
-              >
-                <Mail className="w-5 h-5" />
-                <span>{t.info.email}</span>
-              </motion.a>
-              <motion.a
-                href={`tel:${t.info.phone}`}
-                className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
-                whileHover={{ x: 5 }}
-              >
-                <Phone className="w-5 h-5" />
-                <span>{t.info.phone}</span>
-              </motion.a>
-              <motion.div
-                className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
-                whileHover={{ x: 5 }}
-              >
-                <MapPin className="w-5 h-5" />
-                <span>{t.info.address}</span>
-              </motion.div>
-              <motion.div
-                className="flex items-center space-x-3 text-gray-600 dark:text-gray-300 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/30"
-                whileHover={{ x: 5 }}
-              >
-                <Clock className="w-5 h-5" />
-                <span>{t.info.hours}</span>
-              </motion.div>
-            </div>
+              {/* Carte Google Maps sécurisée */}
+              <div className="relative w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-lg">
+                {/* Placeholder pendant le chargement */}
+                <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 animate-pulse" />
+                
+                {/* Carte avec URL sécurisée */}
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.698168171767!2d4.3517!3d50.8503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c38150702ee9%3A0xb283ebb7da71b23e!2sRue%20Saint-Michel%205%2C%201000%20Bruxelles!5e0!3m2!1sfr!2sbe!4v1731161910725!5m2!1sfr!2sbe"
+                  className="absolute inset-0 w-full h-full border-0 z-10"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Google Maps"
+                  aria-label="Carte de localisation"
+                  allowFullScreen
+                />
+                
+                {/* Overlay pour améliorer la visibilité */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-black/10" />
+              </div>
+            </motion.div>
           </div>
-
-          {/* Carte Google Maps sécurisée */}
-          <div className="relative w-full h-[300px] md:h-[400px] rounded-xl overflow-hidden shadow-lg">
-            {/* Placeholder pendant le chargement */}
-            <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 animate-pulse" />
-            
-            {/* Carte avec URL sécurisée */}
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.698168171767!2d4.3517!3d50.8503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c38150702ee9%3A0xb283ebb7da71b23e!2sRue%20Saint-Michel%205%2C%201000%20Bruxelles!5e0!3m2!1sfr!2sbe!4v1731161910725!5m2!1sfr!2sbe"
-              className="absolute inset-0 w-full h-full border-0 z-10"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Google Maps"
-              aria-label="Carte de localisation"
-              allowFullScreen
-            />
-            
-            {/* Overlay pour améliorer la visibilité */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-black/10" />
-          </div>
-        </motion.div>
+        </div>
       </div>
-    </div>
+    </main>
   )
 } 
