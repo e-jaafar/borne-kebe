@@ -59,7 +59,7 @@ export function TestimonialsCarousel({ reviews, title }: TestimonialsCarouselPro
                   <Card className="p-4 h-[200px] bg-white/80 dark:bg-[#2d1f42]/80 backdrop-blur-sm border border-purple-200/20 dark:border-purple-500/20 hover:border-purple-500/30 dark:hover:border-purple-400/30 transition-all duration-300 shadow-lg hover:shadow-purple-500/10">
                     <div className="flex flex-col h-full">
                       {/* En-tête avec rating */}
-                      <div className="flex-none">
+                      <div className="flex-none flex justify-center">
                         {review.rating && (
                           <div className="flex gap-1 mb-2">
                             {[...Array(review.rating)].map((_, i) => (
@@ -73,22 +73,25 @@ export function TestimonialsCarousel({ reviews, title }: TestimonialsCarouselPro
                       </div>
 
                       {/* Corps du témoignage */}
-                      <div className="flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500/20 scrollbar-track-transparent pr-2">
-                        <p className="text-gray-700 dark:text-gray-200 italic text-sm">
-                          "{review.comment}"
+                      <div className="flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500/20 scrollbar-track-transparent px-2 flex items-center">
+                        <p className="text-gray-700 dark:text-gray-200 italic text-sm text-center w-full">
+                          &ldquo;{review.comment}&rdquo;
                         </p>
                       </div>
 
                       {/* Pied de carte */}
                       <div className="flex-none pt-2 mt-auto border-t border-purple-200/20 dark:border-purple-500/20">
-                        <div className="flex justify-between items-center text-xs">
+                        <div className="flex justify-center items-center text-xs gap-2">
                           <span className="font-semibold text-purple-700 dark:text-purple-400">
                             {review.name}
                           </span>
                           {review.date && (
-                            <span className="text-gray-500 dark:text-gray-400">
-                              {review.date}
-                            </span>
+                            <>
+                              <span className="text-gray-400">•</span>
+                              <span className="text-gray-500 dark:text-gray-400">
+                                {review.date}
+                              </span>
+                            </>
                           )}
                         </div>
                       </div>

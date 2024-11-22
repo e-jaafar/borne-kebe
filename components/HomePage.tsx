@@ -242,17 +242,13 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           <div className="relative w-full h-full">
             <Image
               src="/videos/hero1.jpg"
-              alt="Photobooth professionnel en action"
+              alt=""
               fill
               priority
               quality={90}
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 100vw"
-              // style={{
-              //   transform: shouldReduceMotion ? 'none' : `translate(${
-              //     (mousePosition.x - 0.5) * 10
-              //   }px, ${(mousePosition.y - 0.5) * 10}px)`
-              // }}
+              aria-hidden="true"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px]" />
           </div>
