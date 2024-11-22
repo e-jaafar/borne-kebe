@@ -71,15 +71,6 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
   const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-  // Gestionnaire de mouvement de souris
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!heroRef.current || shouldReduceMotion) return;
-    const rect = heroRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    setMousePosition({ x, y });
-  }, [shouldReduceMotion]);
-
   // Initialisation des particules
   useEffect(() => {
     const initParticles = async () => {
@@ -242,8 +233,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {/* Hero Section avec Parallax */}
       <section
         ref={heroRef}
-        onMouseMove={handleMouseMove}
-        className="relative z-10 min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
+        className="relative z-10 min-h-screen md:min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
       >
         <motion.div
           className="absolute inset-0 z-0 w-full h-full"
@@ -257,9 +247,9 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               priority
               quality={90}
               className="object-cover"
-              sizes="100vw"
+              sizes="(max-width: 768px) 100vw, 100vw"
               style={{
-                transform: shouldReduceMotion ? 'none' : `scale(1.1) translate(${
+                transform: shouldReduceMotion ? 'none' : `translate(${
                   (mousePosition.x - 0.5) * 10
                 }px, ${(mousePosition.y - 0.5) * 10}px)`
               }}
@@ -269,14 +259,12 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </motion.div>
 
         {/* Contenu optimisé pour mobile */}
-        <div className={`relative z-30 container mx-auto max-w-7xl px-4 md:px-6 ${
-          shouldReduceMotion ? 'low-perf' : ''
-        }`}>
+        <div className="relative z-30 container mx-auto max-w-7xl px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col items-center space-y-8 md:space-y-6 text-center -mt-20 sm:mt-0"
+            className="flex flex-col items-center space-y-8 md:space-y-6 text-center pt-20 md:pt-0 min-h-[60vh] md:min-h-0 justify-center"
           >
             <header className="space-y-6 md:space-y-4 max-w-[800px] mx-auto">
               <motion.h1
