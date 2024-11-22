@@ -104,7 +104,7 @@ export const DemoVideo = () => {
       </video>
 
       {/* Bouton de lecture manuel pour les appareils à faible performance */}
-      {isLowPerformance() && !isReducedMotion && (
+      {/* {isLowPerformance() && !isReducedMotion && (
         <button
           onClick={() => videoRef.current?.play()}
           className="absolute inset-0 flex items-center justify-center bg-black/50 hover:bg-black/60 transition-colors"
@@ -130,7 +130,7 @@ export const DemoVideo = () => {
             />
           </svg>
         </button>
-      )}
+      )} */}
     </div>
   );
 }; 
