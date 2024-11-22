@@ -81,7 +81,7 @@ export const DemoVideo = () => {
       
       <video
         ref={videoRef}
-        poster="/videos/hero1.jpg"
+        poster="/images/poster.jpg"
         playsInline
         muted
         loop
