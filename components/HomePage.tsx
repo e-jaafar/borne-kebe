@@ -5,24 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Camera, Zap, Mail, ArrowUp } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { DemoVideo } from "@/components/DemoVideo";
 import { FadeIn } from "@/components/ui/motion";
 import { type HomePageTranslations } from "@/types/translations";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadStarsPreset } from "@tsparticles/preset-stars";
+import { loadFull } from "tsparticles";
 import { MasonryGrid } from "@/components/MasonryGrid";
 import { TypeAnimation } from "react-type-animation";
 import { HowItWorks } from "@/components/HowItWorks";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
-// type S3Image = {
-//   Key: string
-//   LastModified: string
-//   ETag: string
-//   Size: number
-//   StorageClass: string
-// }
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+
+// Ajouter le type pour window.navigator
+declare global {
+  interface Navigator {
+    deviceMemory?: number;
+    hardwareConcurrency?: number;
+  }
+}
 
 type HomePageProps = {
   lang: string;
@@ -36,36 +38,62 @@ type LocalImage = {
 };
 
 export function HomePage({ lang, translations: t }: HomePageProps) {
+  // États
   const [galleryImages, setGalleryImages] = useState<LocalImage[]>([]);
   const [init, setInit] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isNearBottom, setIsNearBottom] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [showScroll, setShowScroll] = useState(true);
-
+  const [isLowPerfDevice, setIsLowPerfDevice] = useState(false);
+  
+  // Refs
   const heroRef = useRef<HTMLDivElement>(null);
+  
+  // Media queries et détection des performances
+  const isReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isLowEnd = useCallback(() => {
+    if (typeof window === 'undefined' || !navigator) return false;
+    return (
+      (navigator.deviceMemory && navigator.deviceMemory < 4) ||
+      (navigator.hardwareConcurrency || 4) <= 4
+    );
+  }, []);
+
+  const shouldReduceMotion = isReducedMotion || isMobile || isLowEnd() || isLowPerfDevice
+
+  // Scroll et animations
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
   const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!heroRef.current) return;
+  // Gestionnaire de mouvement de souris
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!heroRef.current || shouldReduceMotion) return;
     const rect = heroRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     setMousePosition({ x, y });
-  };
+  }, [shouldReduceMotion]);
 
+  // Initialisation des particules
   useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadStarsPreset(engine);
-    }).then(() => {
-      setInit(true);
-    });
+    const initParticles = async () => {
+      try {
+        await initParticlesEngine(async (engine) => {
+          await loadFull(engine);
+        });
+        setInit(true);
+      } catch (error) {
+        console.error('Error initializing particles:', error);
+      }
+    };
+
+    initParticles();
   }, []);
 
   // Chargement des images
@@ -123,122 +151,127 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Détection des performances du dispositif
+  useEffect(() => {
+    const checkPerformance = () => {
+      if (typeof window === 'undefined' || !navigator) return;
+      
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const cpuCores = navigator.hardwareConcurrency || 1;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lowMemory = Boolean(navigator.deviceMemory && navigator.deviceMemory < 4);
+      
+      const isLowPerf = Boolean(
+        isMobile || 
+        cpuCores <= 2 || 
+        prefersReducedMotion || 
+        lowMemory
+      );
+      
+      setIsLowPerfDevice(isLowPerf);
+    };
+
+    checkPerformance();
+  }, []);
+
+  // Configuration des particules avec les types corrects
+  const particlesConfig = {
+    particles: {
+      number: {
+        value: shouldReduceMotion ? 20 : 50,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: ["#9333ea", "#ffffff"]
+      },
+      links: {
+        color: "#9333ea",
+        distance: 150,
+        enable: true,
+        opacity: 0.2,
+        width: 1
+      },
+      move: {
+        enable: !shouldReduceMotion,
+        speed: 0.3,
+        direction: "none" as const,
+        random: true,
+        straight: false,
+        outModes: {
+          default: "bounce" as const
+        }
+      },
+      size: {
+        value: { min: 1, max: 3 }
+      }
+    },
+    interactivity: {
+      events: {
+        onHover: {
+          enable: !shouldReduceMotion,
+          mode: "grab"
+        }
+      },
+      modes: {
+        grab: {
+          distance: 140,
+          links: {
+            opacity: 0.2
+          }
+        }
+      }
+    },
+    detectRetina: !shouldReduceMotion,
+    fullScreen: false,
+    fpsLimit: shouldReduceMotion ? 30 : 60
+  };
+
   return (
-    <main role="main" className="flex flex-col items-center relative">
-      {/* Particules interactives avec paramètres optimisés */}
-      {init && (
+    <main className="relative">
+      {init && !shouldReduceMotion && (
         <Particles
           id="tsparticles"
-          className="fixed inset-0 z-10 pointer-events-none"
-          options={{
-            particles: {
-              number: {
-                value: 50,
-                density: {
-                  enable: true,
-                  width: 1920,
-                  height: 1080,
-                },
-              },
-              color: {
-                value: ["#ffffff", "#9333ea", "#a855f7", "#c084fc"],
-              },
-              move: {
-                enable: true,
-                speed: 0.5,
-                direction: "none",
-                random: true,
-                straight: false,
-                outModes: {
-                  default: "bounce",
-                },
-              },
-              size: {
-                value: { min: 2, max: 4 },
-              },
-              opacity: {
-                value: { min: 0.3, max: 0.7 },
-              },
-              interactivity: {
-                detectsOn: "window",
-                events: {
-                  onHover: {
-                    enable: true,
-                    mode: "slow",
-                    parallax: {
-                      enable: true,
-                      force: 10,
-                      smooth: 300,
-                    },
-                  },
-                },
-                modes: {
-                  slow: {
-                    factor: 4,
-                    radius: 200,
-                  },
-                  grab: {
-                    distance: 400,
-                    links: {
-                      opacity: 0.3,
-                      width: 2,
-                    },
-                  },
-                },
-              },
-              links: {
-                enable: true,
-                distance: 200,
-                color: "#9333ea",
-                opacity: 0.2,
-                width: 1.5,
-              },
-            },
-            fullScreen: {
-              enable: false,
-            },
-            detectRetina: true,
-            background: {
-              color: "transparent",
-            },
-          }}
+          className="fixed inset-0 z-0"
+          options={particlesConfig}
         />
       )}
 
-      {/* Hero Section améliorée */}
+      {/* Hero Section avec Parallax */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
-        aria-label="Hero section"
-        className="relative w-full min-h-[90vh] flex items-center py-12 md:py-24 lg:py-32 xl:py-40 overflow-hidden bg-white dark:bg-[#1a0f2e] transition-colors duration-300"
+        className="relative z-10 min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
       >
-        {/* Background avec Parallaxe amélioré */}
         <motion.div
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 w-full h-full"
           style={{ scale: imageScale }}
         >
-          <Image
-            src="/videos/hero1.jpg"
-            alt="Photobooth professionnel en action"
-            fill
-            priority
-            quality={90}
-            className="object-cover transition-transform duration-300 ease-out"
-            style={{
-              transform: `scale(1.1) translate(${
-                (mousePosition.x - 0.5) * 10
-              }px, ${(mousePosition.y - 0.5) * 10}px)`,
-            }}
-          />
-          {/* Gradient overlay modifié pour le mode clair/sombre */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px] transition-colors duration-300" />
+          <div className="relative w-full h-full">
+            <Image
+              src="/videos/hero1.jpg"
+              alt="Photobooth professionnel en action"
+              fill
+              priority
+              quality={90}
+              className="object-cover"
+              sizes="100vw"
+              style={{
+                transform: shouldReduceMotion ? 'none' : `scale(1.1) translate(${
+                  (mousePosition.x - 0.5) * 10
+                }px, ${(mousePosition.y - 0.5) * 10}px)`
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px]" />
+          </div>
         </motion.div>
 
         {/* Contenu optimisé pour mobile */}
-        <motion.div
-          className="relative z-30 container mx-auto max-w-7xl px-4 md:px-6"
-          style={{ opacity: contentOpacity }}
-        >
+        <div className={`relative z-30 container mx-auto max-w-7xl px-4 md:px-6 ${
+          shouldReduceMotion ? 'low-perf' : ''
+        }`}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -304,13 +337,18 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 asChild
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg border-2 border-white text-white bg-transparent hover:bg-white/10"
+                className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg border-2 
+                  dark:border-white dark:text-white 
+                  border-gray-800 text-gray-800 
+                  bg-white/10 backdrop-blur-sm
+                  hover:bg-white/20 dark:hover:bg-white/10 
+                  transition-all duration-300"
               >
                 <Link href={`/${lang}/features`}>{t.hero.cta2}</Link>
               </Button>
             </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
         {/* Indicateur de scroll amélioré */}
         <motion.div
           className="absolute bottom-24 left-0 right-0 mx-auto z-30 flex flex-col items-center justify-center w-fit"
@@ -354,7 +392,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="w-full py-24 bg-gradient-to-b from-white to-gray-50 dark:from-[#1a0f2e] dark:to-[#140b24] relative overflow-hidden">
+      <section className="relative z-10 w-full py-24 bg-gradient-to-b from-white/80 to-gray-50/80 dark:from-[#1a0f2e]/80 dark:to-[#140b24]/80">
         {/* Particules de fond améliorées */}
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-purple-500/5 via-purple-400/5 to-transparent dark:from-purple-500/10 dark:via-purple-400/5 dark:to-transparent rounded-full blur-[120px] animate-pulse-slow" />

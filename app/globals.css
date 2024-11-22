@@ -266,3 +266,51 @@ textarea {
 .animate-light-sweep {
   animation: light-sweep 2s ease-in-out infinite;
 }
+
+/* Ajouter ces règles à la fin du fichier */
+
+/* Optimisations pour les appareils à faibles performances */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+/* Classes utilitaires pour la gestion des performances */
+.low-perf {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Désactiver les animations complexes sur les appareils à faibles performances */
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  .animate-parallax,
+  .animate-float,
+  .animate-glow {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .backdrop-blur-lg {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+/* Optimisation du rendu des particules */
+@media (max-width: 768px) {
+  .particles-container {
+    display: none !important;
+  }
+}
