@@ -43,7 +43,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   const [init, setInit] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isNearBottom, setIsNearBottom] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  // const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [showScroll, setShowScroll] = useState(true);
   const [isLowPerfDevice, setIsLowPerfDevice] = useState(false);
   
@@ -248,11 +248,11 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               quality={90}
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 100vw"
-              style={{
-                transform: shouldReduceMotion ? 'none' : `translate(${
-                  (mousePosition.x - 0.5) * 10
-                }px, ${(mousePosition.y - 0.5) * 10}px)`
-              }}
+              // style={{
+              //   transform: shouldReduceMotion ? 'none' : `translate(${
+              //     (mousePosition.x - 0.5) * 10
+              //   }px, ${(mousePosition.y - 0.5) * 10}px)`
+              // }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px]" />
           </div>
