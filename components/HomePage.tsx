@@ -261,10 +261,10 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {/* Hero Section avec Parallax */}
       <section
         ref={heroRef}
-        className="relative z-10 min-h-screen md:min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
+        className=" relative z-10 min-h-screen md:min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
       >
         <motion.div
-          className="absolute inset-0 z-0 w-full h-full"
+          className="absolute inset-0 z-0 w-full h-full "
           style={{ scale: imageScale }}
         >
           {/* <div className="relative w-full h-full hero-image-container">
@@ -293,14 +293,15 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               backgroundPosition: 'center',
               backgroundSize: 'cover',
               backgroundRepeat: 'no-repeat',
+              
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px]" />
+            <div className="absolute  inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px]" />
           </div>
         </motion.div>
 
         {/* Contenu optimisé pour mobile */}
-        <div className="relative z-30 container mx-auto max-w-7xl px-4 md:px-6">
+        <div className="  -mt-20 relative z-30 container mx-auto max-w-7xl px-4 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -330,7 +331,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               </motion.h1>
 
               <motion.p
-                className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-100 max-w-[90%] mx-auto leading-relaxed px-4 md:px-0 transition-colors duration-300"
+                className="text-base  sm:text-lg md:text-xl text-gray-700 dark:text-gray-100 max-w-[90%] mx-auto leading-relaxed px-4 md:px-0 transition-colors duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
@@ -341,7 +342,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
             {/* Boutons CTA optimisés pour mobile */}
             <motion.div
-              className="flex flex-col sm:flex-row w-full sm:w-auto gap-4 px-6 sm:px-0"
+              className="flex  flex-col sm:flex-row w-full sm:w-auto gap-4 px-6 sm:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
@@ -380,7 +381,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </div>
         {/* Indicateur de scroll amélioré */}
         <motion.div
-          className="absolute bottom-24 left-0 right-0 mx-auto z-30 flex flex-col items-center justify-center w-fit"
+          className="absolute bottom-40 left-0 right-0 mx-auto z-30 flex flex-col items-center justify-center w-fit"
           initial={{ opacity: 1 }}
           animate={{
             opacity: showScroll ? 1 : 0,
