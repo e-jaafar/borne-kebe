@@ -68,9 +68,12 @@ export function MasonryGrid({ images }: MasonryGridProps) {
   const distributeImages = useCallback(() => {
     if (!images || images.length === 0) return []
     
+    // Limiter à 9 images
+    const limitedImages = images.slice(0, 9)
+    
     const columnArrays: Image[][] = Array.from({ length: columns }, () => [])
     
-    images.forEach((image, index) => {
+    limitedImages.forEach((image, index) => {
       columnArrays[index % columns].push(image)
     })
     

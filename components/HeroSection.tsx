@@ -145,17 +145,17 @@ export function HeroSection({ lang, translations: t }: HeroSectionProps) {
   >
     {/* Animated Background Gradient - Plus doux en mode clair */}
     <div className="absolute inset-0 overflow-hidden z-0">
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-50/10 via-transparent to-pink-50/10 dark:from-purple-900/20 dark:via-transparent dark:to-pink-900/20 animate-gradient" />
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-100/30 via-transparent to-pink-100/30 dark:from-purple-900/30 dark:via-transparent dark:to-pink-900/30 animate-gradient" />
       <motion.div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(147,51,234,0.02),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(147,51,234,0.1),transparent_70%)]"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(147,51,234,0.1),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(147,51,234,0.2),transparent_70%)]"
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.05, 0.1, 0.05],
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
-          duration: 8,
+          duration: 6,
           repeat: Infinity,
-          ease: "linear",
+          ease: "easeInOut",
         }}
       />
     </div>
