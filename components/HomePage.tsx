@@ -270,7 +270,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           <div className="relative w-full h-full">
             <Image
               src="/videos/hero1.jpg"
-              alt=""
+              alt="Description de l'image héroïque"
               fill
               priority
               quality={90}
@@ -730,7 +730,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
             <span className="flex items-center gap-3 text-lg font-medium relative z-10">
               <div className="relative">
                 <Mail className="w-5 h-5 transition-all duration-1000 ease-out group-hover:scale-105" />
-                <div className="absolute inset-0 animate-pulse opacity-0 group-hover:opacity-50 bg-white rounded-full duration-1000" />
+                <div className="absolute -inset-1 animate-pulse opacity-0 group-hover:opacity-50 bg-white rounded-full duration-1000" />
               </div>
 
               <span className="relative">
