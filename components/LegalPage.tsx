@@ -98,7 +98,7 @@ export function LegalPage({ title, content, type }: LegalPageProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          Dernière mise à jour : {new Date().toLocaleDateString()}
+          Dernière mise à jour : 24/11/2024
         </motion.div>
       </div>
     </div>
