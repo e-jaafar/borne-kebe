@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Camera, Zap, Mail, ArrowUp } from "lucide-react";
-import Image from "next/image";
+// import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { DemoVideo } from "@/components/DemoVideo";
 import { FadeIn } from "@/components/ui/motion";
