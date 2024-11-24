@@ -5,18 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Camera, Zap, Mail, ArrowUp } from "lucide-react";
 // import Image from "next/image";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { DemoVideo } from "@/components/DemoVideo";
 import { FadeIn } from "@/components/ui/motion";
 import { type HomePageTranslations } from "@/types/translations";
-import { motion, useScroll, useTransform } from "framer-motion";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { loadFull } from "tsparticles";
+import { motion } from "framer-motion";
 import { MasonryGrid } from "@/components/MasonryGrid";
-import { TypeAnimation } from "react-type-animation";
 import { HowItWorks } from "@/components/HowItWorks";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { HeroSection } from "@/components/HeroSection";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadFull } from "tsparticles";
 
 // Ajouter le type pour window.navigator
 declare global {
@@ -44,11 +44,8 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isNearBottom, setIsNearBottom] = useState(false);
   // const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
-  const [showScroll, setShowScroll] = useState(true);
   const [isLowPerfDevice, setIsLowPerfDevice] = useState(false);
   
-  // Refs
-  const heroRef = useRef<HTMLDivElement>(null);
   
   // Media queries et détection des performances
   const isReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
@@ -63,29 +60,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
 
   const shouldReduceMotion = isReducedMotion || isMobile || isLowEnd() || isLowPerfDevice
 
-  // Scroll et animations
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
 
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-
-  // Initialisation des particules
-  useEffect(() => {
-    const initParticles = async () => {
-      try {
-        await initParticlesEngine(async (engine) => {
-          await loadFull(engine);
-        });
-        setInit(true);
-      } catch (error) {
-        console.error('Error initializing particles:', error);
-      }
-    };
-
-    initParticles();
-  }, []);
 
   // Chargement des images
   useEffect(() => {
@@ -158,7 +133,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setShowScroll(window.scrollY <= 100);
+          setShowScrollTop(window.scrollY <= 100);
           ticking = false;
         });
 
@@ -193,233 +168,95 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
     checkPerformance();
   }, []);
 
-  // Configuration des particules avec les types corrects
+  // Réajouter l'initialisation des particules
+  useEffect(() => {
+    const initParticles = async () => {
+      try {
+        await initParticlesEngine(async (engine) => {
+          await loadFull(engine);
+        });
+        setInit(true);
+      } catch (error) {
+        console.error('Error initializing particles:', error);
+      }
+    };
+
+    initParticles();
+  }, []);
+
+  // Configuration des particules en constellation
   const particlesConfig = {
+    fullScreen: false,
+    background: {
+      color: "transparent"
+    },
     particles: {
       number: {
-        value: shouldReduceMotion ? 20 : 50,
+        value: shouldReduceMotion ? 40 : 100,
         density: {
           enable: true,
           value_area: 800
         }
       },
       color: {
-        value: ["#9333ea", "#ffffff"]
+        value: "#9333ea"
       },
       links: {
-        color: "#9333ea",
-        distance: 150,
         enable: true,
-        opacity: 0.2,
-        width: 1
+        distance: 120,
+        color: "#9333ea",
+        opacity: 0.5,
+        width: 1.2
+      },
+      size: {
+        value: { min: 1, max: 2 },
+        random: {
+          enable: true
+        }
+      },
+      opacity: {
+        value: 1,
+        random: {
+          enable: true,
+          minimumValue: 0.6
+        }
       },
       move: {
-        enable: !shouldReduceMotion,
-        speed: 0.3,
+        enable: true,
+        speed: 0.6,
         direction: "none" as const,
         random: true,
         straight: false,
         outModes: {
           default: "bounce" as const
         }
-      },
-      size: {
-        value: { min: 1, max: 3 }
       }
     },
     interactivity: {
-      events: {
-        onHover: {
-          enable: !shouldReduceMotion,
-          mode: "grab"
-        }
-      },
-      modes: {
-        grab: {
-          distance: 140,
-          links: {
-            opacity: 0.2
-          }
-        }
-      }
+      enable: false
     },
-    detectRetina: !shouldReduceMotion,
-    fullScreen: false,
-    fpsLimit: shouldReduceMotion ? 30 : 60
+    detectRetina: false,
+    smooth: true,
+    fpsLimit: 60
   };
 
   return (
     <main className="relative overflow-x-hidden">
-      {init && !shouldReduceMotion && (
+      {init && (
         <Particles
           id="tsparticles"
-          className="fixed inset-0 z-0"
+          className="fixed inset-0 z-[1] opacity-30 md:opacity-40 dark:opacity-60 [.hero-section_+_&]:opacity-100"
           options={particlesConfig}
         />
       )}
 
-      {/* Hero Section avec Parallax */}
-      <section
-        ref={heroRef}
-        className=" relative z-10 min-h-screen md:min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
-      >
-        <motion.div
-          className="absolute inset-0 z-0 w-full h-full "
-          style={{ scale: imageScale }}
-        >
-          {/* <div className="relative w-full h-full hero-image-container">
-            <Image
-              src="/videos/hero1.jpg"
-              alt="Description de l'image héroïque"
-              fill
-              priority
-              quality={90}
-              className="object-cover w-full h-full"
-              sizes="100vw"
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQtJSAyVC0zLyAvLTMpQEY6OEBGOTdBRUVZWldaXWZqc2RxcnVzfX+Bh7n/2wBDARUXFx4aHh4pIR8hOTc5Nzk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTk5OTn/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-              loading="eager"
-              style={{
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                objectFit: 'cover'
-              }}
-            /> */}
-          <div 
-            className="relative w-full h-full bg-hero-image"
-            style={{
-              backgroundImage: 'url(/videos/hero1.jpg)',
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              
-            }}
-          >
-            <div className="absolute  inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px]" />
-          </div>
-        </motion.div>
-
-        {/* Contenu optimisé pour mobile */}
-        <div className="  -mt-20 relative z-30 container mx-auto max-w-7xl px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col items-center space-y-8 md:space-y-6 text-center pt-20 md:pt-0 min-h-[60vh] md:min-h-0 justify-center"
-          >
-            <header className="space-y-6 md:space-y-4 max-w-[800px] mx-auto">
-              <motion.h1
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-foreground drop-shadow-lg"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-              >
-                <TypeAnimation
-                  sequence={[
-                    t.hero.title,
-                    3000,
-                    ...t.hero.sequences.flatMap((text) => [text, 2500]),
-                  ]}
-                  wrapper="span"
-                  speed={30}
-                  deletionSpeed={30}
-                  repeat={Infinity}
-                  cursor={true}
-                  className="bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-purple-200 bg-clip-text text-transparent transition-all duration-300"
-                />
-              </motion.h1>
-
-              <motion.p
-                className="text-base  sm:text-lg md:text-xl text-gray-700 dark:text-gray-100 max-w-[90%] mx-auto leading-relaxed px-4 md:px-0 transition-colors duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-              >
-                {t.hero.subtitle}
-              </motion.p>
-            </header>
-
-            {/* Boutons CTA optimisés pour mobile */}
-            <motion.div
-              className="flex  flex-col sm:flex-row w-full sm:w-auto gap-4 px-6 sm:px-0"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-            >
-              <Button
-                asChild
-                size="lg"
-                className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg relative overflow-hidden group bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 shadow-lg"
-              >
-                <Link href={`/${lang}/pricing`}>
-                  <span className="relative z-10">{t.hero.cta1}</span>
-                  <motion.div
-                    className="absolute inset-0 bg-white/20"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: "100%" }}
-                    transition={{ duration: 0.5 }}
-                  />
-                </Link>
-              </Button>
-
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto py-6 sm:py-4 text-base sm:text-lg border-2 
-                  dark:border-white dark:text-white 
-                  border-gray-800 text-gray-800 
-                  bg-white/10 backdrop-blur-sm
-                  hover:bg-white/20 dark:hover:bg-white/10 
-                  transition-all duration-300"
-              >
-                <Link href={`/${lang}/features`}>{t.hero.cta2}</Link>
-              </Button>
-            </motion.div>
-          </motion.div>
-        </div>
-        {/* Indicateur de scroll amélioré */}
-        <motion.div
-          className="absolute bottom-40 left-0 right-0 mx-auto z-30 flex flex-col items-center justify-center w-fit"
-          initial={{ opacity: 1 }}
-          animate={{
-            opacity: showScroll ? 1 : 0,
-            y: showScroll ? 0 : 20,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: "easeInOut",
-          }}
-        >
-          <div className="w-8 h-14 border-2 border-white/50 rounded-full flex justify-center p-2 backdrop-blur-sm">
-            <motion.div
-              className="w-2 h-2 bg-white rounded-full"
-              animate={{
-                y: [0, 20, 0],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          </div>
-          <motion.p
-            className="text-white/70 text-sm mt-2 text-center font-light tracking-wider"
-            animate={{
-              opacity: [0.5, 1, 0.5],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            SCROLL
-          </motion.p>
-        </motion.div>
-      </section>
+      <div className="hero-section">
+        <HeroSection 
+          lang={lang}
+          translations={t.hero}
+          shouldReduceMotion={shouldReduceMotion}
+        />
+      </div>
 
       {/* Why Choose Us Section */}
       <section className="relative z-10 w-full py-24 bg-gradient-to-b from-white/80 to-gray-50/80 dark:from-[#1a0f2e]/80 dark:to-[#140b24]/80">

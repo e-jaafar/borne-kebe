@@ -96,7 +96,7 @@ export function GalleryImage({ src, alt, width, allImages = [], currentIndex = 0
               object-cover transition-all duration-300
               ${isLoading ? 'scale-110 blur-sm' : 'scale-100 blur-0'}
             `}
-            onLoadingComplete={() => setIsLoading(false)}
+            onLoad={() => setIsLoading(false)}
             draggable={false}
           />
         </div>
