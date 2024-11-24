@@ -225,7 +225,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {init && (
         <Particles
           id="tsparticles"
-          className="fixed inset-0 opacity-30 md:opacity-40 dark:opacity-60 
+          className="fixed inset-0 pointer-events-none opacity-30 md:opacity-40 dark:opacity-60 
             [.hero-section_+_&]:opacity-100 
             [.hero-section_+_&]:z-[1] 
             z-[0]"
@@ -404,8 +404,8 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       />
 
       {/* Features Section avec effets 3D et micro-interactions */}
-      <section className="w-full z-[67] py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
-        <div className="container mx-auto max-w-7xl px-4 md:px-6">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24] relative z-[3]">
+        <div className="container mx-auto max-w-7xl px-4 md:px-6 relative z-[4]">
           <FadeIn>
             <div className="text-center mb-16">
               <h2 className="text-foreground text-3xl font-bold">
@@ -416,7 +416,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
               </p>
             </div>
           </FadeIn>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-[5]">
             {t.features.items.slice(0, 3).map((feature, index) => (
               <FadeIn key={index} delay={index * 0.1}>
                 <motion.div
@@ -427,7 +427,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                     translateZ: 20,
                   }}
                   whileTap={{ scale: 0.98 }}
-                  className="h-full perspective-1000"
+                  className="h-full perspective-1000 relative z-[6]"
                 >
                   <Card className="relative h-full overflow-hidden bg-gradient-to-br from-white to-gray-50/50 dark:from-[#2d1f42]/80 dark:to-[#1a0f2e]/80 hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-purple-900/20 backdrop-blur-sm group">
                     {/* Effet de brillance au hover */}
