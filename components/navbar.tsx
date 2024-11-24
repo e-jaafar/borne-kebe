@@ -35,6 +35,18 @@ const defaultTranslations = {
   }
 }
 
+// Définir les langues valides
+const validLanguages = ['fr', 'en', 'nl'] as const
+type ValidLang = typeof validLanguages[number]
+
+// Extraire la langue de l'URL avec une valeur par défaut
+const getValidLang = (path: string | null): ValidLang => {
+  const urlLang = (path?.split('/')[1] || 'fr') as string
+  return validLanguages.includes(urlLang as ValidLang) 
+    ? (urlLang as ValidLang) 
+    : 'fr'
+}
+
 export function Navbar() {
   const { theme, setTheme } = useTheme()
   const { lang, setLang } = useLang()
@@ -55,8 +67,8 @@ export function Navbar() {
       : `rgba(255, 255, 255, ${navOpacity.get()})`
   }
 
-  // Extraire la langue de l'URL avec une valeur par défaut
-  const urlLang = (pathname?.split('/')[1] || 'fr') as Lang
+  // Utiliser la nouvelle fonction
+  const urlLang = getValidLang(pathname)
   const currentPath = pathname?.split('/').slice(2).join('/') || ''
 
   // Gestion sécurisée des traductions avec vérification complète
@@ -108,6 +120,9 @@ export function Navbar() {
   if (!mounted) {
     return null // ou un placeholder/skeleton
   }
+
+  // Ajoutez une vérification de sécurité
+  const menuText = translations?.[urlLang]?.nav?.menu || 'Menu'
 
   return (
     <motion.nav 
@@ -171,20 +186,22 @@ export function Navbar() {
                 value={urlLang}
                 onValueChange={handleLanguageChange}
               >
-                <SelectTrigger className="w-[52px] h-[40px] p-0 pl-2 bg-transparent border-gray-200/50 dark:border-gray-800/50 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors backdrop-blur-lg">
+                <SelectTrigger className="w-[52px] h-[40px] p-0 pl-2 bg-transparent border-gray-200/50 dark:border-gray-800/50 border-none hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors backdrop-blur-lg focus:outline-none">
                   <SelectValue>
                     <motion.div 
                       className="flex items-center justify-center w-full"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Image
-                        src={`/flags/${urlLang}.svg`}
-                        alt={urlLang === 'fr' ? 'Français' : urlLang === 'en' ? 'English' : 'Nederlands'}
-                        width={24}
-                        height={24}
-                        className="rounded-sm w-6 h-6"
-                      />
+                      {validLanguages.includes(urlLang as ValidLang) && (
+                        <Image
+                          src={`/flags/${urlLang}.svg`}
+                          alt={urlLang === 'fr' ? 'Français' : urlLang === 'en' ? 'English' : 'Nederlands'}
+                          width={24}
+                          height={24}
+                          className="rounded-sm w-6 h-6"
+                        />
+                      )}
                     </motion.div>
                   </SelectValue>
                 </SelectTrigger>
@@ -262,7 +279,7 @@ export function Navbar() {
                     className="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors backdrop-blur-lg"
                   >
                     <Menu className="h-[1.2rem] w-[1.2rem]" />
-                    <span className="sr-only">{translations[urlLang].nav.menu}</span>
+                    <span className="sr-only">{menuText}</span>
                   </Button>
                 </motion.div>
               </SheetTrigger>
