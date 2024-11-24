@@ -327,3 +327,12 @@ textarea {
 body.lightbox-open {
   overflow: hidden;
 }
+
+/* Fix pour Safari iOS */
+@supports (-webkit-touch-callout: none) {
+  .hero-image-container {
+    position: relative !important;
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+}
