@@ -336,3 +336,21 @@ body.lightbox-open {
     height: -webkit-fill-available;
   }
 }
+
+/* Fix pour l'image de fond sur mobile */
+.bg-hero-image {
+  background-attachment: scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* Fix spécifique pour iOS */
+@supports (-webkit-touch-callout: none) {
+  .bg-hero-image {
+    background-attachment: scroll;
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+}

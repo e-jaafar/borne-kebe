@@ -267,7 +267,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           className="absolute inset-0 z-0 w-full h-full"
           style={{ scale: imageScale }}
         >
-          <div className="relative w-full h-full hero-image-container">
+          {/* <div className="relative w-full h-full hero-image-container">
             <Image
               src="/videos/hero1.jpg"
               alt="Description de l'image héroïque"
@@ -285,7 +285,16 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
                 position: 'absolute',
                 objectFit: 'cover'
               }}
-            />
+            /> */}
+          <div 
+            className="relative w-full h-full bg-hero-image"
+            style={{
+              backgroundImage: 'url(/videos/hero1.jpg)',
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
             <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/90 dark:from-[#1a0f2e]/90 dark:via-[#1a0f2e]/70 dark:to-[#1a0f2e]/90 backdrop-blur-[2px]" />
           </div>
         </motion.div>
