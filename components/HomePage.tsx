@@ -107,7 +107,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Modification de la gestion du scroll pour le bouton scroll to top
+  // Simplifier la gestion du scroll pour le bouton scroll to top
   useEffect(() => {
     let ticking = false;
 
@@ -117,26 +117,6 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           setShowScrollTop(window.scrollY > 300);
           ticking = false;
         });
-
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Modification de la gestion du scroll pour l'animation
-  useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setShowScrollTop(window.scrollY <= 100);
-          ticking = false;
-        });
-
         ticking = true;
       }
     };
@@ -245,7 +225,10 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       {init && (
         <Particles
           id="tsparticles"
-          className="fixed inset-0 z-[1] opacity-30 md:opacity-40 dark:opacity-60 [.hero-section_+_&]:opacity-100"
+          className="fixed inset-0 opacity-30 md:opacity-40 dark:opacity-60 
+            [.hero-section_+_&]:opacity-100 
+            [.hero-section_+_&]:z-[1] 
+            z-[0]"
           options={particlesConfig}
         />
       )}
@@ -259,15 +242,15 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       </div>
 
       {/* Why Choose Us Section */}
-      <section className="relative z-10 w-full py-24 bg-gradient-to-b from-white/80 to-gray-50/80 dark:from-[#1a0f2e]/80 dark:to-[#140b24]/80">
+      <section className="relative z-[2] w-full py-24 bg-gradient-to-b from-white/80 to-gray-50/80 dark:from-[#1a0f2e]/80 dark:to-[#140b24]/80">
         {/* Particules de fond améliorées */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl translate-x-[-25%]" />
           <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-700/5 rounded-full blur-3xl translate-x-[25%]" />
           <div className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] bg-gradient-to-tr from-purple-700/5 via-purple-600/5 to-transparent dark:from-purple-700/10 dark:via-purple-600/5 dark:to-transparent rounded-full blur-[120px] animate-pulse-slower" />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-[3]">
           <FadeIn>
 
             <div className="text-center mb-20">
@@ -315,12 +298,12 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
           </div>
 
           {/* Grille des avantages */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto relative z-[4]">
             {t.why.items.map((item, index) => (
               <FadeIn key={index} delay={index * 0.1}>
                 <motion.div
                   whileHover={{ y: -10 }}
-                  className="relative group h-full"
+                  className="relative group h-full cursor-pointer"
                 >
                   {/* Effet de halo amélioré */}
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-purple-500/5 to-purple-800/10 dark:from-purple-600/20 dark:via-purple-500/10 dark:to-purple-800/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
@@ -421,7 +404,7 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
       />
 
       {/* Features Section avec effets 3D et micro-interactions */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
+      <section className="w-full z-[67] py-12 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#140b24] dark:via-[#1a0f2e] dark:to-[#140b24]">
         <div className="container mx-auto max-w-7xl px-4 md:px-6">
           <FadeIn>
             <div className="text-center mb-16">
@@ -598,9 +581,9 @@ export function HomePage({ lang, translations: t }: HomePageProps) {
         </Button>
       </div>
 
-      {/* Scroll to Top Button - Repositionné */}
+      {/* Scroll to Top Button - Repositionné et corrigé */}
       <div
-        className={`fixed md:bottom-8 md:left-8 bottom-20 left-4 z-50 transition-transform duration-500 ease-out will-change-transform ${
+        className={`fixed md:bottom-8 md:left-8 bottom-20 left-4 z-50 transition-all duration-500 ease-out ${
           showScrollTop
             ? "translate-y-0 opacity-100"
             : "translate-y-10 opacity-0 pointer-events-none"
