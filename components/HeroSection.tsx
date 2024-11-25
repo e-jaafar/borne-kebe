@@ -84,7 +84,7 @@ export function HeroSection({ lang, translations: t }: HeroSectionProps) {
       rotation: 8
     },
     { 
-      src: '/images/photo_20240915_012027_187.JPG', 
+      src: '/images/photo20240915012027187.jpg', 
       position: { 
         desktop: { x: 0, y: -25 },
         mobile: { x: 0, y: -20 }
@@ -93,7 +93,7 @@ export function HeroSection({ lang, translations: t }: HeroSectionProps) {
       rotation: -3
     },
     { 
-      src: '/images/photo_20240915_012127_210.JPG', 
+      src: '/images/photo20240915012127210.jpg', 
       position: { 
         desktop: { x: -35, y: 0 },
         mobile: { x: -12, y: 0 }
